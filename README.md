@@ -18,13 +18,27 @@
 
 El objetivo de este proyecto es diseñar e implementar un sistema de comunicacion entre dos usuarios a travez de MORSE, facilitandole el acceso a quienes no conozcan el codigo, funcionando asi como "traductor". Se busca además garantizar una comunicación clara y confiable entre los dispositivos, implementando detección precisa de señales sonoras, y una correcta decodificación y visualización de los mensajes en texto.
 
+El uso de código Morse puede justificarse en dos contextos concretos, aunque es importante reconocer que no es una tecnología moderna ni eficiente, sino un mecanismo mínimo que se mantiene vigente solo como backup extremo.
+En la Educación (Pues se sigue instruyendo en MORSE en escuelas navales y aeronáuticas). Y en situaciones de Emergencia o muy mala calidad de comunicaciones de radio; Donde el MORSE funciona como minimo absoluto; con un canal de un solo bit (Ya sea un boton, un cable, luz, sonido) y cierta cantidad de tiempo, se es capaz de trasmitir cualquier mensaje.
+
+Algunos escenarios reales donde tener un traductor MORSE seria efectivo son...
+
+1. Grupos aislados de Montaña, donde no hay señal; y se quieren comunicar a media distancia a travez de un valle que esta lo suficientmente lejos para que no llegue el sonido.
+2. Comunicación silenciosa entre patrullas costeras. Se quiere enviar un mensaje, pero usar radio podria delatar su posición o ser interceptada.
+3. Comunicaciones entre dos barcos pesqueros a media distancia, con VHF inhabilitado (bloqueado o saturado).
+4. Caso educativo, donde se entrena en comunicaciones de bajo ancho de banda, y obliga a pensar en terminos de señales binarias.
+
+En conclusion, llevar un traductor Morse compacto puede ser útil en emergencias, pero no porque Morse sea moderno, sino porque es el último recurso cuando todo lo demás falla.
+
 #### **1.2 Proyectos similares**
 
-1.  Traductor Morse luminoso (óptico). 
+1. Traductor Morse luminoso (óptico). 
 
 2. Traductor Morse por vibración
 
-Para comparar estas alternativas, se tienen en cuenta seis aspectos característicos:
+3. Traductor Morse Sonoro
+
+Para comparar estas alternativas, se tienen en cuenta cuatro aspectos característicos:
 
 1. Disponibilidad del hardware: Se evalúa si el proyecto es fácilmente implementable con hardware disponible en mercados regionales.
 
@@ -58,11 +72,13 @@ En la Figura 1.3.1 se muestra el diagrama en bloques del sistema con los princip
 
 Existen varios productos similares y app de celulares que cumplen la función de "entrenador de MORSE"; pero lo que nosotros queremos implementar también es un traductor (tanto emisor como receptor), algo que por lo menos no es común en el mercado.
 
-Como primer competidor esta la app de Play Store "Learn and Traslate"; Pero solo traduce "manualmente" es decir uno tiene que escribir el codigo escuchado; ademas de que es una velocidad fija. Sin embargo, aunque nuestro proyecto requiera hacerlo automaticamente, nos servira para probar y experimentar ciertas funciones
+Como primer competidor esta la app de Play Store "Learn and Traslate" link: https://play.google.com/store/apps/details?id=com.puzan.morsecode; Pero solo traduce "manualmente" es decir uno tiene que escribir el codigo escuchado; ademas de que es una velocidad fija. Sin embargo, aunque nuestro proyecto requiera hacerlo automaticamente, nos servira para probar y experimentar ciertas funciones
 
 Un segundo competidor es https://www.mercadolibre.com.ar/pantalones-cortos-morse-cw-telegraph-radio-de-onda-corta-par/p/MLA2039077129?matt_tool=38087446&pdp_filters=item_id%3AMLA2469142614&from=gshop&utm_source=chatgpt.com, el cual es el tipico pedal de morse para radio de ondas cortas (entre 3 MHz y 30 MHz).
 
 En resumen, el mercado es escaso (Debido mayormente a que puede llegar a verse como "una comunicacion del pasado"; aunque en ciertos contextos muy eficiente).
+
+En la Tabla 2.1 se presentan los requisitos y casos de uso
 
 | Grupo                   | ID  | Descripción                                                                                                                                                                                                         |
 | :---------------------- | :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -97,7 +113,7 @@ En las tablas se presentan 2 casos de uso para el sistema.
 | **Flujos alternativos** | a. **Pérdida de conexión Bluetooth:** el sistema no recibe el texto completo. Se muestra un aviso de error en la aplicación y el LED de error parpadea.<br> b. **Modo incorrecto:** si el sistema está en modo “Recepción”, ignora la orden de transmisión y enciende el indicador correspondiente.<br> c. **Error de codificación:** si el texto contiene caracteres no reconocidos por el traductor Morse, el sistema los omite y notifica en la aplicación.<br> d. **Interrupción del usuario:** si se presiona el botón de cancelación o se apaga el sistema durante la emisión, la transmisión se detiene y se indica mediante un destello del LED. |
 
 
-<p align="center"><em>Tabla 2.1: Caso de uso 1: El usuario quiere emitir MORSE</em></p>
+<p align="center"><em>Tabla 2.2: Caso de uso 1: El usuario quiere emitir MORSE</em></p>
 
 
 | **Elemento**            | **Definición**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |

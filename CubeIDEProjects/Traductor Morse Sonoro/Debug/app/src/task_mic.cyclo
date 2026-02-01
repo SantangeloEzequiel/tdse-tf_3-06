@@ -1,0 +1,5 @@
+../app/src/task_mic.c:98:6:task_mic_init	2
+../app/src/task_mic.c:144:6:task_mic_update	4
+../app/src/task_mic.c:182:6:task_mic_statechart	10
+../app/src/task_mic.c:247:6:HAL_ADC_ConvCpltCallback	3
+../app/src/task_mic.c:268:7:goertzel_energy	2

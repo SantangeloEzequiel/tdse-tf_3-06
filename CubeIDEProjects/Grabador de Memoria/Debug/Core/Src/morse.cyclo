@@ -1,0 +1,4 @@
+../Core/Src/morse.c:66:19:EEPROM_WaitForWrite	2
+../Core/Src/morse.c:78:19:EEPROM_WriteByte	2
+../Core/Src/morse.c:94:9:EEPROM_ReadByte	1
+../Core/Src/morse.c:111:19:EEPROM_WriteBuffer	4

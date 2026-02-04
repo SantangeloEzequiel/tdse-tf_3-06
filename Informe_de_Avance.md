@@ -1,4 +1,4 @@
-# **Traductor Morse Sonoro**
+ # **Traductor Morse Sonoro**
  ## **Informe de Avance**
 
 ### **Autores:**
@@ -7,7 +7,7 @@
 
 * Ramiro Mántaras \- Padrón 111510
 
-*Fecha: 03/02/2026*
+*Fecha: 01/02/2026*
 
 **2do cuatrimestre 2025**
 

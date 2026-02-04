@@ -1,0 +1,77 @@
+# **Traductor Morse Sonoro**
+ ## **Informe de Avance**
+
+### **Autores:**
+
+* Ezequiel Santangelo \- Padrón 112762
+
+* Ramiro Mántaras \- Padrón 111510
+
+*Fecha: 03/02/2026*
+
+**2do cuatrimestre 2025**
+
+A continuación se detalla según la siguiente tabla el estado de avance de cada uno de los requerimientos planteados en el documento de especificaciones.
+
+| Estado | Descripción      |
+|-----|---------------------|
+| 🟢 | Ya implementado|
+| 🟡 | En proceso de implementación |
+| 🟠 | Se implementará|
+| 🔴 | No se implementará |
+
+### *Entrada*
+
+|ID|Descripción|Estado|
+| -- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|1.1|El sistema contará con un micrófono para captar señales sonoras.|🟢|
+|1.2|El sistema tendrá un botón que permita generar un código Morse manualmente.|🟢|
+|1.3|El sistema contará con un teclado matricial (se está considerando la posibilidad   de reemplazarlo por una aplicación Bluetooth en el celular) que permitirá enviar caracteres para ser reproducidos en código Morse.|🟡|
+
+* El módulo micrófono se encuentra implementado y funcional (tarea task_mic).
+* No habrá teclado matricial, se implementará mediante Bloetooth.
+
+### *Indicadores*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|2.1|El sistema contará con un indicador luminoso para indicar si se está recibiendo la señal Morse correctamente.|🟠|
+|2.2|El sistema se conectará mediante Bluetooth al celular, para indicar el carácter Morse que se está recibiendo.|🟡|
+|2.3|El sistema contará con un indicador luminoso que indique si está en modo "Emisión" o "Recepción".|🟢|
+|2.4|El sistema notificará mediante el titileo de LEDs cuando ocurra un error al recibir el código.|🟠|
+|2.5|El sistema notificará con audio y luz cuando se deje un código sin introducir completamente.|🟠|
+
+### *Parlante*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|3.1|El sistema contará con un parlante (o zumbador, a definir) para reproducir el código Morse que se desea emitir.|🟠|
+|3.2|El sistema solo podrá emitir cuando no esté recibiendo, ya que las señales sonoras podrían interferirse.|🟠|
+
+* Se decidió que se tratará de un zumbador para facilitar la detección sonora.
+
+### *Comunicación Bluetooth*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|4.1|El sistema se comunicará mediante Bluetooth con la aplicación del celular.|🟡|
+|4.2|El sistema deberá enviar a la aplicación los caracteres recibidos (ya habiendo procesado el código Morse).|🟠|
+|4.3|El sistema deberá poder recibir caracteres desde la aplicación (en caso de no usar un teclado matricial) para codificarlos en Morse y luego reproducirlos.|🟡|
+
+* La tarea hc_05 se encuentra implementada y funcional. Queda por implementar la lógica del sistema que interpreta los caracteres recibidos y enviados.
+
+### *Aplicación*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|5.1|La aplicación deberá permitir al usuario escribir caracteres.|🟠|
+|5.2|La aplicación deberá poder mostrar en pantalla los caracteres recibidos.|🟢|
+
+
+### *Interruptores/Botones*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|6.1|El sistema contará con un DIP switch que permitirá controlar la velocidad de emisión.|🟡|
+
+* Se encuentra implementada la tarea task_sensor, que se encarga del sensado del DIP switch. La funcionalidad de cambio de velocidad, sin embargo, no.

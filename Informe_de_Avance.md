@@ -78,7 +78,7 @@ A continuación se detalla según la siguiente tabla el estado de avance de cada
 
 
 
-### *ADICIONAL: APP DE ANDROID*
+### *ADICIONAL: App de ANDROID*
 
 |ID|Descripción|Estado|
 | :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
@@ -87,7 +87,7 @@ A continuación se detalla según la siguiente tabla el estado de avance de cada
 |7.3|La aplicación deberá recibir señales de audio Morse de un emisor indeterminado, y poder traducirlo.|🟡|
 |7.4|La aplicación deberá tener un apartado "HELP" que guiara al usuario sobre su funcionamiento.|🟠|
 
-* Para probar el algoritmo de detección de señales, primero se decidió implementarlo en consola. A partir de eso, y ya teniendo el código funcionando, surgió como posibilidad desarrollar una app de Android de traducción Morse, idea que también estuvo motivada por la falta de aplicaciones en la Play Store que permitan recibir audio como entrada (hay apps de Morse, pero en general no analizan audio).
+Para probar el algoritmo de detección de señales, primero se decidió implementarlo en consola. A partir de eso, y ya teniendo el código funcionando, surgió como posibilidad desarrollar una app de Android de traducción Morse, idea que también estuvo motivada por la falta de aplicaciones en la Play Store que permitan recibir audio como entrada (hay apps de Morse, pero en general no analizan audio).
 
 De esta forma se creó MyFriendlyMorse, dejando la APK incluida en el repositorio. Si bien esta aplicación no entra dentro de los contenidos de la materia, ya que fue programada en otro entorno (Android API 21) y en otro lenguaje (Kotlin), consideramos oportuno mostrarla como una aplicación práctica del algoritmo desarrollado.
 

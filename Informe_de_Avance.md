@@ -75,3 +75,37 @@ A continuación se detalla según la siguiente tabla el estado de avance de cada
 |6.1|El sistema contará con un DIP switch que permitirá controlar la velocidad de emisión.|🟡|
 
 * Se encuentra implementada la tarea task_sensor, que se encarga del sensado del DIP switch. La funcionalidad de cambio de velocidad, sin embargo, no.
+
+
+
+### *ADICIONAL: APP DE ANDROID*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|7.1|La aplicación deberá permitir al usuario escribir caracteres y mostrar en pantalla su traduccion a Morse.|🟢|
+|7.2|La aplicación deberá permitir al usuario escribir Morse y mostrar en pantalla su traduccion a texto.|🟢|
+|7.3|La aplicación deberá recibir señales de audio Morse de un emisor indeterminado, y poder traducirlo.|🟡|
+|7.4|La aplicación deberá tener un apartado "HELP" que guiara al usuario sobre su funcionamiento.|🟠|
+
+* Para probar el algoritmo de detección de señales, primero se decidió implementarlo en consola. A partir de eso, y ya teniendo el código funcionando, surgió como posibilidad desarrollar una app de Android de traducción Morse, idea que también estuvo motivada por la falta de aplicaciones en la Play Store que permitan recibir audio como entrada (hay apps de Morse, pero en general no analizan audio).
+
+De esta forma se creó MyFriendlyMorse, dejando la APK incluida en el repositorio. Si bien esta aplicación no entra dentro de los contenidos de la materia, ya que fue programada en otro entorno (Android API 21) y en otro lenguaje (Kotlin), consideramos oportuno mostrarla como una aplicación práctica del algoritmo desarrollado.
+
+El algoritmo de detección y análisis de señales utiliza Goertzel para detectar qué frecuencia está presente en la señal de audio, evitando calcular una FFT completa (ya que realizar una FFT en cada ciclo de detección en tiempo real resulta muy costoso).
+
+Primero se toma un segmento inicial de la señal y se usa Goertzel para ver en qué frecuencia hay mayor energía. Luego, una se vuelve a usar Goertzel para decidir cuándo hay señal y cuándo no (o cuando hay sonido y cuando no). Asi detectamos Morse.
+
+Se asume que el tipo de emisor es indeterminado, y que pueden existir ruidos que alteren la emisión y la recepción. Esto implica que un dash no siempre va a durar tres veces lo que un dot (casi nunca pasa), y lo mismo ocurre con los silencios. Además, a priori no se conoce cuál es el tiempo base del punto.
+
+Para manejar esto, se implementó un período inicial de aprendizaje (Learning Morse), en el cual se espera detectar al menos dos señales diferentes (un punto y una raya). El umbral que usamos fue...
+
+raya ≥ 2 · (punto − 1)
+
+Este criterio fue elegido porque fue el que mejor funcionó con el audio utilizado durante las pruebas.
+
+La aplicación MyFriendlyMorse debería poder traducir correctamente el audio
+https://www.youtube.com/watch?v=9A3tBINRdiE
+
+utilizando una velocidad de reproducción de 0.75x.
+
+Actualmente todavía falta mejorar el análisis de los silencios, lo cual será implementado en la brevedad. Con esto, las señales que podrían traducirse no serían tan específicas y el sistema sería más robusto frente a distintas condiciones de emisión.

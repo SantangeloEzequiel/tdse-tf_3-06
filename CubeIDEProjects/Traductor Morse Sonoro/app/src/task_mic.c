@@ -229,9 +229,11 @@ void task_mic_statechart(void)
 
 				if (energy > THRESHOLD)
 				{
-					HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, LD2_ON);
+					//POSITIVE RESPONSE
+
 				} else {
-					HAL_GPIO_WritePin(LD2_PORT, LD2_PIN, LD2_OFF);
+					//NEGATIVE RESPONSE
+
 				}
 
 				p_task_mic_dta->adc_ready = 0;

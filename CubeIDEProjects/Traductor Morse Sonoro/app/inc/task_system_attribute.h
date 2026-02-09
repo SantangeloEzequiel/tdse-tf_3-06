@@ -29,14 +29,14 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @file   : task_sensor_attribute.h
+ * @file   : task_system_attribute.h
  * @date   : Set 26, 2023
  * @author : Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>
  * @version	v1.0.0
  */
 
-#ifndef TASK_INC_TASK_SENSOR_ATTRIBUTE_H_
-#define TASK_INC_TASK_SENSOR_ATTRIBUTE_H_
+#ifndef TASK_INC_TASK_SYSTEM_ATTRIBUTE_H_
+#define TASK_INC_TASK_SYSTEM_ATTRIBUTE_H_
 
 /********************** CPP guard ********************************************/
 #ifdef __cplusplus
@@ -49,42 +49,39 @@ extern "C" {
 
 /********************** typedef **********************************************/
 
-/* Events to excite Task Sensor */
-typedef enum task_sensor_ev {EV_BTN_XX_UP,
-							 EV_BTN_XX_DOWN} task_sensor_ev_t;
 
-/* States of Task Sensor */
-typedef enum task_sensor_st {ST_BTN_XX_UP,
-							 ST_BTN_XX_FALLING,
-							 ST_BTN_XX_DOWN,
-						     ST_BTN_XX_RISING} task_sensor_st_t;
+/* Events to excite Task System */
+typedef enum task_system_ev {EV_SYS_IDLE,
+							 EV_SYS_VELOCITY1_ON,
+							 EV_SYS_VELOCITY1_OFF,
+							 EV_SYS_VELOCITY2_ON,
+							 EV_SYS_VELOCITY2_OFF,
+							 EV_SYS_VELOCITY3_ON,
+							 EV_SYS_VELOCITY3_OFF,
+							 EV_SYS_BTN_INPUT_ON,
+							 EV_SYS_BTN_INPUT_OFF,
+							 EV_SYS_MIC_INPUT_ON,
+							 EV_SYS_MIC_INPUT_OFF,
+							 EV_SYS_MODE_RECEIVE,
+							 EV_SYS_MODE_TRANSMIT
+								} task_system_ev_t;
 
-/* Identifier of Task Sensor */
-typedef enum task_sensor_id {ID_BTN_INPUT,
-							 ID_VELOCITY1,
-							 ID_VELOCITY2,
-							 ID_VELOCITY3} task_sensor_id_t;
-
-typedef struct
-{
-	task_sensor_id_t	identifier;
-	GPIO_TypeDef *		gpio_port;
-	uint16_t			pin;
-	GPIO_PinState		pressed;
-	uint32_t			tick_max;
-	task_sensor_ev_t	signal_up;
-	task_sensor_ev_t	signal_down;
-} task_sensor_cfg_t;
+/* State of Task System */
+typedef enum task_system_st {ST_SYS_RECEIVING,
+							 ST_SYS_TRANSMITTING} task_system_st_t;
 
 typedef struct
 {
 	uint32_t			tick;
-	task_sensor_st_t	state;
-	task_sensor_ev_t	event;
-} task_sensor_dta_t;
+	task_system_st_t	state;
+	task_system_ev_t	event;
+	uint32_t			velocity;
+	char 				morse_character;
+	bool				flag;
+} task_system_dta_t;
 
 /********************** external data declaration ****************************/
-extern task_sensor_dta_t task_sensor_dta_list[];
+extern task_system_dta_t task_system_dta;
 
 /********************** external functions declaration ***********************/
 
@@ -93,6 +90,6 @@ extern task_sensor_dta_t task_sensor_dta_list[];
 }
 #endif
 
-#endif /* TASK_INC_TASK_SENSOR_ATTRIBUTE_H_ */
+#endif /* TASK_INC_TASK_SYSTEM_ATTRIBUTE_H_ */
 
 /********************** end of file ******************************************/

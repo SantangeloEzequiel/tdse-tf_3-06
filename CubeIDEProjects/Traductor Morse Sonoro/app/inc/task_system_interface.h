@@ -29,14 +29,14 @@
  * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @file   : task_sensor_attribute.h
+ * @file   : task_system_interface.h
  * @date   : Set 26, 2023
  * @author : Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>
  * @version	v1.0.0
  */
 
-#ifndef TASK_INC_TASK_SENSOR_ATTRIBUTE_H_
-#define TASK_INC_TASK_SENSOR_ATTRIBUTE_H_
+#ifndef TASK_INC_TASK_SYSTEM_INTERFACE_H_
+#define TASK_INC_TASK_SYSTEM_INTERFACE_H_
 
 /********************** CPP guard ********************************************/
 #ifdef __cplusplus
@@ -49,50 +49,24 @@ extern "C" {
 
 /********************** typedef **********************************************/
 
-/* Events to excite Task Sensor */
-typedef enum task_sensor_ev {EV_BTN_XX_UP,
-							 EV_BTN_XX_DOWN} task_sensor_ev_t;
-
-/* States of Task Sensor */
-typedef enum task_sensor_st {ST_BTN_XX_UP,
-							 ST_BTN_XX_FALLING,
-							 ST_BTN_XX_DOWN,
-						     ST_BTN_XX_RISING} task_sensor_st_t;
-
-/* Identifier of Task Sensor */
-typedef enum task_sensor_id {ID_BTN_INPUT,
-							 ID_VELOCITY1,
-							 ID_VELOCITY2,
-							 ID_VELOCITY3} task_sensor_id_t;
-
-typedef struct
-{
-	task_sensor_id_t	identifier;
-	GPIO_TypeDef *		gpio_port;
-	uint16_t			pin;
-	GPIO_PinState		pressed;
-	uint32_t			tick_max;
-	task_sensor_ev_t	signal_up;
-	task_sensor_ev_t	signal_down;
-} task_sensor_cfg_t;
-
-typedef struct
-{
-	uint32_t			tick;
-	task_sensor_st_t	state;
-	task_sensor_ev_t	event;
-} task_sensor_dta_t;
-
 /********************** external data declaration ****************************/
-extern task_sensor_dta_t task_sensor_dta_list[];
 
 /********************** external functions declaration ***********************/
+extern void init_queue_event_task_system(void);
+extern void init_queue_rx_task_system(void);
+extern void put_event_task_system(task_system_ev_t event);
+extern void put_message_task_system(char message);
+extern task_system_ev_t get_event_task_system(void);
+extern char get_message_task_system(void);
+extern char get_message_task_system(void);
+extern bool any_event_task_system(void);
+extern bool any_message_task_system(void);
 
 /********************** End of CPP guard *************************************/
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* TASK_INC_TASK_SENSOR_ATTRIBUTE_H_ */
+#endif /* TASK_INC_TASK_SYSTEM_INTERFACE_H_ */
 
 /********************** end of file ******************************************/

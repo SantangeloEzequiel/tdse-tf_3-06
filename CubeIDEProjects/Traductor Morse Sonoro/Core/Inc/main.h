@@ -60,16 +60,26 @@ void Error_Handler(void);
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
 #define B1_EXTI_IRQn EXTI15_10_IRQn
+#define VELOCITY1_Pin GPIO_PIN_0
+#define VELOCITY1_GPIO_Port GPIOC
+#define VELOCITY2_Pin GPIO_PIN_1
+#define VELOCITY2_GPIO_Port GPIOC
 #define MIC_Pin GPIO_PIN_0
 #define MIC_GPIO_Port GPIOA
 #define UART2_TX2_Pin GPIO_PIN_2
 #define UART2_TX2_GPIO_Port GPIOA
 #define UART2_RX_Pin GPIO_PIN_3
 #define UART2_RX_GPIO_Port GPIOA
+#define LED_ERROR_Pin GPIO_PIN_6
+#define LED_ERROR_GPIO_Port GPIOA
+#define BUZZER_Pin GPIO_PIN_7
+#define BUZZER_GPIO_Port GPIOA
+#define VELOCITY3_Pin GPIO_PIN_0
+#define VELOCITY3_GPIO_Port GPIOB
 #define UART1_STATUS_Pin GPIO_PIN_10
 #define UART1_STATUS_GPIO_Port GPIOB
-#define BTN1_Pin GPIO_PIN_7
-#define BTN1_GPIO_Port GPIOC
+#define BTN_INPUT_Pin GPIO_PIN_7
+#define BTN_INPUT_GPIO_Port GPIOC
 #define UART1_TX_Pin GPIO_PIN_9
 #define UART1_TX_GPIO_Port GPIOA
 #define UART1_RX_Pin GPIO_PIN_10
@@ -80,10 +90,10 @@ void Error_Handler(void);
 #define TCK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
-#define LD2_Pin GPIO_PIN_4
-#define LD2_GPIO_Port GPIOB
-#define LD1_Pin GPIO_PIN_5
-#define LD1_GPIO_Port GPIOB
+#define LED_TRANSMIT_Pin GPIO_PIN_4
+#define LED_TRANSMIT_GPIO_Port GPIOB
+#define LED_RECEIVE_Pin GPIO_PIN_5
+#define LED_RECEIVE_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -54,6 +54,7 @@
 #include "board.h"
 #include "app.h"
 #include "task_hc05_attribute.h"
+#include "task_HC05_interface.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_HC05_CNT_INIT			0ul
@@ -106,6 +107,8 @@ void task_hc05_init(void *parameters)
 	/* Init & Print out: Task execution counter */
 	g_task_hc05_cnt = G_TASK_HC05_CNT_INIT;
 	LOGGER_INFO("   %s = %lu", GET_NAME(g_task_hc05_cnt), g_task_hc05_cnt);
+
+	init_queue_messages_task_HC05();
 
 	for (index = 0; HC05_DTA_QTY > index; index++)
 	{
@@ -184,6 +187,11 @@ void task_hc05_statechart(void)
 		p_task_hc05_cfg = &task_hc05_cfg_list[index];
 		p_task_hc05_dta = &task_hc05_dta_list[index];
 
+		if(any_tx_message_task_HC05()){
+			p_task_hc05_dta->tx_flag = 1;
+		}
+
+
 		if (p_task_hc05_cfg->connected == HAL_GPIO_ReadPin(p_task_hc05_cfg->pin_status_port, p_task_hc05_cfg->pin_status))
 		{
 			if(p_task_hc05_dta->rx_flag != 0 && p_task_hc05_dta->tx_flag != 0)
@@ -232,6 +240,8 @@ void task_hc05_statechart(void)
 			case ST_HC05_RECEIVING:
 				p_task_hc05_dta->rx_flag = 0;
 
+				//RX_BUFFER NOT EMPTY
+
 				p_task_hc05_dta->state = ST_HC05_CONNECTED;
 				if(p_task_hc05_dta->event == EV_HC05_TX_BUFFER)
 					p_task_hc05_dta->state = ST_HC05_SENDING;
@@ -240,6 +250,9 @@ void task_hc05_statechart(void)
 			break;
 
 			case ST_HC05_SENDING:
+
+				//TX BUFFER NOT EMPTY
+				p_task_hc05_dta->tx_buffer = get_tx_message_task_HC05();
 
 				HAL_UART_Transmit(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1, HC05_TIMEOUT);
 				p_task_hc05_dta->tx_flag = 0;
@@ -281,7 +294,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		}
 	}
 }
-
+/*
 void task_hc05_transmit( task_hc05_id_t id ,uint8_t data){
 	uint32_t index;
 	task_hc05_dta_t *p_task_hc05_dta;
@@ -296,5 +309,5 @@ void task_hc05_transmit( task_hc05_id_t id ,uint8_t data){
 			break;
 		}
 	}
-}
+}*/
 /********************** end of file ******************************************/

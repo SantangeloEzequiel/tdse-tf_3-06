@@ -1,0 +1,6 @@
+../app/src/memoria_morse.c:12:19:EEPROM_WaitForWrite	2
+../app/src/memoria_morse.c:24:19:EEPROM_WriteByte	2
+../app/src/memoria_morse.c:40:19:EEPROM_WriteBuffer	4
+../app/src/memoria_morse.c:66:9:EEPROM_ReadByte	1
+../app/src/memoria_morse.c:83:6:EEPROM_ReadSymbol	3
+../app/src/memoria_morse.c:97:6:EEPROM_NextSymbol	1

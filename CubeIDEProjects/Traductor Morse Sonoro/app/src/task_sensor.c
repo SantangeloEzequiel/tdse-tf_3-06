@@ -58,13 +58,22 @@
 
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
-	{ID_BTN_INPUT,  BTN1_PORT,  BTN1_PIN,  BTN1_PRESSED, DEL_BTN_XX_MAX,
+	{ID_BTN_INPUT,  BTN_INPUT_PORT,  BTN_INPUT_PIN,  BTN_INPUT_PRESSED, DEL_BTN_XX_MAX,
+			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
+	{ID_VELOCITY3,  VELOCITY1_PORT,  VELOCITY1_PIN,  VELOCITY1_PRESSED, DEL_BTN_XX_MAX,
+			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
+	{ID_VELOCITY2,  VELOCITY2_PORT,  VELOCITY2_PIN,  VELOCITY2_PRESSED, DEL_BTN_XX_MAX,
+			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
+	{ID_VELOCITY3,  VELOCITY3_PORT,  VELOCITY3_PIN,  VELOCITY3_PRESSED, DEL_BTN_XX_MAX,
 			EV_BTN_XX_UP,  EV_BTN_XX_DOWN}
 };
 
 #define SENSOR_CFG_QTY	(sizeof(task_sensor_cfg_list)/sizeof(task_sensor_cfg_t))
 
 task_sensor_dta_t task_sensor_dta_list[] = {
+	{DEL_BTN_XX_MIN, ST_BTN_XX_UP, EV_BTN_XX_UP},
+	{DEL_BTN_XX_MIN, ST_BTN_XX_UP, EV_BTN_XX_UP},
+	{DEL_BTN_XX_MIN, ST_BTN_XX_UP, EV_BTN_XX_UP},
 	{DEL_BTN_XX_MIN, ST_BTN_XX_UP, EV_BTN_XX_UP}
 };
 
@@ -196,7 +205,8 @@ void task_sensor_statechart(void)
 				{
 					if (EV_BTN_XX_DOWN == p_task_sensor_dta->event)
 					{
-						HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, LD1_ON);
+						//SIGNAL FELL
+
 						p_task_sensor_dta->state = ST_BTN_XX_DOWN;
 					}
 					else
@@ -224,7 +234,8 @@ void task_sensor_statechart(void)
 				{
 					if (EV_BTN_XX_UP == p_task_sensor_dta->event)
 					{
-						HAL_GPIO_WritePin(LD1_PORT, LD1_PIN, LD1_OFF);
+						//SIGNAL ROSE
+
 						p_task_sensor_dta->state = ST_BTN_XX_UP;
 					}
 					else

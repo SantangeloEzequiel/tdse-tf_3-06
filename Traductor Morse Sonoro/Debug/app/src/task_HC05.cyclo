@@ -1,0 +1,4 @@
+../app/src/task_HC05.c:96:6:task_hc05_init	2
+../app/src/task_HC05.c:141:6:task_hc05_update	4
+../app/src/task_HC05.c:180:6:task_hc05_statechart	22
+../app/src/task_HC05.c:289:6:HAL_UART_RxCpltCallback	3

@@ -1,0 +1,8 @@
+../app/src/task_system_interface.c:82:6:init_queue_event_task_system	2
+../app/src/task_system_interface.c:94:6:init_queue_rx_task_system	2
+../app/src/task_system_interface.c:106:6:put_event_task_system	2
+../app/src/task_system_interface.c:116:6:put_message_rx_system	2
+../app/src/task_system_interface.c:125:18:get_event_task_system	2
+../app/src/task_system_interface.c:139:6:get_message_task_system	2
+../app/src/task_system_interface.c:153:6:any_event_task_system	1
+../app/src/task_system_interface.c:158:6:any_message_task_system	1

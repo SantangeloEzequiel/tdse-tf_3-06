@@ -29,7 +29,8 @@ typedef struct {
 } morse_entry_t;
 
 extern const morse_entry_t morse_table[36];
-extern const morse_entry_t error;
+extern const morse_entry_t morse_error;
+extern const morse_entry_t morse_space;
 extern const morse_entry_t starting_symbol;
 
 HAL_StatusTypeDef EEPROM_WriteBuffer(uint8_t memAddr, uint8_t *data, uint8_t len);
@@ -39,5 +40,7 @@ HAL_StatusTypeDef EEPROM_WriteByte(uint8_t memAddr, uint8_t data);
 uint8_t EEPROM_ReadByte(uint16_t memAddr);
 
 void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal);
+
+void EEPROM_SymbolToMorse(morse_entry_t* currentSymbol , char symbol);
 
 #endif /* INC_MORSE_H_ */

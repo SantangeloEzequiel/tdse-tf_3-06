@@ -1,40 +1,3 @@
-/*
- * Copyright (c) 2023 Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @file   : task_sensor.c
- * @date   : Set 26, 2023
- * @author : Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>
- * @version	v1.0.0
- */
-
 /********************** inclusions *******************************************/
 /* Project includes */
 #include "main.h"
@@ -47,6 +10,7 @@
 #include "board.h"
 #include "app.h"
 #include "task_sensor_attribute.h"
+#include "task_system_interface.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_SEN_CNT_INIT			0ul
@@ -59,13 +23,13 @@
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
 	{ID_BTN_INPUT,  BTN_INPUT_PORT,  BTN_INPUT_PIN,  BTN_INPUT_PRESSED, DEL_BTN_XX_MAX,
-			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
-	{ID_VELOCITY3,  VELOCITY1_PORT,  VELOCITY1_PIN,  VELOCITY1_PRESSED, DEL_BTN_XX_MAX,
-			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
+			EV_SYS_BTN_INPUT_ON,  EV_SYS_BTN_INPUT_OFF},
+	{ID_VELOCITY1,  VELOCITY1_PORT,  VELOCITY1_PIN,  VELOCITY1_PRESSED, DEL_BTN_XX_MAX,
+			EV_SYS_VELOCITY1_ON,  EV_SYS_VELOCITY1_OFF},
 	{ID_VELOCITY2,  VELOCITY2_PORT,  VELOCITY2_PIN,  VELOCITY2_PRESSED, DEL_BTN_XX_MAX,
-			EV_BTN_XX_UP,  EV_BTN_XX_DOWN},
+			EV_SYS_VELOCITY2_ON,  EV_SYS_VELOCITY2_OFF},
 	{ID_VELOCITY3,  VELOCITY3_PORT,  VELOCITY3_PIN,  VELOCITY3_PRESSED, DEL_BTN_XX_MAX,
-			EV_BTN_XX_UP,  EV_BTN_XX_DOWN}
+			EV_SYS_VELOCITY3_ON,  EV_SYS_VELOCITY3_OFF}
 };
 
 #define SENSOR_CFG_QTY	(sizeof(task_sensor_cfg_list)/sizeof(task_sensor_cfg_t))
@@ -205,7 +169,7 @@ void task_sensor_statechart(void)
 				{
 					if (EV_BTN_XX_DOWN == p_task_sensor_dta->event)
 					{
-						//SIGNAL FELL
+						put_event_task_system(p_task_sensor_cfg->signal_down);
 
 						p_task_sensor_dta->state = ST_BTN_XX_DOWN;
 					}
@@ -234,7 +198,7 @@ void task_sensor_statechart(void)
 				{
 					if (EV_BTN_XX_UP == p_task_sensor_dta->event)
 					{
-						//SIGNAL ROSE
+						put_event_task_system(p_task_sensor_cfg->signal_up);
 
 						p_task_sensor_dta->state = ST_BTN_XX_UP;
 					}

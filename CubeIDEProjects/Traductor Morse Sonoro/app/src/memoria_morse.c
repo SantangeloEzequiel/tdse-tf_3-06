@@ -4,8 +4,9 @@
 // 0 = punto , 1 = raya
 //ordenado como arbol binario. punto = 2*x , raya = 2*x + 1
 
-const morse_entry_t error = {0 , 0 , {SILENCE} , '?'};
+const morse_entry_t morse_error = {0 , 0 , {SILENCE} , '?'};
 const morse_entry_t starting_symbol = {1 , 0 , {SILENCE} , '#'};
+const morse_entry_t morse_space = {0 , 1 , {SILENCE,SILENCE,SILENCE} , ' '};
 
 
 //--------------------------------------------------WRITE OPERATIONS
@@ -83,7 +84,7 @@ uint8_t EEPROM_ReadByte(uint16_t memAddr)
 void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
 	Symbol->index = index;
 	uint8_t sequence = EEPROM_ReadByte(index);
-	Symbol->len = (sequence & 0b11100000) >> 4;
+	Symbol->len = (sequence & 0b11100000) >> 5;
 
 	for(uint8_t i = 0 ; i < Symbol->len ; i++){
 		if(sequence & (1 << i))
@@ -108,6 +109,25 @@ void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal){
 
 		default:
 		break;
+	}
+}
+
+void EEPROM_SymbolToMorse( morse_entry_t* currentSymbol , char symbol){
+if(symbol != ' '){
+		uint8_t symbol_index;
+		if(symbol >= '0' && symbol <= '9' ){
+			symbol_index = symbol - '0' + ('Z' - 'A') + 1; //Maps 48-57 to 27-36
+			EEPROM_ReadSymbol(currentSymbol , symbol_index*2 + MORSE_TOTAL_SPACE_BYTES + 1);
+		}
+		else if(symbol >= 'A' && symbol <= 'Z' ){
+			symbol_index = symbol - 'A'; //Maps 65-90 to 0-25
+			EEPROM_ReadSymbol(currentSymbol , symbol_index*2 + MORSE_TOTAL_SPACE_BYTES + 1);
+		}
+		else{
+			*currentSymbol = morse_error;
+		}
+	} else {
+		*currentSymbol = morse_space;
 	}
 }
 

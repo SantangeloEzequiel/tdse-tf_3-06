@@ -1,48 +1,3 @@
-/*
- * Copyright (c) 2023 Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
- * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
- * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *
- * @file   : task_HC05.c
- * @date   : Set 26, 2023
- * @author : Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>
- * @version	v1.0.0
- */
-
-/*	This task handles bidirectional serial communication between two devices.
- * 	Longer buffers are to be implemented, as the current implementation handles
- * 	byte per byte, with no buffering support (inferring that this scenario is
- * 	the result of mismatching transfer rates).
- * 	Transfer frequency is that of Systick.
- */
-
-/********************** inclusions *******************************************/
 /* Project includes */
 #include "main.h"
 
@@ -55,6 +10,7 @@
 #include "app.h"
 #include "task_hc05_attribute.h"
 #include "task_HC05_interface.h"
+#include "task_system_interface.h"
 
 /********************** macros and definitions *******************************/
 #define G_TASK_HC05_CNT_INIT			0ul
@@ -68,7 +24,8 @@
 /********************** internal data declaration ****************************/
 const task_hc05_cfg_t task_hc05_cfg_list[] = {
 		{ID_HC05 , &huart1 , UART_RX_PORT , UART_RX_PIN , UART_TX_PORT , UART_TX_PIN
-		, UART_STATUS_PORT , UART_STATUS_PIN , GPIO_PIN_SET , DEL_HC05_MAX}
+		, UART_STATUS_PORT , UART_STATUS_PIN , GPIO_PIN_SET , DEL_HC05_MAX , EV_SYS_CONNECTION_ESTABLISHED
+		, EV_SYS_CONNECTION_LOST }
 };
 
 #define HC05_CFG_QTY	(sizeof(task_hc05_cfg_list)/sizeof(task_hc05_cfg_t))
@@ -212,12 +169,11 @@ void task_hc05_statechart(void)
 		switch (p_task_hc05_dta->state)
 		{
 			case ST_HC05_DISCONNECTED:
-				if(p_task_hc05_dta->event == EV_HC05_CONNECTED)
+
+				if(p_task_hc05_dta->event == EV_HC05_CONNECTED){
+					put_event_task_system(p_task_hc05_cfg->connection_established);
 					p_task_hc05_dta->state = ST_HC05_CONNECTED;
-				else if (p_task_hc05_dta->event == EV_HC05_RX_BUFFER)
-					p_task_hc05_dta->state = ST_HC05_RECEIVING;
-				else if (p_task_hc05_dta->event == EV_HC05_TX_BUFFER)
-					p_task_hc05_dta->state = ST_HC05_SENDING;
+				}
 			break;
 
 			case ST_HC05_CONNECTED:
@@ -233,20 +189,25 @@ void task_hc05_statechart(void)
 				else if (p_task_hc05_dta->event == EV_HC05_TX_BUFFER)
 					p_task_hc05_dta->state = ST_HC05_SENDING;
 
-				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED)
+				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED){
 					p_task_hc05_dta->state = ST_HC05_DISCONNECTED;
+					put_event_task_system(p_task_hc05_cfg->connection_lost);
+				}
 			break;
 
 			case ST_HC05_RECEIVING:
 				p_task_hc05_dta->rx_flag = 0;
 
 				//RX_BUFFER NOT EMPTY
+				put_message_rx_system(p_task_hc05_dta->rx_buffer);
 
 				p_task_hc05_dta->state = ST_HC05_CONNECTED;
 				if(p_task_hc05_dta->event == EV_HC05_TX_BUFFER)
 					p_task_hc05_dta->state = ST_HC05_SENDING;
-				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED)
+				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED){
 					p_task_hc05_dta->state = ST_HC05_DISCONNECTED;
+					put_event_task_system(p_task_hc05_cfg->connection_lost);
+				}
 			break;
 
 			case ST_HC05_SENDING:
@@ -260,8 +221,10 @@ void task_hc05_statechart(void)
 				p_task_hc05_dta->state = ST_HC05_CONNECTED;
 				if(p_task_hc05_dta->event == EV_HC05_RX_BUFFER)
 					p_task_hc05_dta->state = ST_HC05_RECEIVING;
-				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED)
+				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED){
 					p_task_hc05_dta->state = ST_HC05_DISCONNECTED;
+					put_event_task_system(p_task_hc05_cfg->connection_lost);
+				}
 			break;
 
 			case ST_HC05_ERROR:

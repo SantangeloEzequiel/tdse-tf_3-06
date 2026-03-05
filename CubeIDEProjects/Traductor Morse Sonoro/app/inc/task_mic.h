@@ -1,5 +1,5 @@
-#ifndef TASK_INC_TASK_MIC_H_
-#define TASK_INC_TASK_MIC_H_
+#ifndef INC_TASK_MIC_H_
+#define INC_TASK_MIC_H_
 
 /********************** CPP guard ********************************************/
 #ifdef __cplusplus

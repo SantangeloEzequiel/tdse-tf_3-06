@@ -99,11 +99,11 @@ void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal){
 
 	switch(signal){
 
-		DOT:
+	case DOT:
 		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 );
 		break;
 
-		LINE:
+	case LINE:
 		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 + 1 );
 		break;
 

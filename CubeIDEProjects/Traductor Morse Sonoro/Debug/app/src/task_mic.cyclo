@@ -1,6 +1,6 @@
-../app/src/task_mic.c:72:6:task_mic_init	1
-../app/src/task_mic.c:164:6:task_mic_statechart	16
-../app/src/task_mic.c:126:6:task_mic_update	3
-../app/src/task_mic.c:229:6:HAL_ADC_ConvCpltCallback	2
-../app/src/task_mic.c:250:10:goertzel_energy	3
-../app/src/task_mic.c:271:10:batch_energy	4
+../app/src/task_mic.c:73:6:task_mic_init	1
+../app/src/task_mic.c:165:6:task_mic_statechart	16
+../app/src/task_mic.c:127:6:task_mic_update	3
+../app/src/task_mic.c:230:6:HAL_ADC_ConvCpltCallback	2
+../app/src/task_mic.c:251:10:goertzel_energy	3
+../app/src/task_mic.c:272:10:batch_energy	4

@@ -1,5 +1,5 @@
-#ifndef TASK_INC_TASK_SYSTEM_ATTRIBUTE_H_
-#define TASK_INC_TASK_SYSTEM_ATTRIBUTE_H_
+#ifndef INC_TASK_SYSTEM_ATTRIBUTE_H_
+#define INC_TASK_SYSTEM_ATTRIBUTE_H_
 
 /********************** CPP guard ********************************************/
 #ifdef __cplusplus
@@ -46,7 +46,7 @@ typedef struct
 	uint32_t			WPM_tick;
 	bool 				WPM_flag;
 	bool				flag;
-	bool 				input_signal;
+	bool				input_signal;
 	bool 				input_mic;
 	bool 				input_btn;
 } task_system_dta_t;

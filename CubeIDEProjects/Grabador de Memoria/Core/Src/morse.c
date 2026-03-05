@@ -63,6 +63,49 @@ const morse_entry_t morse_table[36] = {
     { 63, (5<<5)|0b11111, '0' }  // -----
 };
 
+const morse_entry_t morse_table_alphabet[36] = {
+
+	    { 0, (2<<5)|0b00010, 'A' },
+	    { 1, (4<<5)|0b00001, 'B' },
+	    { 2, (4<<5)|0b00101, 'C' },
+	    { 3, (3<<5)|0b00001, 'D' },
+	    { 4, (1<<5)|0b00000, 'E' },
+	    { 5, (4<<5)|0b00100, 'F' },
+	    { 6, (3<<5)|0b00011, 'G' },
+	    { 7, (4<<5)|0b00000, 'H' },
+	    { 8, (2<<5)|0b00000, 'I' },
+	    { 9, (4<<5)|0b01110, 'J' },
+
+	    { 10, (3<<5)|0b00101, 'K' },
+	    { 11, (3<<5)|0b00010, 'L' },
+	    { 12, (2<<5)|0b00011, 'M' },  // ROOT
+	    { 13, (2<<5)|0b00001, 'N' },
+	    { 14, (3<<5)|0b00111, 'O' },
+	    { 15, (4<<5)|0b00110, 'P' },
+	    { 16, (4<<5)|0b01011, 'Q' },
+	    { 17, (3<<5)|0b00010, 'R' },
+	    { 18, (3<<5)|0b00000, 'S' },
+	    { 19, (1<<5)|0b00001, 'T' },
+
+	    { 20, (3<<5)|0b00100, 'U' },
+	    { 21, (4<<5)|0b01000, 'V' },
+	    { 22, (3<<5)|0b00110, 'W' },
+	    { 23, (4<<5)|0b01001, 'X' },
+	    { 24, (4<<5)|0b01101, 'Y' },
+	    { 25, (4<<5)|0b00011, 'Z' },
+
+	    { 26, (5<<5)|0b11111, '0' },
+	    { 27, (5<<5)|0b01111, '1' },
+	    { 28, (5<<5)|0b00111, '2' },
+	    { 29, (5<<5)|0b00011, '3' },
+	    { 30, (5<<5)|0b00001, '4' },
+	    { 31, (5<<5)|0b00000, '5' },
+	    { 32, (5<<5)|0b00001, '6' },
+	    { 33, (5<<5)|0b00011, '7' },
+	    { 34, (5<<5)|0b00111, '8' },
+	    { 35, (5<<5)|0b01111, '9' },
+};
+
 HAL_StatusTypeDef EEPROM_WaitForWrite(void)
 {
     while (HAL_I2C_IsDeviceReady(&hi2c1,
@@ -95,17 +138,25 @@ uint8_t EEPROM_ReadByte(uint16_t memAddr)
 {
     uint8_t data = 0xFF;
 
-    HAL_I2C_Mem_Read(
-        &hi2c1,               // I2C handle
-        EEPROM_I2C_ADDR,      // Dirección I2C de la EEPROM
-        memAddr,              // Dirección interna
-        I2C_MEMADD_SIZE_8BIT, // 24C02 usa 8 bits
-        &data,                // Buffer destino
-        1,                    // Cantidad de bytes
-        HAL_MAX_DELAY         // Timeout
-    );
+    HAL_StatusTypeDef status =
+        HAL_I2C_Mem_Read(&hi2c1,
+                         EEPROM_I2C_ADDR,
+                         memAddr,
+                         I2C_MEMADD_SIZE_8BIT,
+                         &data,
+                         1,
+                         100);
 
-    return data;
+    if(status == HAL_OK)
+        return data;
+
+    if(status == HAL_TIMEOUT)
+        return 0xEE;
+
+    if(status == HAL_ERROR)
+        return 0xDD;
+
+    return 0xCC;
 }
 
 HAL_StatusTypeDef EEPROM_WriteBuffer(uint8_t memAddr,

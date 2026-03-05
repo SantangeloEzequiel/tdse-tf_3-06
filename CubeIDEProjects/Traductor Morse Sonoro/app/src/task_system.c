@@ -175,35 +175,48 @@ void task_system_statechart(void)
 		case ST_SYS_RECEIVING:
 
 			//RECEIVING SEQUENCE
-			if(any_message_task_system()){
-				message = get_message_task_system();
-			}
+		    if(any_message_task_system()){
+		        message = get_message_task_system();
+		    }
 
-			//Led Control
-			if(p_task_system_dta->event == EV_SYS_MIC_INPUT_ON){
-				put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_LED_ERROR);
-				p_task_system_dta->input_mic = HIGH_SIGNAL;
-			}else if (p_task_system_dta->event == EV_SYS_MIC_INPUT_OFF){
-				put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_ERROR);
-				p_task_system_dta->input_mic = LOW_SIGNAL;
-			}
+		    // MIC events
+		    if(p_task_system_dta->event == EV_SYS_MIC_INPUT_ON){
+		        put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_LED_ERROR);
+		        p_task_system_dta->input_mic = HIGH_SIGNAL;
 
-			//Buzzer Control
-			if(p_task_system_dta->event == EV_SYS_BTN_INPUT_OFF){
-				put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_BUZZER);
-				p_task_system_dta->input_btn = HIGH_SIGNAL;
-			}else if (p_task_system_dta->event == EV_SYS_BTN_INPUT_ON){
-				put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_BUZZER);
-				p_task_system_dta->input_btn = LOW_SIGNAL;
-			}
+		    }else if(p_task_system_dta->event == EV_SYS_MIC_INPUT_OFF){
+		        put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_ERROR);
+		        p_task_system_dta->input_mic = LOW_SIGNAL;
+		    }
 
-			//Signal Control
-			if(p_task_system_dta->input_btn == HIGH_SIGNAL && p_task_system_dta->input_mic == HIGH_SIGNAL)
-				p_task_system_dta->input_signal = HIGH_SIGNAL;
-			else
-				p_task_system_dta->input_signal = LOW_SIGNAL;
+		    // BTN events
+		    if(p_task_system_dta->event == EV_SYS_BTN_INPUT_OFF){
+		        put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_BUZZER);
+		        p_task_system_dta->input_btn = HIGH_SIGNAL;
 
+		    }else if(p_task_system_dta->event == EV_SYS_BTN_INPUT_ON){
+		        put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_BUZZER);
+		        p_task_system_dta->input_btn = LOW_SIGNAL;
+		    }
+
+		    // Compute logical state
+		    uint8_t new_state =
+		        (p_task_system_dta->input_mic == HIGH_SIGNAL ||
+		         p_task_system_dta->input_btn == HIGH_SIGNAL)
+		        ? HIGH_SIGNAL
+		        : LOW_SIGNAL;
+
+		    // Transmit only if state changed
+		    if(new_state != p_task_system_dta->input_signal){
+		    	p_task_system_dta->input_signal = new_state;
+
+		        if(new_state == HIGH_SIGNAL)
+		            put_tx_message_task_HC05(HIGH_SIGNAL_SYMBOL);
+		        else
+		            put_tx_message_task_HC05(LOW_SIGNAL_SYMBOL);
+		    }
 			//HC_05 TX
+			/*	REMOVED (PERIODIC REFRESH)
 			p_task_system_dta->tick++;
 			if(p_task_system_dta->tick >= MAIN_SIGNAL_PERIOD){
 				p_task_system_dta->tick = DEL_SYS_MIN;
@@ -213,6 +226,7 @@ void task_system_statechart(void)
 				else
 					put_tx_message_task_HC05(LOW_SIGNAL_SYMBOL);
 			}
+			*/
 
 
 			if(message == TRANSMIT_CODE){

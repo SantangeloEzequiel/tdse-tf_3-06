@@ -1,4 +1,4 @@
 ../app/src/task_system.c:70:6:task_system_init	1
-../app/src/task_system.c:353:6:velocity_management	4
-../app/src/task_system.c:147:6:task_system_statechart	42
+../app/src/task_system.c:367:6:velocity_management	4
+../app/src/task_system.c:147:6:task_system_statechart	43
 ../app/src/task_system.c:109:6:task_system_update	3

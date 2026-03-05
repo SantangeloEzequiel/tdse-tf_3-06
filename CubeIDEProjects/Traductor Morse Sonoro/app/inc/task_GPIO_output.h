@@ -1,5 +1,5 @@
-#ifndef TASK_INC_TASK_GPIO_OUTPUT_H_
-#define TASK_INC_TASK_GPIO_OUTPUT_H_
+#ifndef INC_TASK_GPIO_OUTPUT_H_
+#define INC_TASK_GPIO_OUTPUT_H_
 
 /********************** CPP guard ********************************************/
 #ifdef __cplusplus

@@ -11,6 +11,7 @@
 #include "board.h"
 #include "app.h"
 #include "task_mic_attribute.h"
+#include "task_system_interface.h"
 
 #include "dwt.h"
 

@@ -8,7 +8,7 @@
 /* Application & Tasks includes */
 #include "board.h"
 #include "app.h"
-#include "task_hc05_attribute.h"
+#include "task_HC05_attribute.h"
 #include "task_HC05_interface.h"
 #include "task_system_interface.h"
 

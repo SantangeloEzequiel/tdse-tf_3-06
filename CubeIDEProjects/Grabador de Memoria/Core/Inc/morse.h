@@ -24,6 +24,7 @@ typedef struct {
 } morse_entry_t;
 
 extern const morse_entry_t morse_table[36];
+extern const morse_entry_t morse_table_alphabet[36];
 extern const morse_entry_t error;
 
 HAL_StatusTypeDef EEPROM_WriteBuffer(uint8_t memAddr, uint8_t *data, uint8_t len);

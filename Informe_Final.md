@@ -6,7 +6,7 @@
 
 **Fecha: 8/3/26**
 
-**Cuatrimestre de cursada: 2do 2026**
+**Cuatrimestre de cursada: 2do 2025**
 
 <div align="justify">
 

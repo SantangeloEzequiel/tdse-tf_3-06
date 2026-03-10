@@ -1,3 +1,4 @@
+<div align="center">
 <img width="365" height="138" alt="Uba_fiuba_ingenieria_logo" src="https://github.com/user-attachments/assets/412e1968-b281-4fce-98f3-e37283acfc46" />
 
 # **Traductor Morse Sonoro: Asistencia de aprendizaje** 
@@ -37,19 +38,25 @@ El presente documento detalla las características técnicas del producto, model
         - [2.3.8 HC-05](#238-hc-05)
         - [2.3.9 Placa de desarrollo](#239-placa-de-desarrollo)
 3. [Diseño e implementación](#diseño-e-implementación)
-    - [3.1 Esquema eléctrico y conexión de placas](#31-esquema-eléctrico-y-conexión-de-placas)
-    - [3.2 Descripción del esquema eléctrico](#32-descripción-del-esquema-eléctrico)
-    - [3.3 Descripción del comportamiento](#33-descripción-del-comportamiento)
-    - [3.4 Firmware del Simon Says](#34-firmware-del-simon-says)
-        - [3.4.1 Task actuator](#341-task-actuator)
-        - [3.4.2 Task sensor](#342-task-sensor)
-        - [3.4.3 Task ADC](#343-task-adc)
-        - [3.4.4 Task PWM](#344-task-pwm)
-        - [3.4.5 Task gameplay](#345-task-gameplay)
-        - [3.4.6 Task storage](#346-task-storage)
-        - [3.4.7 Task I2C](#347-task-i2c)
-        - [3.4.8 Task display](#348-task-display)
-        - [3.4.9 Task menu](#349-task-menu)
+    - [3.1 Esquema general](#31-esquema-general)
+    - [3.2 Esquemático Eléctrico](#32-esquemático-eléctrico)
+        - [3.2.1 Preamplificador](#321-preamplificador)
+        - [3.2.2 Memoria E2PROM](#322-memoria-e2prom)
+        - [3.2.3 Buzzer](#323-buzzer)
+        - [3.2.4 GPIO](#324-gpio)
+    - [3.3 PCB](#33-pcb)
+    - [3.4 Descripción de comportamiento](#32-descripción-de-comportamiento)
+    - [3.5 Firmware](#34-firmware)
+        - [3.5.1 Task actuator](#341-task-actuator)
+        - [3.5.2 Task sensor](#342-task-sensor)
+        - [3.5.3 Task ADC](#343-task-adc)
+        - [3.5.4 Task PWM](#344-task-pwm)
+        - [3.5.5 Task gameplay](#345-task-gameplay)
+        - [3.5.6 Task storage](#346-task-storage)
+        - [3.5.7 Task I2C](#347-task-i2c)
+        - [3.5.8 Task display](#348-task-display)
+        - [3.5.9 Task menu](#349-task-menu)
+    - [3.6 Aplicación Móvil](#34-aplicación-móvil)
 4. [Ensayos y resultados](#ensayos-y-resultados)
     - [4.1 Medición y análisis de consumo](#41-medición-y-análisis-de-consumo)
     - [4.2 Medición y análisis de tiempos de ejecución (WCET)](#42-medición-y-análisis-de-tiempos-de-ejecución-wcet)
@@ -323,3 +330,92 @@ En las tablas se presentan 2 casos de uso para el sistema.
 </table>
 
 # Diseño e implementación
+En esta sección se detalla la implementación técnica y específica de los requisitos, comenzando por el hardware utilizado, y ascendiendo hacia el firmware y software.
+
+## 3.1 Esquema general
+
+<img width="2199" height="1080" alt="Diagrama_Bloques" src="https://github.com/user-attachments/assets/ee59740b-8430-4fa7-9ded-29057365209c" />
+<p align="center"><em>Imagen 3.1.1: Diagrama en bloques del proyecto.</em></p>
+
+### 3.2 Esquemático eléctrico
+
+A continuación se expone el esquemático eléctrico completo del PCB tipo "Shield" diseñado, y se recorren las diferentes secciones:
+<img width="1274" height="827" alt="Esquematico" src="https://github.com/user-attachments/assets/ebe2cb42-8f9c-438b-92c5-7c855c14b5b6" />
+<p align="center"><em>Imagen 3.2.1: Esquemático eléctrico completo.</em></p>
+
+### 3.2.1 Preamplificador
+<img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/user-attachments/assets/41ffcb3a-a8f0-4520-9f80-232bb7240f29" />
+<p align="center"><em>Imagen 3.2.1.1: Esquemático eléctrico del bloque preamplificador.</em></p>
+
+El bloque preamplificador se divide a su vez en tres partes: El bloque micrófono, y ambos bloques en configuración amplificador inversor con referencia no nula.
+
+El bloque micrófono no es más que la aplicación del circuito sugerido en la datasheet. Alimenta el micrófono electret y filtra la señal contínua con un capacitor de acople.
+
+La señal de entrada, no obstante, se encuentra centrada en 0V y tiene valores pico imperceptibles al microcontrolador de unos 10mV, aproximadamente. Mediante la implementación de los bloques amplificadores se busca obtener una señal centrada en 1,6V, con valores pico cercanos a 1,6V. De este modo, la señal podrá tener máxima excursión simétrica y ser detectada correctamente por la entrada analógica del microcontrolador.
+
+Es bien conocida la amplificación de tensión de este tipo de configuraciones: 
+
+$$A_v = -\left( \frac{R_2}{R_1} \right)$$
+
+En este caso, y aplicando ambas en cascada, se esperará una ganancia de 10000.
+
+(CONTINUAR)
+
+### 3.2.2 Memoria E2PROM
+<img width="1246" height="483" alt="Esquematico_Memoria" src="https://github.com/user-attachments/assets/8660efd0-37db-4917-a437-718df6f2dfad" />
+<p align="center"><em>Imagen 3.2.1.1: Esquemático eléctrico del bloque memoria.</em></p>
+
+El conexionado de la memoria 24C02 (256B) es muy sencillo. Los terminales E0 , E1 y E2 asignan los últimos 3 dígitos de la dirección del integrado, para la comunicación I2C. Para la aplicación solo necesitamos uno, por lo que sus valores son arbitrarios siempre y cuando el firmware sepa la dirección resultante, en este caso 0x50.
+
+Al tener una resistencia de pull-down interna, la protección contra escritura no se conecta, pues no la utilizaremos.
+
+Finalmente, se analiza el t-rise obtenido con un osciloscopio para determinar la mayor resistencia admisible en la red I2C. En este caso 4K7.
+<div align="center">
+<img width="500" alt="CBus" src="https://github.com/user-attachments/assets/85878fe3-d6a7-4abc-b0b0-e73a91667231" />
+<p align="center"><em>Imagen 3.2.1.2: Relación máx RL en función de la capacidad de la red CBUS.</em></p>
+<div align="justify">
+
+### 3.2.3 Buzzer
+<div align="center">
+<img width="350"  alt="Buzzer" src="https://github.com/user-attachments/assets/d4eb34ca-570f-4399-aecf-980437322201" />
+<p align="center"><em>Imagen 3.2.3.1: Esquemático eléctrico del bloque memoria.</em></p>
+<div align="justify">
+    
+El conexionado del buzzer requiere de la aplicación de un amplificador de corriente, pues, a parte de requerir una alimentación de 5V, también tiene una corriente de operación muy superior a la que puede entregar el microcontrolador por un solo pin GPIO.
+
+Para solucionar el problema, se utiliza un simple transistor NPN en modo corte o saturación. La corriente esperada por el pin GPIO será de $$I_b = 2,6mA$$, mientras que la corriente máxima del Buzzer será de $$Ic = h_{fe} I_b \approx 156mA$$ para un $$h_{fe}$$ mínimo de 60.
+
+### 3.2.4 GPIO
+<div align="center">
+<img width="1300" height="563" alt="gpio" src="https://github.com/user-attachments/assets/06898bf1-d845-4b37-a60c-11d67db9bb4c" />
+<img width="303" height="324" alt="gpio2" src="https://github.com/user-attachments/assets/65cf87ac-d8e9-475f-b11b-0e49c88fe2c6" />
+<p align="center"><em>Imagen 3.2.4.1: Esquemáticos de GPIOs.</em></p>
+<div align="justify">
+
+Se utilizan en este proyecto 9 puertos de uso general (GPIO), 5 entradas y 4 salidas. Aunque su aplicación es muy sencilla, se describe cada uno:
+
+Inputs:
+* <strong>Botón Input</strong>: Se utiliza el formato RPU, es decir, normalmente alto.
+* <strong>DIP Switch de velocidad</strong>: Se escojen pines con RPD interna disponible, de este modo se elimina este componente de la placa, y el conexionado es directo.
+* <strong>Status de HC-05</strong>: El HC-05 cuenta con una salida 0V/3,3V compatible para conexión directa con el microcontrolador, que indica si el dispositivo pudo o no establecer una conexión.
+
+Outputs:
+* <strong>LEDs indicadores</strong>: Se utiliza una salida de forma directa para alimentar los LEDs indicadores, con una resistencia de 1K. Esto produce corrientes $$I \approx 1,5mA$$, dependiendo del color.
+* <strong>Disparador de Buzzer</strong>: Conectado directamente a la base del transistor de control del Buzzer.
+
+## 3.3 PCB
+
+Una vez diseñados y probados los diferentes bloques circuitales, se los implementó conjuntamente en un PCB que utiliza los pines Morpho de la placa NUCLEO-F103RB para montarse en formato shield.
+
+<div align="center">
+<img width="300" alt="placa1" src="https://github.com/user-attachments/assets/d9c0316a-09ce-4f30-a791-8306b42e8534" />
+<br>
+<img width="300" alt="placa2" src="https://github.com/user-attachments/assets/946c729e-bebc-4739-a669-2ddb47e51256" />
+<img width="300" alt="placa3" src="https://github.com/user-attachments/assets/a157a106-970d-4ec2-8c31-e0ecb7047428" />
+
+<p align="center"><em>Imagen 3.3.1: Versión final del PCB.</em></p>
+<div align="justify">
+
+## 3.4 Descripción de comportamiento
+
+

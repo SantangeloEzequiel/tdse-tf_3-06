@@ -44,19 +44,21 @@ El presente documento detalla las características técnicas del producto, model
         - [3.2.2 Memoria E2PROM](#322-memoria-e2prom)
         - [3.2.3 Buzzer](#323-buzzer)
         - [3.2.4 GPIO](#324-gpio)
+    - [3.2 Esquemático Eléctrico](#32-esquemático-eléctrico)
     - [3.3 PCB](#33-pcb)
-    - [3.4 Descripción de comportamiento](#32-descripción-de-comportamiento)
-    - [3.5 Firmware](#34-firmware)
-        - [3.5.1 Task actuator](#341-task-actuator)
-        - [3.5.2 Task sensor](#342-task-sensor)
-        - [3.5.3 Task ADC](#343-task-adc)
-        - [3.5.4 Task PWM](#344-task-pwm)
-        - [3.5.5 Task gameplay](#345-task-gameplay)
-        - [3.5.6 Task storage](#346-task-storage)
-        - [3.5.7 Task I2C](#347-task-i2c)
-        - [3.5.8 Task display](#348-task-display)
-        - [3.5.9 Task menu](#349-task-menu)
-    - [3.6 Aplicación Móvil](#34-aplicación-móvil)
+    - [3.4 Descripción de comportamiento](#34-descripción-de-comportamiento)
+        - [3.4.1 Modo de Espera](#341-modo-de-espera)
+        - [3.4.2 Modo de Recepción](#342-modo-de-recepción)
+        - [3.4.3 Modo de Transmisión](#343-modo-de-transmisión)
+    - [3.5 Firmware](#35-firmware)
+        - [3.5.1 Task system](#351-task-system)
+        - [3.5.2 Task sensor](#352-task-sensor)
+        - [3.5.3 Task GPIO Output](#353-gpio-output)
+        - [3.5.4 Task mic](#354-task-mic)
+        - [3.5.5 Task HC-05](#355-task-hc-05)
+        - [3.5.6 Memoria Morse](#356-memoria-morse)
+    - [3.6 Aplicación Móvil](#36-aplicación-móvil)
+    - [3.7 Pinout](#37-pinout)
 4. [Ensayos y resultados](#ensayos-y-resultados)
     - [4.1 Medición y análisis de consumo](#41-medición-y-análisis-de-consumo)
     - [4.2 Medición y análisis de tiempos de ejecución (WCET)](#42-medición-y-análisis-de-tiempos-de-ejecución-wcet)
@@ -404,7 +406,6 @@ Outputs:
 * <strong>Disparador de Buzzer</strong>: Conectado directamente a la base del transistor de control del Buzzer.
 
 ## 3.3 PCB
-
 Una vez diseñados y probados los diferentes bloques circuitales, se los implementó conjuntamente en un PCB que utiliza los pines Morpho de la placa NUCLEO-F103RB para montarse en formato shield.
 
 <div align="center">
@@ -413,9 +414,79 @@ Una vez diseñados y probados los diferentes bloques circuitales, se los impleme
 <img width="300" alt="placa2" src="https://github.com/user-attachments/assets/946c729e-bebc-4739-a669-2ddb47e51256" />
 <img width="300" alt="placa3" src="https://github.com/user-attachments/assets/a157a106-970d-4ec2-8c31-e0ecb7047428" />
 
-<p align="center"><em>Imagen 3.3.1: Versión final del PCB.</em></p>
+<p align="center"><em>Imagen 3.3.1.1: Versión final del PCB.</em></p>
 <div align="justify">
+
+El PCB final tiene tan solo tres salidas:
+* Alimentación independiente (J1) (4,85V - 5,15V)
+* Conector para llave morse (J2)
+* Conector para HC05 (J4)
+
 
 ## 3.4 Descripción de comportamiento
 
+En esta sección se detalla el comportamiento programado y esperado del dispositivo, así como su forma correcta de uso. Se encuentra intrínsecamente relacionado con la tarea Task System, que se tratará en la sección siguiente.
 
+### 3.4.1 Modo de espera
+
+El dispositivo utiliza el terminal STATE del HC-05 para conocer el estado de la conexión bluetooth. En este modo, se le informa al usuario mediante el parpadeo de los leds EMISIÓN y RECEPCIÓN que el dispositivo se encuentra a la espera de conexión para comenzar a funcionar.
+
+Este modo se activa siempre que no se encuentre una conexión estable, no solo al inicio de la operación.
+
+### 3.4.2 Modo de Recepción
+
+Este es el modo por defecto tras establecer una conexión. Se espera que, ya sea por medio de señales sonoras o utilizando la llave morse, el usuario ingrese una señal. Esta señal es transmitida a la aplicación móvil, que desencripta la información y la muestra en formato letra.
+
+<strong>Importante:</strong> antes de ingresar una secuencia morse, se deben enviar al menos dos símbolos diferentes (PUNTO-LÍNEA) para que el algoritmo pueda aprender la velocidad estimada del usuario.
+
+### 3.4.3 Modo de Transmisión
+
+Si el usuario lo desea, puede cambiar por medio de la aplicación entre los modos Recepción y Transmisión. En este modo, se espera que el usuario escriba en formato LETRA por medio de la aplicación, para convertirlo a señales sonoras.
+
+Se puede controlar la velocidad de transmisión utilizando el DIP Switch (SW1). Estos valores de velocidad van desde el mínimo esperable de un usuario de nivel inicial, hasta el de un profesional (5-40ppm). 
+
+## 3.5 Firmware
+
+El firmware funciona en modo Bare-Metal (sin sistema operativo), y se basa en la ejecución cíclica de diferentes tareas modulares que controlan diferentes etapas del dispositivo.
+
+La base de tiempo es de 1ms (1 tick), fijado por la interrupción `HAL_SYSTICK_Callback`. Por ello, es importante que la ejecución de todas las tareas se efectúe en un tiempo menor a 1 tick.
+
+En caso de sobrepasar dicho límite, se habilita un contador `g_task_xx_tick_cnt` que contabiliza la cantidad de ejecuciones perdidas, y las ejecuta todas en la próxima iteración.
+
+Para el control de tiempos de ejecución, se utiliza la variable `WCET`, contenida en cada tarea, `app.c`.
+
+El gestor de tareas se encuentra en `app.c`, y contiene las siguientes:
+* `task_system`: Controla la lógica principal del programa y delega funciones a las demás tareas. Hace uso de la librería `memoria_morse.h`.
+* `task_sensor`: Lee las entradas, aplica algoritmos de debounce y devuelve una señal limpia a `task_system`.
+* `task_GPIO_output`: Lee las salidas de `task_system` y las aplica a los terminales de la placa. Contiene diferentes estados como ON , OFF , PULSE, etc.
+* `task_mic`: Utiliza el lector ADC para capturar la señal de micrófono, aplicar análisis de señales e indicar a `task_system` si detecta audio en las bandas especificadas o no.
+* `task_HC05`: Sirve para insertar palabras al buffer de `task_system` que vienen <i>desde</i> la aplicación, y al mismo tiempo tiene un buffer que le permite a `task_system` encolar palabras pendientes para transmitir <i>hacia</i> la aplicación.
+
+
+<div align="center">
+<img width="1200" alt="TPF EMBEBIDOS" src="https://github.com/user-attachments/assets/f427b3a2-51af-447c-8af2-682ad7436e8d" />
+<p align="center"><em>Imagen 3.5.1: Flujo de datos entre tareas.</em></p>
+<div align="justify">
+
+### 3.5.1 Task system
+
+La tarea más importante del firmware. Se encarga del comportamiento básico del dispositivo, descripto en [3.4 Descripción de comportamiento](#34-descripción-de-comportamiento). A continuación se presenta el diagrama de estados de la tarea:
+
+<div align="center">
+<img width="1200" alt="TPF EMBEBIDOS" src="https://github.com/user-attachments/assets/f427b3a2-51af-447c-8af2-682ad7436e8d" />
+<p align="center"><em>Imagen 3.5.1: Flujo de datos entre tareas.</em></p>
+<div align="justify">
+
+* `ST_SYS_WAITING_CONNECTION`:
+  Es el estado por defecto del dispositivo. Se encuentra esperando la conexión bluetooth, mediante la lectura de STATE. Siempre que se pierde la conexión, se vuelve a este estado.
+* `ST_SYS_RECEIVING`:
+  Observa los eventos `EV_SYS_BTN_INPUT_XX` y `EV_SYS_MIC_INPUT_XX` para enviar los flancos como `1`(ascendente) o `0`(descendiente) hacia la aplicación. La señal evaluada es un resultado de una combinación del micrófono y la llave morse. Es decir, los flancos responden a `MIC OR BTN`.
+
+* `ST_SYS_TRANSMITTING`
+  Queda a la espera del búffer rx. Al recibir un caractér, se invoca a `memoria_morse` para obtener una secuencia de puntos o rayas según el caractér. De ser un caractér no listado en el diccionario, se enciende el led ERROR. Este comportamiento no se ve normalmente, por ser la aplicación encargada de enviar solo caractéres válidos.
+* `ST_SYS_TRANSMITTING_CHAR`
+  Con la secuencia a reproducir obtenida, este modo se encarga de reproducirlo con la asistencia de `task_GPIO_output` y el estado `ST_SYS_TRANSMITTING_WAIT`.
+* `ST_SYS_TRANSMITTING_WAIT`
+  Decrementa `tick` hasta 0, y vuelve al estado `ST_SYS_TRANSMITTING_CHAR`.
+
+### 3.5.2 Task sensor

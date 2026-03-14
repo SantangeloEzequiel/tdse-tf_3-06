@@ -44,8 +44,8 @@ El presente documento detalla las características técnicas del producto, model
         - [3.2.2 Memoria E2PROM](#322-memoria-e2prom)
         - [3.2.3 Buzzer](#323-buzzer)
         - [3.2.4 GPIO](#324-gpio)
-    - [3.2 Esquemático Eléctrico](#32-esquemático-eléctrico)
     - [3.3 PCB](#33-pcb)
+        - [3.3.1 Pinout](#331-pinout)
     - [3.4 Descripción de comportamiento](#34-descripción-de-comportamiento)
         - [3.4.1 Modo de Espera](#341-modo-de-espera)
         - [3.4.2 Modo de Recepción](#342-modo-de-recepción)
@@ -58,7 +58,6 @@ El presente documento detalla las características técnicas del producto, model
         - [3.5.5 Task HC-05](#355-task-hc-05)
         - [3.5.6 Memoria Morse](#356-memoria-morse)
     - [3.6 Aplicación Móvil](#36-aplicación-móvil)
-    - [3.7 Pinout](#37-pinout)
 4. [Ensayos y resultados](#ensayos-y-resultados)
     - [4.1 Medición y análisis de consumo](#41-medición-y-análisis-de-consumo)
     - [4.2 Medición y análisis de tiempos de ejecución (WCET)](#42-medición-y-análisis-de-tiempos-de-ejecución-wcet)
@@ -422,6 +421,34 @@ El PCB final tiene tan solo tres salidas:
 * Conector para llave morse (J2)
 * Conector para HC05 (J4)
 
+### 3.3.1 Pinout
+
+Se utiliza el siguiente listado de conexiones para el conexionado del PCB:
+
+| **Pin** | **Función** | **Implementación** |
+| :------ |:------| :-------------- | 
+| `PA0`      | ADC1 In | Entrada analógica de micrófono |
+| `PA6`      | GPIO Out | Salida para Led_Info |
+| `PA7`      | GPIO Out | Salida para Buzzer |
+| `PA9`      | UART2 TX | RX de Hc-05 |
+| `PA10`      | UART2 RX | TX de Hc-05 |
+| `PB0`      | GPIO In | Entrada de Velocidad 3 (DIP Switch) |
+| `PB4`      | GPIO Out | Salida para Led_Transmit |
+| `PB5`      | GPIO Out | Salida para Led_Receive |
+| `PB6`      | SCL | Canal SCL para memoria E2PROM |
+| `PB7`      | SDA | Canal SDA para memoria E2PROM |
+| `PB10`      | GPIO In | Entrada de STATUS del HC-05 |
+| `PC0`      | GPIO In | Entrada de Velocidad 1 (DIP Switch) |
+| `PC1`      | GPIO In | Entrada de Velocidad 2 (DIP Switch) |
+| `PC7`      | GPIO In | Entrada de llave morse |
+
+<p align="center"><em>Tabla 3.7.1: Tabla de pinouts.</em></p>
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Pinout.PNG?raw=true"/>
+<p align="center"><em>Imagen 3.7.1.1: Distribución de pines de la placa NUCLEO-F103RB.</em></p>
+<div align="justify">
+
 
 ## 3.4 Descripción de comportamiento
 
@@ -473,8 +500,8 @@ El gestor de tareas se encuentra en `app.c`, y contiene las siguientes:
 La tarea más importante del firmware. Se encarga del comportamiento básico del dispositivo, descripto en [3.4 Descripción de comportamiento](#34-descripción-de-comportamiento). A continuación se presenta el diagrama de estados de la tarea:
 
 <div align="center">
-<img width="1200" alt="TPF EMBEBIDOS" src="https://github.com/user-attachments/assets/f427b3a2-51af-447c-8af2-682ad7436e8d" />
-<p align="center"><em>Imagen 3.5.1: Flujo de datos entre tareas.</em></p>
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/system_Statechart.png?raw=true" />
+<p align="center"><em>Imagen 3.5.1.1: Diagrama de estados <i>simplificado</i> de task_system.</em></p>
 <div align="justify">
 
 * `ST_SYS_WAITING_CONNECTION`:
@@ -490,3 +517,186 @@ La tarea más importante del firmware. Se encarga del comportamiento básico del
   Decrementa `tick` hasta 0, y vuelve al estado `ST_SYS_TRANSMITTING_CHAR`.
 
 ### 3.5.2 Task sensor
+
+La tarea `task_sensor` se encarga de la lectura de todos los puertos GPIO configurados como entrada digital.
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Sensor_Statechart.png?raw=true" />
+<p align="center"><em>Imagen 3.5.2.1: Diagrama de estados de task_sensor.</em></p>
+<div align="justify">
+
+Para cada puerto, se implementa un algoritmo de debounce por software mediante los estados `ST_BTN_XX_FALLING` y `ST_BTN_XX_RISING`, que se encarga de filtrar el ruido mecánico de los pulsadores. Para esto, se utiliza `tick`, que se incrementa cada `1ms`. En este caso, se configura el tiempo de debounce en 50ms, es decir, 50 ticks. De este modo, cada vez que se detecta un flanco, se espera a que el puerto se mantenga estable durante 50 ticks para validar el cambio de estado. También, por supuesto, retrasa la entrada, pero de forma imperceptible para el usuario.
+
+### 3.5.3 Task GPIO output
+
+La contraparte de `task_sensor`. Se encarga de aplicar a los puertos GPIO configurados como salida digital el resultado de la lógica del programa. Para esto, se implementan diferentes estados para cada puerto, como `ON`, `OFF`, `PULSE`, `BLINK`, etc. Cada estado tiene un comportamiento diferente, y algunos de ellos hacen uso de `tick` para controlar su duración.
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/GPIO_Output_Statechart.png?raw=true" />
+<p align="center"><em>Imagen 3.5.3.1: Diagrama de estados de task_GPIO_output.</em></p>
+<div align="justify">
+
+### 3.5.4 Task mic
+
+`task_mic` se encarga de la lectura de n señales analógicas de micrófono, y de la aplicación del algoritmo de Goertzel para detectar la presencia de señales en bandas de frecuencia específicas. En este caso, se configura para detectar señales en la banda de 3,3kHz, que es la frecuencia de operación del buzzer.
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/mic_Statechart.png?raw=true" />
+<p align="center"><em>Imagen 3.5.4.1: Flujo de datos entre tareas.</em></p>
+<div align="justify">
+
+Aunque el diagrama de estados resulta extremadamente sencillo, la complejidad de la tarea radica en su implementación específica.
+
+Se utiliza la lectura del ADC en formato Batch por medio de DMA e interrupciones por medio de una señal PWM. Esto garantiza que cada `N` muestras separadas `Ts` segundos, se refresque un buffer que contiene valores que reflejan un muestreo de la señal de micrófono.
+
+En este caso, y por cuestiones de efectividad (se debe garantizar un tiempo de ejecución al menos menos a 1ms), se utiliza un Batch de 50 muestras, con una frecuencia de muestreo de 10kHz.
+
+Esto significa que se toman fragmentos de 5ms de la señal de micrófono. Como la frecuencia a detectar es del orden de los 3,3kHz, se cumple el teorema de Nyquist:
+
+$$
+f_s > 2 \cdot f_{max}
+$$
+
+También debe garantizarse que el tiempo de conversión individual sea inferior a 1/Ts, es decir, 100µs. El tiempo de ejecución será de 12.5 ciclos (SAR) más el tiempo de carga del capacitor Cadc, con valor 8pF.
+
+Para el ADC1, utilizado, se utiliza una señal de clock PCLK2/ADCprescaler = 4MHz. 12,5 ciclos serán 3,125µs.
+
+El tiempo de carga del capacitor será $(R_{in} + R_{adc}) \cdot C_{adc}$, siendo Rin la resistencia de entrada del ADC, y Radc la resistencia interna del ADC, con valor 1k. Al estar conectada la entrada del ADC a la salida de un operacional, ser espera que el tiempo de carga sea aproximadamente $5 \cdot R_{adc} \cdot C_{adc} = 8ns$.
+
+Finalmente, el tiempo total de conversión será de aproximadamente 
+
+$$T_{conv} = 3.125\mu s + 8ns \approx 3.133\mu s < 100\mu s$$
+
+lo que garantiza un correcto funcionamiento del sistema.
+
+### 3.5.5 Task HC05
+
+`task_HC05` se encarga de la comunicación bidireccional con la aplicación móvil por medio del módulo HC-05. Para esto, se implementan dos buffers: uno para almacenar las palabras recibidas desde la aplicación, y otro para almacenar las palabras pendientes de enviar hacia la aplicación.
+
+<div align="center">
+<img width="1200"  src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/HC05_Statechart.png?raw=true" />
+<p align="center"><em>Imagen 3.5.5.1: Flujo de datos entre tareas.</em></p>
+<div align="justify">
+
+Para la implementación específica, se requiere que la transmisión sea de caractéres individuales, debido a la frecuencia máxima fijada por el HC-5:
+
+$$ T_{min} = 8 * T_{bit}  = 8 * \frac{1}{9600} = 0.833ms $$
+
+que se encuentra cerca del límite de 1ms.
+
+Contiene dos estados principales: `ST_HC05_RECEIVING` y `ST_HC05_TRANSMITTING`. En el primero, se espera a recibir un caractér desde la aplicación, que se almacena en el buffer de recepción y se envía a `task_system`, en el segundo, se espera que se reciba un caractér desde alguna tarea, en este caso `task_system`, para transmitirlo a la aplicación.
+
+En ambos casos, el funcionamiento es transparente para la aplicación y las tareas.
+
+### 3.5.6 Memoria Morse
+
+Memoria morse es una librería implementada para separar la comunicación I2C con los diccionarios morse, implementados en la memoria E2PROM, de la lógica principal del programa en `task_system`. 
+
+Contiene una definición de caractér morse en dos bytes:
+
+*Byte 0: bit del caracter en ASCII
+*Byte 1: código de secuencia morse: los 3 bits menos significativos representan la cantidad de símbolos, y los 5 bits más significativos representan la secuencia de puntos y rayas, siendo `0` un punto y `1` una raya.
+
+Para la organización de estos datos, se utlizan dos estructuras: una de traducción Morse-Letra, implementada en un árbol binario, y otra de traducción Letra-Morse, implementada en un vector. De este modo, se garantiza una búsqueda eficiente en ambos sentidos.
+
+Para el árbol binario, se utiliza el siguiente esquema:
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/%C3%81rbol%20Binario.jpg?raw=true"/>
+<p align="center"><em>Imagen 3.5.6.1: Árbol binario de traducción Morse-Letra.</em></p>
+<div align="justify">
+
+esto permite buscar el caracter según el usuario ingresa puntos o rayas en tiempo real.
+
+Para el vector, simplemente se ordenan en orden ascendente por caracter ASCII, mapeando el valor de ASCII a la posición del vector.
+
+En total, el árbol binario contiene 64 posiciones, es decir, 64 caracteres morse, lo que significa un total de 128 bytes. La mitad de la memoria disponible (256 bytes).
+
+Para el vector, se utilizan tan solo 37 caracteres, sin espacios vacíos por implementación, lo cual significa un total de 74 bytes.
+
+Para el grabado de memoria inicial, se utiliza el proyecto `Grabador de Memoria`.
+
+## 3.6 Aplicación móvil
+
+
+## Ensayos y resultados
+### 4.1 Medición y análisis de consumo
+### 4.2 Medición y análisis de tiempos de ejecución (WCET)
+### 4.3 Cálculo del factor de uso (U) de la CPU
+### 4.4 Cumplimiento de requisitos
+
+| Estado | Descripción      |
+|-----|---------------------|
+| 🟢 | Ya implementado|
+| 🟡 | Implementación parcial |
+| 🔴 | No implementado |
+
+### *Entrada*
+
+|ID|Descripción|Estado|
+| -- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|1.1|El sistema contará con un micrófono para captar señales sonoras.|🟢|
+|1.2|El sistema tendrá un botón que permita generar un código Morse manualmente.|🟢|
+|1.3|El sistema contará con un teclado matricial (se está considerando la posibilidad   de reemplazarlo por una aplicación Bluetooth en el celular) que permitirá enviar caracteres para ser reproducidos en código Morse.|🟢|
+
+### *Indicadores*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|2.1|El sistema contará con un indicador luminoso para indicar si se está recibiendo la señal Morse correctamente.|🟡|
+|2.2|El sistema se conectará mediante Bluetooth al celular, para indicar el carácter Morse que se está recibiendo.|🟢|
+|2.3|El sistema contará con un indicador luminoso que indique si está en modo "Emisión" o "Recepción".|🟢|
+|2.4|El sistema notificará mediante el titileo de LEDs cuando ocurra un error al recibir el código.|🟢|
+|2.5|El sistema notificará con audio y luz cuando se deje un código sin introducir completamente.|🔴|
+
+### *Parlante*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|3.1|El sistema contará con un parlante (o zumbador, a definir) para reproducir el código Morse que se desea emitir.|🟢|
+|3.2|El sistema solo podrá emitir cuando no esté recibiendo, ya que las señales sonoras podrían interferirse.|🟢|
+
+* Se decidió que se tratará de un zumbador para facilitar la detección sonora.
+
+### *Comunicación Bluetooth*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|4.1|El sistema se comunicará mediante Bluetooth con la aplicación del celular.|🟢|
+|4.2|El sistema deberá enviar a la aplicación los caracteres recibidos (ya habiendo procesado el código Morse).|🟡|
+|4.3|El sistema deberá poder recibir caracteres desde la aplicación (en caso de no usar un teclado matricial) para codificarlos en Morse y luego reproducirlos.|🟢|
+
+* La tarea hc_05 se encuentra implementada y funcional. Queda por implementar la lógica del sistema que interpreta los caracteres recibidos y enviados.
+
+### *Aplicación*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|5.1|La aplicación deberá permitir al usuario escribir caracteres.|🟢|
+|5.2|La aplicación deberá poder mostrar en pantalla los caracteres recibidos.|🟢|
+
+
+### *Interruptores/Botones*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|6.1|El sistema contará con un DIP switch que permitirá controlar la velocidad de emisión.|🟢|
+
+
+
+### *ADICIONAL: App de ANDROID*
+
+|ID|Descripción|Estado|
+| :-- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |-|
+|7.1|La aplicación deberá permitir al usuario escribir caracteres y mostrar en pantalla su traduccion a Morse.|🟢|
+|7.2|La aplicación deberá permitir al usuario escribir Morse y mostrar en pantalla su traduccion a texto.|🟢|
+|7.3|La aplicación deberá recibir señales de audio Morse de un emisor indeterminado, y poder traducirlo.|🟡|
+|7.4|La aplicación deberá tener un apartado "HELP" que guiara al usuario sobre su funcionamiento.|🟠|
+
+
+### 4.5 Reporte de uso
+### 4.6 Prueba de integración
+# Conclusiones
+## 5.1 Resultados obtenidos
+## 5.2 Próximos pasos
+# Bibliografía

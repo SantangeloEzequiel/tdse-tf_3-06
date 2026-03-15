@@ -617,7 +617,29 @@ Para el vector, se utilizan tan solo 37 caracteres, sin espacios vacíos por imp
 Para el grabado de memoria inicial, se utiliza el proyecto `Grabador de Memoria`.
 
 ## 3.6 Aplicación móvil
+Para la implementación de la comunicación Bluetooth se utilizó como base un repositorio público disponible en GitHub, correspondiente a un terminal Bluetooth (autoría de Kai Morich), el cual permite el envío y recepción de datos mediante comunicacion serie desde dispositivos Android.
 
+Sobre esta base, se desarrolló y añadió lógica propia, integrando el algoritmo de detección de código Morse proveniente de la aplicación MyFriendlyMorse, de autoría propia.
+Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, adaptándola al contexto del proyecto, mientras que la aplicación final presenta una implementación y propósito diferentes.
+
+diagrama de estado de HAREL de deteccion Morse (SOLO LA LOGICA)...
+
+
+<div align="center">
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/%C3%81rbol%20Binario.jpg?raw=true"/>
+<p align="center"><em>Imagen 3.5.6.1: Árbol binario de traducción Morse-Letra.</em></p>
+<div align="justify">
+    
+Repositorios y enlaces
+
+Repositorio del terminal Bluetooth (base del proyecto):
+https://github.com/kai-morich/SimpleBluetoothTerminal
+
+Aplicación MyFriendlyMorse en Google Play:
+https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR
+
+Repositorio de MyFriendlyMorse
+https://github.com/SantangeloEzequiel/MyFriendlyMorse
 
 ## Ensayos y resultados
 ### 4.1 Medición y análisis de consumo

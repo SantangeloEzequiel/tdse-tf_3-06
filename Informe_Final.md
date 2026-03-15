@@ -622,12 +622,14 @@ Para la implementación de la comunicación Bluetooth se utilizó como base un r
 Sobre esta base, se desarrolló y añadió lógica propia, integrando el algoritmo de detección de código Morse proveniente de la aplicación MyFriendlyMorse, de autoría propia.
 Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, adaptándola al contexto del proyecto, mientras que la aplicación final presenta una implementación y propósito diferentes.
 
-diagrama de estado de HAREL de deteccion Morse (SOLO LA LOGICA)...
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Diagrama%20de%20Harel%20Morse-Logic.png?raw=true"/>
-<p align="center"><em>Imagen 3.5.6.1: Árbol binario de traducción Morse-Letra.</em></p>
-experimentación. Si bien, en teoría, una raya dura aproximadamente tres veces más que un punto, en la práctica el punto de mayor duración puede ser solo alrededor de 1,5 veces menor que la raya de menor duración.
+<p align="center"> diagrama de estado de HAREL de Logica Morse <em>Imagen 3.5.6.2: </em></p>
+<div align="justify">
+
+Aquí se detecta la existencia de símbolos diferentes mediante una función empírica basada en la experimentación. Si bien, en teoría, una raya dura aproximadamente tres veces más que un punto, en la práctica el punto de mayor duración puede ser solo alrededor de 1,5 veces menor que la raya de menor duración.
 
 Por este motivo, se utiliza la condición de que un sonido detectado sea al menos 1,5 veces mayor o menor que el anterior para considerar que se han identificado dos símbolos distintos. Con esta información es posible calcular un umbral inicial entre punto y raya, a partir del cual se promedian las duraciones de los puntos y las rayas detectados, obteniendo así el umbral definitivo.
 

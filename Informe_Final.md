@@ -642,12 +642,15 @@ En conclusión, se puede afirmar que se trata de un sistema que no depende de un
 Repositorios y enlaces...
 
 Repositorio del terminal Bluetooth (base del proyecto): 
+
 https://github.com/kai-morich/SimpleBluetoothTerminal
 
 Aplicación MyFriendlyMorse en Google Play: 
+
 https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR
 
 Repositorio de MyFriendlyMorse: 
+
 https://github.com/SantangeloEzequiel/MyFriendlyMorse
 
 ## Ensayos y resultados

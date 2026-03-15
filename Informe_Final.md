@@ -624,21 +624,28 @@ Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, a
 
 diagrama de estado de HAREL de deteccion Morse (SOLO LA LOGICA)...
 
-
 <div align="center">
-<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/%C3%81rbol%20Binario.jpg?raw=true"/>
+<img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Diagrama%20de%20Harel%20Morse-Logic.png?raw=true"/>
 <p align="center"><em>Imagen 3.5.6.1: Árbol binario de traducción Morse-Letra.</em></p>
-<div align="justify">
-    
-Repositorios y enlaces
+experimentación. Si bien, en teoría, una raya dura aproximadamente tres veces más que un punto, en la práctica el punto de mayor duración puede ser solo alrededor de 1,5 veces menor que la raya de menor duración.
 
-Repositorio del terminal Bluetooth (base del proyecto):
+Por este motivo, se utiliza la condición de que un sonido detectado sea al menos 1,5 veces mayor o menor que el anterior para considerar que se han identificado dos símbolos distintos. Con esta información es posible calcular un umbral inicial entre punto y raya, a partir del cual se promedian las duraciones de los puntos y las rayas detectados, obteniendo así el umbral definitivo.
+
+Para los silencios, en cambio, se emplean los límites teóricos del código Morse: un silencio de tres veces la duración del símbolo corresponde a un separador de letra, mientras que uno de siete veces indica un separador de palabra.
+
+Una vez finalizada la etapa de aprendizaje, los símbolos previamente almacenados se reconstruyen utilizando el umbral definitivo y, a partir de ese momento, el sistema comienza a realizar la traducción en tiempo real.
+
+En conclusión, se puede afirmar que se trata de un sistema que no depende de una duración fija de los símbolos, lo que permite una fácil escalabilidad. Asimismo, contempla ciertas invariancias propias del emisor (no extremas), es decir, mientras los puntos mantengan una duración menor que las rayas, el sistema será capaz de detectarlos correctamente.
+
+Repositorios y enlaces...
+
+Repositorio del terminal Bluetooth (base del proyecto): 
 https://github.com/kai-morich/SimpleBluetoothTerminal
 
-Aplicación MyFriendlyMorse en Google Play:
+Aplicación MyFriendlyMorse en Google Play: 
 https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR
 
-Repositorio de MyFriendlyMorse
+Repositorio de MyFriendlyMorse: 
 https://github.com/SantangeloEzequiel/MyFriendlyMorse
 
 ## Ensayos y resultados

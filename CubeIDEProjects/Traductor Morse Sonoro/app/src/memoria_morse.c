@@ -64,26 +64,28 @@ HAL_StatusTypeDef EEPROM_WriteBuffer(uint8_t memAddr,
 
 //--------------------------------------------------READ OPERATIONS
 
-uint8_t EEPROM_ReadByte(uint16_t memAddr)
+uint16_t EEPROM_Read2Bytes(uint16_t memAddr)
 {
-    uint8_t data = 0xFF;
+    uint8_t buffer[2] = {0};
 
     HAL_I2C_Mem_Read(
-        &hi2c1,               // I2C handle
-        EEPROM_I2C_ADDR,      // Dirección I2C de la EEPROM
-        memAddr,              // Dirección interna
-        I2C_MEMADD_SIZE_8BIT, // 24C02 usa 8 bits
-        &data,                // Buffer destino
-        1,                    // Cantidad de bytes
-        HAL_MAX_DELAY         // Timeout
+        &hi2c1,
+        EEPROM_I2C_ADDR,
+        memAddr,
+        I2C_MEMADD_SIZE_8BIT,
+        buffer,
+        2,
+        HAL_MAX_DELAY
     );
 
-    return data;
+    // EEPROM devuelve MSB primero (generalmente)
+    return (buffer[0] << 8) | buffer[1];
 }
 
 void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
+	uint16_t reading = EEPROM_Read2Bytes(index);
 	Symbol->index = index;
-	uint8_t sequence = EEPROM_ReadByte(index);
+	uint8_t sequence = reading >> 8;
 	Symbol->len = (sequence & 0b11100000) >> 5;
 
 	for(uint8_t i = 0 ; i < Symbol->len ; i++){
@@ -92,7 +94,7 @@ void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
 		else
 			Symbol->morse_sequence[i] = DOT;
 	}
-	Symbol->ascii_symbol = EEPROM_ReadByte(index + 1);
+	Symbol->ascii_symbol = reading & 0xFF;
 }
 
 void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal){

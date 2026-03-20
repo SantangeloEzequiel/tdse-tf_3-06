@@ -5,7 +5,7 @@
 
 **Autores: Ezequiel Santangelo - 112762, Ramiro Mántaras - 111510**
 
-**Fecha: 8/3/26**
+**Fecha: 23/3/26**
 
 **Cuatrimestre de cursada: 2do 2025**
 
@@ -62,12 +62,14 @@ El presente documento detalla las características técnicas del producto, model
     - [4.1 Medición y análisis de consumo](#41-medición-y-análisis-de-consumo)
     - [4.2 Medición y análisis de tiempos de ejecución (WCET)](#42-medición-y-análisis-de-tiempos-de-ejecución-wcet)
     - [4.3 Cálculo del factor de uso (U) de la CPU](#43-cálculo-del-factor-de-uso-u-de-la-cpu)
-    - [4.4 Cumplimiento de requisitos](#44-cumplimiento-de-requisitos)
-    - [4.5 Reporte de uso](#45-reporte-de-uso)
-    - [4.6 Prueba de integración](#46-prueba-de-integración)
+    - [4.4 Utilización de modo de bajo consumo](#44-utilización-de-modo-de-bajo-consumo)
+    - [4.5 Consola y Build Analyzer](#45-consola-y-build-analyzer)
+    - [4.6 Cumplimiento de requisitos](#46-cumplimiento-de-requisitos)
+    - [4.7 Pruebas de integración](#47-pruebas-de-integración)
 5. [Conclusiones](#conclusiones)
     - [5.1 Resultados obtenidos](#51-resultados-obtenidos)
-    - [5.2 Próximos pasos](#52-próximos-pasos)
+    - [5.2 Dificultades encontradas](#52-dificultades-encontradas)
+    - [5.3 Uso de IA](#53-uso-de-ia)
 6. [Bibliografía](#bibliografía)
 
 
@@ -549,7 +551,7 @@ Aunque el diagrama de estados resulta extremadamente sencillo, la complejidad de
 
 Se utiliza la lectura del ADC en formato Batch por medio de DMA e interrupciones por medio de una señal PWM. Esto garantiza que cada `N` muestras separadas `Ts` segundos, se refresque un buffer que contiene valores que reflejan un muestreo de la señal de micrófono.
 
-En este caso, y por cuestiones de efectividad (se debe garantizar un tiempo de ejecución al menos menos a 1ms), se utiliza un Batch de 50 muestras, con una frecuencia de muestreo de 10kHz.
+En este caso, y por cuestiones de efectividad (se debe garantizar un tiempo de ejecución al menos menos a 1ms), se utiliza un Batch de 50 muestras, con una frecuencia de muestreo de 10kHz. Esto da como resultado un tiempo de muestreo de 5ms. Suficiente para la máxima velocidad morse, que ronda una duración de punto de 30ms.
 
 Esto significa que se toman fragmentos de 5ms de la señal de micrófono. Como la frecuencia a detectar es del orden de los 3,3kHz, se cumple el teorema de Nyquist:
 
@@ -583,6 +585,8 @@ Para la implementación específica, se requiere que la transmisión sea de cara
 $$ T_{min} = 8 * T_{bit}  = 8 * \frac{1}{9600} = 0.833ms $$
 
 que se encuentra cerca del límite de 1ms.
+
+La implementación de `DMA` hace que la tarea no se vea afectada por el alto tiempo de transmisión, pues el microcontrolador se encarga de enviar o recibir los datos de forma autónoma, y solo interrumpe a la tarea cuando la transmisión o recepción ha finalizado.
 
 Contiene dos estados principales: `ST_HC05_RECEIVING` y `ST_HC05_TRANSMITTING`. En el primero, se espera a recibir un caractér desde la aplicación, que se almacena en el buffer de recepción y se envía a `task_system`, en el segundo, se espera que se reciba un caractér desde alguna tarea, en este caso `task_system`, para transmitirlo a la aplicación.
 
@@ -626,7 +630,7 @@ Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, a
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Diagrama%20de%20Harel%20Morse-Logic.png?raw=true"/>
-<p align="center"> diagrama de estado de HAREL de Logica Morse <em>Imagen 3.5.6.2: </em></p>
+<p align="center"> <em>Imagen 3.5.6.2: Diagrama de estado de HAREL de Logica Morse. </em></p>
 <div align="justify">
 
 Aquí se detecta la existencia de símbolos diferentes mediante una función empírica basada en la experimentación. Si bien, en teoría, una raya dura aproximadamente tres veces más que un punto, en la práctica el punto de mayor duración puede ser solo alrededor de 1,5 veces menor que la raya de menor duración.
@@ -655,10 +659,125 @@ https://github.com/SantangeloEzequiel/MyFriendlyMorse
 
 ## Ensayos y resultados
 ### 4.1 Medición y análisis de consumo
-### 4.2 Medición y análisis de tiempos de ejecución (WCET)
-### 4.3 Cálculo del factor de uso (U) de la CPU
-### 4.4 Cumplimiento de requisitos
 
+Para el análisis de consumo, es preciso tener en cuenta la forma en que se alimenta la placa en la placa de desarrollo. La imagen 4.1.1 muestra el esquemático de la entrada de poder de la placa NUCLEO-F103RB:
+
+<div align="center">
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/esquema_electrico_power.PNG?raw=true"/>
+<p align="center"><em>Imagen 4.1.1: Etapa de entrada de poder.</em></p>
+<div align="justify">
+
+Se realizan entonces dos mediciones:
+
+1. Medición de consumo general: Se mide el consumo de corriente desde la alimentación externa.
+2. Medición de consumo del microcontrolador: Se mide el consumo de corriente del microcontrolador utilizando un amperímetro en serie con la alimentación del microcontrolador, utilizando el Jumper JP6.
+
+#### 1 Medición de consumo general
+$$P_{avg} = 5V \cdot I_{avg}$$
+En modo espera:
+$$P_{avg} = 5V \cdot 105mA = 525mW$$
+Al insertar una señal sonora en modo Recepción:
+$$P_{avg} = 5V \cdot 135mA = 675mW$$
+Al emitir una señal en modo Transmisión:
+$$P_{avg} = 5V \cdot 135mA = 675mW$$
+
+El incremento de consumo se debe, principalmente, a la activación del buzzer, que tiene un consumo de corriente de aproximadamente 30mA.
+
+#### 2 Medición de consumo del microcontrolador
+
+<div align="center">
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/esquema_electrico_power.PNG?raw=true"/>
+<p align="center"><em>Imagen 4.1.2: Banco de trabajo utilizado para la medición del consumo del microcontrolador.</em></p>
+<div align="justify">
+
+Colocando un multímetro en modo amperímetro en JP6, se obtiene el siguiente consumo:
+
+$$P_{mcu_avg} = 3,3V \cdot I_{mcu_avg} = 3,3V \cdot 9mA = 29,7mW$$
+
+El consumo es evidentemente mucho más bajo que el total de consumo. Entonces, ¿qué consume tanto?
+
+Se estima que la memoria EEPROM consume de forma constante casi 90mA. Esto es extraño, debido a que no se encuentra en uso, simplemente alimentada.
+
+### 4.2 Medición y análisis de tiempos de ejecución (WCET)
+
+Se utiliza un indicador de tiempo de ejecución (WCET: Worst Case Execution Time) para registrar el máximo tiempo de ejecución de cada tarea, y así garantizar que se encuentre dentro del límite de 1ms.
+
+A continuación, se presental los resultados tras varios minutos de uso:
+<div align="center">
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/WCET.PNG?raw=true"/>
+<p align="center"><em>Imagen 4.2.1: Resultados de análisis de tiempo de ejecución (WCET).</em></p>
+<div align="justify">
+
+Las tareas son las siguientes:
+* `task_sensor`: 56us
+* `task_hc05`: 37us
+* `task_mic`: 329us
+* `task_system`: 560us
+* `task_GPIO_output`: 44us
+
+La sumatoria de estos procesos da como resultado un total de
+
+$$\sum_{i=0}^{5} WCET_{i} = 1026us$$
+
+lo que significa que se pueden perder iteraciones ocasionalmente, pero no de forma significativa. De hecho, el sistema funciona correctamente y sin retrasos perceptibles para el usuario.
+
+Esto sucede porque, a pesar de superar el límite teórico de 1ms, tareas como `task_mic` y `task_system` no se ejecutan en su modo más pesado en cada iteración, sino que solo lo hacen cuando se cumplen ciertas condiciones, como que se llene el batch del ADC o que se reciba un caractér por bluetooth. Por lo tanto, aunque su tiempo de ejecución es alto, no afectan el rendimiento general del sistema de manera significativa.
+
+### 4.3 Cálculo del factor de uso (U) de la CPU
+
+El factor de uso de la CPU es la medida que da información sobre en qué medida se está utilizando la capacidad de procesamiento del microcontrolador. Se calcula utilizando la siguiente fórmula:
+
+$$U =\sum_{i=0}^{n} \frac{C_i}{T_i}$$
+
+Para valores mayores a 1, el sistema se encuentra sobrecargado y encolará tareas hasta bloquearse. Para valores menores a 1, el sistema es capaz de ejecutar todas las tareas dentro de sus límites de tiempo, y típicamente es posible entrar en modo de bajo consumo durante los períodos de inactividad.
+
+Para nuestro caso, se evalúa para las diferentes tareas:
+
+| Tarea | $$C_i$$      | $$T_i$$ | $$U_i$$ | 
+|-----|---------------------|---------|---------|
+| `task_sensor`| 56us | 1000us | 0.056 |
+| `task_hc05`| 37us | 1000us | 0.037 |
+| `task_mic`| 329us | 5000us | 0.065 |
+| `task_system`| 560us | 1000us | 0.560 |
+| `task_GPIO_output`| 44us | 1000us | 0.044 |
+
+$$U = 0.762 $$
+
+El factor de uso de la CPU podría ser más bajo si se considera que `task_system` solo realiza lecturas a la memoria EEPROM cuando recibe caracteres.
+
+<i>Nota: Se utilizan 5ms como base de tiempo para `task_mic`, pues es el tiempo que toma al ADC llenar el batch.</i>
+
+### 4.4 Utilización de modo de bajo consumo
+
+Nuesto sistema tiene un uso de CPU estimado de 0.762, pero se alcanza sólo cuando se dan ciertas condiciones ya especificadas. Como tal, hay margen para la implementación de modo de bajo consumo.
+
+Al estudio de consumo anterior, se le agrega la directiva HAL_PWR_EnterSLEEPMode(). El resultado es el siguiente:
+
+$$P_{mcu_avg} = 3,3V \cdot I_{mcu_avg} = 3,3V \cdot 6mA = 19,8mW$$
+
+Esto es una reducción de consumo del 33%. Que se condice con el cálculo de factor de uso, que indica que el microcontrolador se encuentra inactivo aproximadamente el 24% del tiempo. Dado que la tarea `task_system` es solo ocasionalmente pesada, se espera que
+
+$$U \approx 0.56$$
+
+Por supuesto, el impacto no es mayor a gran escala, debido al consumo de la memoria EEPROM.
+
+### 4.5 Consola y Build Analyzer
+
+A continuación se presentan los resultados obtenidos del análisis de consola y build analyzer, que permiten identificar posibles errores o advertencias en el código, así como optimizar el proceso de compilación:
+
+<div align="center">
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_build_capture.PNG?raw=true"/>
+<p align="center"><em>Imagen 4.5.1: Output de consola al compilar.</em></p>
+<div align="justify">
+
+<div align="center">
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_memory_usage.PNG?raw=true"/>
+<p align="center"><em>Imagen 4.5.2: Uso de recursos de memoria (Build Analyzer).</em></p>
+<div align="justify">
+
+Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memoria flash, y 1/3 de los recursos de memoria RAM, lo que indica que el sistema tiene un margen considerable para la implementación de nuevas funcionalidades o la optimización del código.
+
+### 4.6 Cumplimiento de requisitos
 | Estado | Descripción      |
 |-----|---------------------|
 | 🟢 | Ya implementado|
@@ -727,10 +846,55 @@ https://github.com/SantangeloEzequiel/MyFriendlyMorse
 |7.3|La aplicación deberá recibir señales de audio Morse de un emisor indeterminado, y poder traducirlo.|🟡|
 |7.4|La aplicación deberá tener un apartado "HELP" que guiara al usuario sobre su funcionamiento.|🟠|
 
+### 4.7 Pruebas de integración
 
-### 4.5 Reporte de uso
-### 4.6 Prueba de integración
+A lo largo del desarrollo del proyecto
+
 # Conclusiones
 ## 5.1 Resultados obtenidos
-## 5.2 Próximos pasos
-# Bibliografía
+
+El resultado final del proyecto es un dispositivo funcional que cumple con la mayoría de los requisitos establecidos, y que se encuentra en una etapa avanzada de desarrollo. Se han implementado las funcionalidades básicas de recepción y transmisión de código Morse, así como la comunicación Bluetooth con una aplicación móvil.
+
+El funcionamiento es adecuado, con algunas mejoras y limitaciones pendientes. A saber:
+
+* Puede mejorarse aún más la detección morse.
+* Sería adecuado agregar una protección de sobrecarga al equipo, para evitar daños por mal conexionado.
+* La implementación de modo de bajo consumo es efectiva, pero se encuentra limitada por el consumo de la memoria EEPROM, que se encuentra constantemente alimentada. Es preciso investigar el motivo de este consumo, y corregirlo para la entrega al cliente.
+
+## 5.2 Dificultades encontradas
+
+A lo largo del desarrollo del proyecto se han encontrado múltiples dificultades que debieron ser resueltas, y por ende dejaron un aprendizaje. Entre ellas, destacan las siguientes:
+
+## 5.3 Uso de IA
+
+
+
+# Bibliografía y referencias
+
+
+
+Listado de archivos de consulta utilizados:
+- [Micrófono electret](https://www.sameskydevices.com/product/resource/cmc-5044pf-a.pdf)
+- [Amplificador LM358](https://www.alldatasheet.com/datasheet-pdf/view/3067/MOTOROLA/LM358.html)
+- [Memoria E2PROM 24C02](https://www.alldatasheet.com/datasheet-pdf/view/23727/STMICROELECTRONICS/24C02.html)
+- [STM32 F103RB Reference Manual](https://www.st.com/resource/en/reference_manual/rm0008-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf)
+- [STM32 F103RB Datasheet](https://www.st.com/resource/en/datasheet/stm32f103rb.pdf)
+- [NUCLEO-F103RB User Manual](https://www.st.com/resource/en/user_manual/um1724-stm32-nucleo64-boards-mb1136-stmicroelectronics.pdf)
+- [NUCLEO-F103RB Schematic](https://www.st.com/resource/en/schematic_pack/mb1136-default-c05_schematic.pdf)
+
+
+Referencias:
+* `README.md`
+* `Informe_de_Avance.md`
+
+* [Repositorio del terminal Bluetooth (base del proyecto)](https://github.com/kai-morich/SimpleBluetoothTerminal)
+
+* [Aplicación MyFriendlyMorse en Google Play](https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR)
+
+* [Repositorio de MyFriendlyMorse](https://github.com/SantangeloEzequiel/MyFriendlyMorse)
+* Video demostrativo del proyecto: 
+#
+<strong>Fin de memoria</strong>
+
+Última actualización: 20/03/2026
+

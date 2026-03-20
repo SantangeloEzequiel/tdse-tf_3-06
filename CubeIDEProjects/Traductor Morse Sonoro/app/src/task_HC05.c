@@ -215,7 +215,8 @@ void task_hc05_statechart(void)
 				//TX BUFFER NOT EMPTY
 				p_task_hc05_dta->tx_buffer = get_tx_message_task_HC05();
 
-				HAL_UART_Transmit(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1, HC05_TIMEOUT);
+				//HAL_UART_Transmit(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1, HC05_TIMEOUT);
+				HAL_UART_Transmit_DMA(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, HC05_TIMEOUT);
 				p_task_hc05_dta->tx_flag = 0;
 
 				p_task_hc05_dta->state = ST_HC05_CONNECTED;

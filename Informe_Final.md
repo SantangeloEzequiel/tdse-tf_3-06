@@ -362,11 +362,21 @@ $$A_v = -\left( \frac{R_2}{R_1} \right)$$
 
 En este caso, y aplicando ambas en cascada, se esperará una ganancia de 10000.
 
-(CONTINUAR)
+A continuación se presenta la respuesta del preamplificador para diferentes entradas:
+
+<img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic.jpg?raw=true" />
+<p align="center"><em>Imagen 3.2.1.1: Salida para circuito excitado con un silvido constante.</em></p>
+
+<img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic_saturada.jpg?raw=true" />
+<p align="center"><em>Imagen 3.2.1.2: Salida para sonido fuerte.</em></p>
+
+Se observa que para sonidos de volumen no muy fuerte, la señal de salida tiene una amplitud de 1V, valor para el que el ADC es muy sensible.
+
+En cuanto a la excursión máxima, se observa que la señal no puede excursionar más allá de 3,24V y 400mV. Se deduce entonces que el diodo Zener `DZ1` realiza su trabajo, limitando la tensión a valores próximos a $V_Z = 3,3V$, y protegiendo el microcontrolador.
 
 ### 3.2.2 Memoria E2PROM
 <img width="1246" height="483" alt="Esquematico_Memoria" src="https://github.com/user-attachments/assets/8660efd0-37db-4917-a437-718df6f2dfad" />
-<p align="center"><em>Imagen 3.2.1.1: Esquemático eléctrico del bloque memoria.</em></p>
+<p align="center"><em>Imagen 3.2.1.3: Esquemático eléctrico del bloque memoria.</em></p>
 
 El conexionado de la memoria 24C02 (256B) es muy sencillo. Los terminales E0 , E1 y E2 asignan los últimos 3 dígitos de la dirección del integrado, para la comunicación I2C. Para la aplicación solo necesitamos uno, por lo que sus valores son arbitrarios siempre y cuando el firmware sepa la dirección resultante, en este caso 0x50.
 
@@ -686,7 +696,7 @@ El incremento de consumo se debe, principalmente, a la activación del buzzer, q
 #### 2 Medición de consumo del microcontrolador
 
 <div align="center">
-<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/esquema_electrico_power.PNG?raw=true"/>
+<img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/banco_de_trabajo.jpeg?raw=true"/>
 <p align="center"><em>Imagen 4.1.2: Banco de trabajo utilizado para la medición del consumo del microcontrolador.</em></p>
 <div align="justify">
 
@@ -721,7 +731,7 @@ $$\sum_{i=0}^{5} WCET_{i} = 1026us$$
 
 lo que significa que se pueden perder iteraciones ocasionalmente, pero no de forma significativa. De hecho, el sistema funciona correctamente y sin retrasos perceptibles para el usuario.
 
-Esto sucede porque, a pesar de superar el límite teórico de 1ms, tareas como `task_mic` y `task_system` no se ejecutan en su modo más pesado en cada iteración, sino que solo lo hacen cuando se cumplen ciertas condiciones, como que se llene el batch del ADC o que se reciba un caractér por bluetooth. Por lo tanto, aunque su tiempo de ejecución es alto, no afectan el rendimiento general del sistema de manera significativa.
+Esto sucede porque, a pesar de superar el límite teórico de 1ms, tareas como `task_mic` (algoritmo de Goertzel) y `task_system` (comunicación I2C) no se ejecutan en su modo más pesado en cada iteración, sino que solo lo hacen cuando se cumplen ciertas condiciones, como que se llene el batch del ADC o que se reciba un caractér por bluetooth. Por lo tanto, aunque su tiempo de ejecución es alto, no afectan el rendimiento general del sistema de manera significativa.
 
 ### 4.3 Cálculo del factor de uso (U) de la CPU
 
@@ -809,7 +819,6 @@ Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memo
 |3.1|El sistema contará con un parlante (o zumbador, a definir) para reproducir el código Morse que se desea emitir.|🟢|
 |3.2|El sistema solo podrá emitir cuando no esté recibiendo, ya que las señales sonoras podrían interferirse.|🟢|
 
-* Se decidió que se tratará de un zumbador para facilitar la detección sonora.
 
 ### *Comunicación Bluetooth*
 
@@ -819,7 +828,6 @@ Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memo
 |4.2|El sistema deberá enviar a la aplicación los caracteres recibidos (ya habiendo procesado el código Morse).|🟡|
 |4.3|El sistema deberá poder recibir caracteres desde la aplicación (en caso de no usar un teclado matricial) para codificarlos en Morse y luego reproducirlos.|🟢|
 
-* La tarea hc_05 se encuentra implementada y funcional. Queda por implementar la lógica del sistema que interpreta los caracteres recibidos y enviados.
 
 ### *Aplicación*
 
@@ -848,7 +856,52 @@ Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memo
 
 ### 4.7 Pruebas de integración
 
-A lo largo del desarrollo del proyecto
+A lo largo del desarrollo del proyecto se realizaron múltiples pruebas de complejidad incremental para verificar el funcionamiento, cada vez más completo, del dispositivo.
+
+#### Pruebas preliminares:
+
+Antes de realizar pruebas de integración, es preciso probar cada módulo de forma individual.
+
+* Prueba de preamplificador:
+
+Para este módulo se realizan múltiples pruebas con la punta de osciloscopio a la salida. Ya que la entrada al microcontrolador es de alta impedancia y se opera en frecuencias mucho menores a la frecuencia de corte asociada del conjunto, es de esperar que la prueba sea fiel.
+
+Una vez diseñado y probado el circuito, se programa la tarea asociada `task_mic` y se la conecta directamente a `task_GPIO_output` para evaluar la salida de forma visible.
+
+* Prueba de HC-05:
+
+Se posiciona el HC-05 preprogramada (mediante comandos AT) conectado al canal UART1 de la placa NUCLEO. Mediante un computador con bluetooth, se envían mensajes y se intenta imprimir el resultado mediante consola. Una vez hecho esto, se realiza el procedimiento opuesto, enviando desde consola hacia el computador.
+
+Una vez operativo, se realizan pruebas mediante debugging para verificar el funcionamiento adecuado de buffers y la interfaz `task_hc05_interface`.
+
+* Prueba de memoria E2PROM:
+
+Para probar la memoria E2PROM, simplemente se utilizan las funciones de comunicación I2C integradas en HAL para escribir valores en diferentes direcciones. Para verificar el correcto grabado, inmediatamente después se los recupera.
+
+#### Prueba de integración 1: micrófono + pulsador + led
+
+Se evalúa el funcionamiento conjunto del micrófono y el pulsador para generar una señal conjunta de salida. Se utiliza el led de status como feedback.
+
+#### Prueba de integración 2: HC05 + leds
+
+En esta prueba se evalua si el sistema reconoce correctamente cuándo se establece y cuándo se rompe una conexión. Es la prueba que define al estado `WAITING_CONNECTION`.
+
+#### Prueba de integración 3: HC05 + pulsador
+
+En esta prueba se chequea en conjunto que HC05 pueda enviar datos de una señal de entrada de forma satisfactoria. Este mecanismo fue implementado en `task_system`, y es la prueba definitiva del modo EMISIÓN.
+
+#### Prueba de integración 4: HC05 + memoria EEPROM 
+
+Esta prueba pretendía probar las funciones implementadas en `memoria_morse`, al mismo tiempo que verificaba la integración del sistema desde la entrada. El objetivo es enviar un dato desde un ordenador hacia el módulo HC05, y que la librería analice su valor y lo descomponga en dos partes: secuencia morse y caractér.
+
+#### Prueba de integración 5: HC05 + memoria EEPROM + Buzzer
+
+Tras la prueba de integración 4, la prueba 5 pretende analizar la secuencia y emitirla correctamente, utilizando a su vez la lectura de velocidad.
+Esta es la prueba definitiva del modo TRANSMISIÓN.
+
+#### Prueba de integración final: Integración con aplicación
+
+Una vez funcional el sistema, se debe verificar que la comunicación sea congruente con la aplicación. Es decir, se reemplaza la consola con una aplicación android de producción propia.
 
 # Conclusiones
 ## 5.1 Resultados obtenidos
@@ -860,14 +913,93 @@ El funcionamiento es adecuado, con algunas mejoras y limitaciones pendientes. A 
 * Puede mejorarse aún más la detección morse.
 * Sería adecuado agregar una protección de sobrecarga al equipo, para evitar daños por mal conexionado.
 * La implementación de modo de bajo consumo es efectiva, pero se encuentra limitada por el consumo de la memoria EEPROM, que se encuentra constantemente alimentada. Es preciso investigar el motivo de este consumo, y corregirlo para la entrega al cliente.
+* Implementación DMA de la comunicación I2C con la memoria EEPROM para reducir notablemente el tiempo de ejecución de `task_system`.
+
+El siguiente video demostrativo repasa cada función del dispositivo y su funcionamiento:
+
+
 
 ## 5.2 Dificultades encontradas
 
 A lo largo del desarrollo del proyecto se han encontrado múltiples dificultades que debieron ser resueltas, y por ende dejaron un aprendizaje. Entre ellas, destacan las siguientes:
 
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Complejidad algorítmica del algoritmo de Goertzel y punto flotante.</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>Resultó un gran problema la duración de task_mic debido a la carga temporal del algoritmo de Goertzel, sumado a la incapacidad del mcu de procesar punto flotante de forma eficiente. 
+      Se debió implementar el punto flotante de forma manual, y al mismo tiempo se redujeron notablemente las muestras tomadas, así como la cantidad de frecuencias a evaluar, hasta encontrar un valor satisfactorio.</p>
+    </tr>
+  </td>
+</table>
+
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Tiempo de ejecución de task_hc05</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>El desconocimiento sobre la capacidad de utilizar DMA para el control de canales de comunicación USART fue un problema durante una parte importante del desarrollo.
+      La solución se escondía detrás de una simple configuración del ioc. Esto llevó el WCET de casi 1ms a los actuales 50us.</p></tr>
+  </td>
+</table>
+
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Falta de protección contra sobretensión</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>La falta de la implementación de una protección contra sobretensión a la entrada resultó un problema en algunas ocasiones, cuando el mal conexionado resultó en el daño de los integrados LM358 y 24C02.</p></tr>
+  </td>
+</table>
+
 ## 5.3 Uso de IA
 
+El rápido desarrollo de Inteligencias Artificiales simplifica en gran medida muchas tareas que antes eran tediosas. Aunque su alcance es aun limitado en la electrónica, durante el desarrollo del proyecto nuestro equipo ha hecho uso de este herramienta de diferentes formas:
 
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Asistencia en el rápido entendimiento de código:</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>El uso de IA ha resultado muy (y sorpresivamente) eficiente para el análisis de código. Normalmente se puede pedir un análisis preliminar para el posterior y más fino análisis técnico, realizado por una persona.</p>
+    </tr>
+  </td>
+</table>
+
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Troubleshooting de código:</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>Es de conocimiento público que las IAs son especialmente buenas analizando y produciendo código. En este caso, fueron utilizadas en múltiples ocasiones para solucionar problemas de código menores pero a veces escondidos a simple vista. Ej: una librería no incluída, una variable mal definida, etc.</p>
+    </tr>
+  </td>
+</table>
+
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Asistencia en la producción del algoritmo de Goertzel.</strong></p>
+    </tr>
+  </td>
+</table>
+
+<table>
+  <td>
+    <tr height="30%" valign="top">
+      <p><strong>Búsqueda de documentación:</strong></p>
+    </tr>
+    <tr height="60%" valign="top">
+      <p>La amplia documentación existente de los componentes utilizados en este MPV hizo posible resolver algunas problemáticas típicas de carácter electrónico, como la programación inicial del HC-05. La mayoría de estos problemas de esta naturaleza, sin embargo, fueron resueltos "a la antigua".</p>
+    </tr>
+  </td>
+</table>
 
 # Bibliografía y referencias
 
@@ -896,5 +1028,5 @@ Referencias:
 #
 <strong>Fin de memoria</strong>
 
-Última actualización: 20/03/2026
+Última actualización: 21/03/2026
 

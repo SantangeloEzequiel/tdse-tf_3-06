@@ -1,0 +1,18 @@
+!SESSION 2026-04-12 14:17:26.922 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_AR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\ramaz\STM32CubeIDE\tdse_workspace_tp4\tdse-tf_3-06\CubeIDEProjects
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-04-12 14:17:37.159
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-04-12 14:17:37.162
+!MESSAGE Log4j2 initialized with config file C:\Users\ramaz\STM32CubeIDE\tdse_workspace_tp4\tdse-tf_3-06\CubeIDEProjects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-04-12 14:17:41.912
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2026-04-12 14:18:56.034
+!MESSAGE Indexed 'Traductor Morse Sonoro' (41 sources, 122 headers) in 5.25 sec: 11,727 declarations; 71,930 references; 2 unresolved inclusions; 35 syntax errors; 186 unresolved names (0.22%)

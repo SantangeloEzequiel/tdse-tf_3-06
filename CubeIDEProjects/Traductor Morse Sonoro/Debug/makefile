@@ -61,8 +61,8 @@ all: main-build
 main-build: Traductor\ Morse\ Sonoro.elf secondary-outputs
 
 # Tool invocations
-Traductor\ Morse\ Sonoro.elf Traductor\ Morse\ Sonoro.map: $(OBJS) $(USER_OBJS) C:\Users\ramaz\STM32CubeIDE\tdse_workspace_tp4\tdse-tf_3-06\CubeIDEProjects\Traductor\ Morse\ Sonoro\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ramaz\STM32CubeIDE\tdse_workspace_tp4\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Traductor\ Morse\ Sonoro.elf Traductor\ Morse\ Sonoro.map: $(OBJS) $(USER_OBJS) C:\Users\ramaz\Desktop\REPO\ EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor\ Morse\ Sonoro\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

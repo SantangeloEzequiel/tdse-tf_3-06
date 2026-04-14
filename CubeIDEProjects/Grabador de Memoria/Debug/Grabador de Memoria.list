@@ -39,13 +39,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_line   0000c90a  00000000  00000000  00026d31  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00080cde  00000000  00000000  0003363b  2**0
+ 18 .debug_str    00080cf4  00000000  00000000  0003363b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b4319  2**0
+ 19 .comment      00000043  00000000  00000000  000b432f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000024a8  00000000  00000000  000b435c  2**2
+ 20 .debug_frame  000024a8  00000000  00000000  000b4374  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006f  00000000  00000000  000b6804  2**0
+ 21 .debug_line_str 00000085  00000000  00000000  000b681c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -398,35 +398,35 @@ int main(void)
 	#endif
 	#ifdef READ
 	  uint8_t caracter , morse;
-	  morse = EEPROM_ReadByte(1 + MORSE_TOTAL_SPACE_BYTES + 1);
- 800031a:	2082      	movs	r0, #130	@ 0x82
+	  morse = EEPROM_ReadByte(0);
+ 800031a:	2000      	movs	r0, #0
  800031c:	f000 f868 	bl	80003f0 <EEPROM_ReadByte>
  8000320:	4603      	mov	r3, r0
  8000322:	71fb      	strb	r3, [r7, #7]
-	  caracter = EEPROM_ReadByte(1 + MORSE_TOTAL_SPACE_BYTES + 2);
- 8000324:	2083      	movs	r0, #131	@ 0x83
+	  caracter = EEPROM_ReadByte(1);
+ 8000324:	2001      	movs	r0, #1
  8000326:	f000 f863 	bl	80003f0 <EEPROM_ReadByte>
  800032a:	4603      	mov	r3, r0
  800032c:	71bb      	strb	r3, [r7, #6]
 
-	  morse = EEPROM_ReadByte(25 + MORSE_TOTAL_SPACE_BYTES + 1);
- 800032e:	209a      	movs	r0, #154	@ 0x9a
+	  morse = EEPROM_ReadByte(2);
+ 800032e:	2002      	movs	r0, #2
  8000330:	f000 f85e 	bl	80003f0 <EEPROM_ReadByte>
  8000334:	4603      	mov	r3, r0
  8000336:	71fb      	strb	r3, [r7, #7]
-	  caracter = EEPROM_ReadByte(25 + MORSE_TOTAL_SPACE_BYTES + 2);
- 8000338:	209b      	movs	r0, #155	@ 0x9b
+	  caracter = EEPROM_ReadByte(3);
+ 8000338:	2003      	movs	r0, #3
  800033a:	f000 f859 	bl	80003f0 <EEPROM_ReadByte>
  800033e:	4603      	mov	r3, r0
  8000340:	71bb      	strb	r3, [r7, #6]
 
-	  morse = EEPROM_ReadByte(26 + MORSE_TOTAL_SPACE_BYTES + 1);
- 8000342:	209b      	movs	r0, #155	@ 0x9b
+	  morse = EEPROM_ReadByte(4);
+ 8000342:	2004      	movs	r0, #4
  8000344:	f000 f854 	bl	80003f0 <EEPROM_ReadByte>
  8000348:	4603      	mov	r3, r0
  800034a:	71fb      	strb	r3, [r7, #7]
-	  caracter = EEPROM_ReadByte(26 + MORSE_TOTAL_SPACE_BYTES + 2);
- 800034c:	209c      	movs	r0, #156	@ 0x9c
+	  caracter = EEPROM_ReadByte(5);
+ 800034c:	2005      	movs	r0, #5
  800034e:	f000 f84f 	bl	80003f0 <EEPROM_ReadByte>
  8000352:	4603      	mov	r3, r0
  8000354:	71bb      	strb	r3, [r7, #6]

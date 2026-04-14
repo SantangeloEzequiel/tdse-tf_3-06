@@ -47,16 +47,28 @@
 
 #define NULL_MESSAGE				'\0'
 
+#define RX_UNIT_TICKS_INIT			120ul
+#define RX_UNIT_TICKS_MIN			10ul
+#define RX_UNIT_TICKS_MAX			400ul
+#define RX_DOT_LINE_FACTOR			2ul
+#define RX_CHAR_GAP_FACTOR			3ul
+#define RX_WORD_GAP_FACTOR			7ul
+
 /********************** internal data declaration ****************************/
 task_system_dta_t task_system_dta =
 	{DEL_SYS_MIN, ST_SYS_RECEIVING, ST_SYS_WAITING_CONNECTION, {} , 0 , WORDS_PER_MINUTE ,
-	 G_TASK_SYS_CNT_INI , false , false , LOW_SIGNAL , LOW_SIGNAL , LOW_SIGNAL};
+	 G_TASK_SYS_CNT_INI , false , false , LOW_SIGNAL , LOW_SIGNAL , LOW_SIGNAL,
+	 {}, 0u, 0u, RX_UNIT_TICKS_INIT, LOW_SIGNAL, false, false, MORSE_STARTING_INDEX, 0u};
 
 #define SYSTEM_DTA_QTY	(sizeof(task_system_dta)/sizeof(task_system_dta_t))
 
 /********************** internal functions declaration ***********************/
 void task_system_statechart(void);
 void velocity_management(task_system_dta_t*);
+static void rx_decoder_reset(task_system_dta_t *p_task_system_dta);
+static void rx_decoder_commit_symbol(task_system_dta_t *p_task_system_dta, bool add_word_space);
+static void rx_decoder_register_mark(task_system_dta_t *p_task_system_dta, uint32_t mark_ticks);
+static void rx_decoder_update(task_system_dta_t *p_task_system_dta, bool input_signal);
 
 /********************** internal data definition *****************************/
 const char *p_task_system 		= "Task System (System Statechart)";
@@ -87,6 +99,7 @@ void task_system_init(void *parameters)
 
 	/* Update Task Actuator Configuration & Data Pointer */
 	p_task_system_dta = &task_system_dta;
+	rx_decoder_reset(p_task_system_dta);
 
 	/* Init & Print out: Task execution FSM */
 	state = ST_SYS_WAITING_CONNECTION;
@@ -164,6 +177,7 @@ void task_system_statechart(void)
 
 			if(p_task_system_dta->flag == true && p_task_system_dta->event == EV_SYS_CONNECTION_ESTABLISHED){
 				p_task_system_dta->state = ST_SYS_RECEIVING;
+				rx_decoder_reset(p_task_system_dta);
 				put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_LED_RECEIVE);
 				put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_TRANSMIT);
 			}
@@ -173,63 +187,44 @@ void task_system_statechart(void)
 			break;
 
 		case ST_SYS_RECEIVING:
-
-			//RECEIVING SEQUENCE
+			// RX command channel from peer
 		    if(any_message_task_system()){
 		        message = get_message_task_system();
 		    }
 
 		    // MIC events
-		    if(p_task_system_dta->event == EV_SYS_MIC_INPUT_ON){
+		    if(p_task_system_dta->flag && p_task_system_dta->event == EV_SYS_MIC_INPUT_ON){
 		        put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_LED_ERROR);
 		        p_task_system_dta->input_mic = HIGH_SIGNAL;
 
-		    }else if(p_task_system_dta->event == EV_SYS_MIC_INPUT_OFF){
+		    }else if(p_task_system_dta->flag && p_task_system_dta->event == EV_SYS_MIC_INPUT_OFF){
 		        put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_ERROR);
 		        p_task_system_dta->input_mic = LOW_SIGNAL;
 		    }
 
 		    // BTN events
-		    if(p_task_system_dta->event == EV_SYS_BTN_INPUT_OFF){
+		    if(p_task_system_dta->flag && p_task_system_dta->event == EV_SYS_BTN_INPUT_OFF){
 		        put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_BUZZER);
 		        p_task_system_dta->input_btn = HIGH_SIGNAL;
 
-		    }else if(p_task_system_dta->event == EV_SYS_BTN_INPUT_ON){
+		    }else if(p_task_system_dta->flag && p_task_system_dta->event == EV_SYS_BTN_INPUT_ON){
 		        put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_BUZZER);
 		        p_task_system_dta->input_btn = LOW_SIGNAL;
 		    }
 
-		    // Compute logical state
+		    // Compute logical input from mic OR button
 		    uint8_t new_state =
 		        (p_task_system_dta->input_mic == HIGH_SIGNAL ||
 		         p_task_system_dta->input_btn == HIGH_SIGNAL)
 		        ? HIGH_SIGNAL
 		        : LOW_SIGNAL;
 
-		    // Transmit only if state changed
-		    if(new_state != p_task_system_dta->input_signal){
-		    	p_task_system_dta->input_signal = new_state;
-
-		        if(new_state == HIGH_SIGNAL)
-		            put_tx_message_task_HC05(HIGH_SIGNAL_SYMBOL);
-		        else
-		            put_tx_message_task_HC05(LOW_SIGNAL_SYMBOL);
-		    }
-			//HC_05 TX
-			/*	REMOVED (PERIODIC REFRESH)
-			p_task_system_dta->tick++;
-			if(p_task_system_dta->tick >= MAIN_SIGNAL_PERIOD){
-				p_task_system_dta->tick = DEL_SYS_MIN;
-
-				if(p_task_system_dta->input_signal == HIGH_SIGNAL)
-					put_tx_message_task_HC05(HIGH_SIGNAL_SYMBOL);
-				else
-					put_tx_message_task_HC05(LOW_SIGNAL_SYMBOL);
-			}
-			*/
+		    p_task_system_dta->input_signal = new_state;
+		    rx_decoder_update(p_task_system_dta, p_task_system_dta->input_signal);
 
 
 			if(message == TRANSMIT_CODE){
+				rx_decoder_commit_symbol(p_task_system_dta, false);
 				p_task_system_dta->state = ST_SYS_TRANSMITTING;
 				p_task_system_dta->tick = DEL_SYS_MIN;
 				put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_RECEIVE);
@@ -240,6 +235,7 @@ void task_system_statechart(void)
 			//RECEIVING SEQUENCE
 
 			if(p_task_system_dta->flag == true && p_task_system_dta->event == EV_SYS_CONNECTION_LOST){
+				rx_decoder_reset(p_task_system_dta);
 				p_task_system_dta->state = ST_SYS_WAITING_CONNECTION;
 				p_task_system_dta->tick = DEL_SYS_MIN;
 				put_event_task_GPIO_output(EV_GPIO_XX_BLINK, ID_LED_RECEIVE);
@@ -259,8 +255,8 @@ void task_system_statechart(void)
 			if(any_message_task_system()){
 
 				message = get_message_task_system();
-
 				if(message == RECEIVE_CODE){
+					rx_decoder_reset(p_task_system_dta);
 					p_task_system_dta->state = ST_SYS_RECEIVING;
 					put_event_task_GPIO_output(EV_GPIO_XX_ON, ID_LED_RECEIVE);
 					put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_TRANSMIT);
@@ -387,5 +383,163 @@ void velocity_management(task_system_dta_t* p_task_system_dta){
 		default:
 			break;
 	}
+}
+
+static void rx_decoder_reset(task_system_dta_t* p_task_system_dta)
+{
+	p_task_system_dta->rx_current_symbol = starting_symbol;
+	p_task_system_dta->rx_high_ticks = 0;
+	p_task_system_dta->rx_low_ticks = 0;
+	p_task_system_dta->rx_unit_ticks = RX_UNIT_TICKS_INIT;
+	p_task_system_dta->rx_prev_signal = LOW_SIGNAL;
+	p_task_system_dta->rx_symbol_started = false;
+	p_task_system_dta->rx_char_committed = false;
+	p_task_system_dta->rx_symbol_index = MORSE_STARTING_INDEX;
+	p_task_system_dta->rx_symbol_len = 0;
+}
+
+static void rx_decoder_commit_symbol(task_system_dta_t* p_task_system_dta, bool add_word_space)
+{
+	if (p_task_system_dta->rx_symbol_started)
+	{
+		if ((p_task_system_dta->rx_symbol_len >= MIN_MORSE_LEN) && (p_task_system_dta->rx_symbol_len <= MAX_MORSE_LEN) && (p_task_system_dta->rx_symbol_index <= MORSE_MAX_INDEX))
+		{
+			/* Keep it simple: decode once when a gap commits the symbol. */
+			EEPROM_ReadSymbol(&p_task_system_dta->rx_current_symbol, p_task_system_dta->rx_symbol_index);
+			if ((p_task_system_dta->rx_current_symbol.ascii_symbol != morse_error.ascii_symbol) &&
+				(p_task_system_dta->rx_current_symbol.ascii_symbol != starting_symbol.ascii_symbol))
+			{
+				put_tx_message_task_HC05(p_task_system_dta->rx_current_symbol.ascii_symbol);
+			}
+		}
+	}
+
+	if (add_word_space)
+	{
+		put_tx_message_task_HC05(' ');
+		p_task_system_dta->rx_char_committed = false;
+	}
+
+	p_task_system_dta->rx_current_symbol = starting_symbol;
+	p_task_system_dta->rx_symbol_started = false;
+	p_task_system_dta->rx_symbol_index = MORSE_STARTING_INDEX;
+	p_task_system_dta->rx_symbol_len = 0;
+}
+
+static void rx_decoder_register_mark(task_system_dta_t *p_task_system_dta, uint32_t mark_ticks)
+{
+	morse_input symbol;
+	uint32_t estimate;
+
+	if (mark_ticks == 0)
+	{
+		return;
+	}
+
+	if (p_task_system_dta->rx_unit_ticks < RX_UNIT_TICKS_MIN)
+	{
+		p_task_system_dta->rx_unit_ticks = RX_UNIT_TICKS_MIN;
+	}
+
+	symbol = (mark_ticks <= (p_task_system_dta->rx_unit_ticks * RX_DOT_LINE_FACTOR)) ? DOT : LINE;
+
+	if (p_task_system_dta->rx_symbol_len < MAX_MORSE_LEN)
+	{
+		p_task_system_dta->rx_symbol_index = EEPROM_NextSymbol(p_task_system_dta->rx_symbol_index, symbol);
+		p_task_system_dta->rx_symbol_len++;
+	}
+	else
+	{
+		/* Mark as invalid; commit will report error once. */
+		p_task_system_dta->rx_symbol_index = (uint8_t)(MORSE_MAX_INDEX + 2u);
+	}
+	p_task_system_dta->rx_symbol_started = true;
+
+	estimate = (symbol == DOT) ? mark_ticks : (mark_ticks / 3u);
+	if (estimate < RX_UNIT_TICKS_MIN)
+	{
+		estimate = RX_UNIT_TICKS_MIN;
+	}
+	else if (estimate > RX_UNIT_TICKS_MAX)
+	{
+		estimate = RX_UNIT_TICKS_MAX;
+	}
+
+
+	p_task_system_dta->rx_unit_ticks = ((p_task_system_dta->rx_unit_ticks * 3u) + estimate) / 4u;
+}
+
+static void rx_decoder_update(task_system_dta_t* p_task_system_dta, bool input_signal)
+{
+	if (input_signal == HIGH_SIGNAL)
+	{
+		p_task_system_dta->rx_high_ticks++;
+
+		if (p_task_system_dta->rx_prev_signal == LOW_SIGNAL)
+		{
+			if (p_task_system_dta->rx_char_committed &&
+			    (p_task_system_dta->rx_low_ticks < (p_task_system_dta->rx_unit_ticks * RX_WORD_GAP_FACTOR)))
+			{
+				/* New mark before word gap: next symbol belongs to same word. */
+				p_task_system_dta->rx_char_committed = false;
+			}
+
+			if (p_task_system_dta->rx_symbol_started)
+			{
+				if (p_task_system_dta->rx_low_ticks >= (p_task_system_dta->rx_unit_ticks * RX_WORD_GAP_FACTOR))
+				{
+					rx_decoder_commit_symbol(p_task_system_dta, true);
+				}
+				else if (p_task_system_dta->rx_low_ticks >= (p_task_system_dta->rx_unit_ticks * RX_CHAR_GAP_FACTOR))
+				{
+					rx_decoder_commit_symbol(p_task_system_dta, false);
+					p_task_system_dta->rx_char_committed = true;
+				}
+				else
+				{
+					uint32_t gap_estimate = p_task_system_dta->rx_low_ticks;
+					if ((gap_estimate >= RX_UNIT_TICKS_MIN) && (gap_estimate <= RX_UNIT_TICKS_MAX))
+					{
+						p_task_system_dta->rx_unit_ticks = ((p_task_system_dta->rx_unit_ticks * 3u) + gap_estimate) / 4u;
+					}
+				}
+			}
+			p_task_system_dta->rx_low_ticks = 0;
+		}
+	}
+	else
+	{
+		p_task_system_dta->rx_low_ticks++;
+
+		if (p_task_system_dta->rx_prev_signal == HIGH_SIGNAL)
+		{
+			rx_decoder_register_mark(p_task_system_dta, p_task_system_dta->rx_high_ticks);
+			p_task_system_dta->rx_high_ticks = 0;
+		}
+
+		/* Flush character as soon as char-gap is reached, even without next mark. */
+		if (p_task_system_dta->rx_symbol_started &&
+		    (p_task_system_dta->rx_low_ticks >= (p_task_system_dta->rx_unit_ticks * RX_CHAR_GAP_FACTOR)))
+		{
+			rx_decoder_commit_symbol(p_task_system_dta, false);
+			p_task_system_dta->rx_char_committed = true;
+		}
+
+		if (p_task_system_dta->rx_symbol_started && (p_task_system_dta->rx_low_ticks >= (p_task_system_dta->rx_unit_ticks * RX_WORD_GAP_FACTOR)))
+		{
+			rx_decoder_commit_symbol(p_task_system_dta, true);
+			p_task_system_dta->rx_low_ticks = 0;
+		}
+
+		if (p_task_system_dta->rx_char_committed &&
+		    (p_task_system_dta->rx_low_ticks >= (p_task_system_dta->rx_unit_ticks * RX_WORD_GAP_FACTOR)))
+		{
+			put_tx_message_task_HC05(' ');
+			p_task_system_dta->rx_char_committed = false;
+			p_task_system_dta->rx_low_ticks = 0;
+		}
+	}
+
+	p_task_system_dta->rx_prev_signal = input_signal;
 }
 /********************** end of file ******************************************/

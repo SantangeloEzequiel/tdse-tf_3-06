@@ -1,4 +1,8 @@
-../app/src/task_system.c:70:6:task_system_init	1
-../app/src/task_system.c:367:6:velocity_management	4
-../app/src/task_system.c:147:6:task_system_statechart	43
-../app/src/task_system.c:109:6:task_system_update	3
+../app/src/task_system.c:85:6:task_system_init	2
+../app/src/task_system.c:125:6:task_system_update	4
+../app/src/task_system.c:163:6:task_system_statechart	44
+../app/src/task_system.c:366:6:velocity_management	7
+../app/src/task_system.c:391:13:rx_decoder_reset	1
+../app/src/task_system.c:403:13:rx_decoder_commit_symbol	8
+../app/src/task_system.c:430:13:rx_decoder_register_mark	8
+../app/src/task_system.c:474:13:rx_decoder_update	11

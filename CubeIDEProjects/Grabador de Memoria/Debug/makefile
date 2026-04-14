@@ -60,8 +60,8 @@ all: main-build
 main-build: Grabador\ de\ Memoria.elf secondary-outputs
 
 # Tool invocations
-Grabador\ de\ Memoria.elf Grabador\ de\ Memoria.map: $(OBJS) $(USER_OBJS) C:\Users\ramaz\STM32CubeIDE\workspace_1.19.0\Grabador\ de\ Memoria\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Grabador de Memoria.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ramaz\STM32CubeIDE\workspace_1.19.0\Grabador de Memoria\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Grabador de Memoria.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Grabador\ de\ Memoria.elf Grabador\ de\ Memoria.map: $(OBJS) $(USER_OBJS) C:\Users\ramaz\Desktop\REPO\ EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Grabador\ de\ Memoria\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Grabador de Memoria.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Grabador de Memoria\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Grabador de Memoria.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

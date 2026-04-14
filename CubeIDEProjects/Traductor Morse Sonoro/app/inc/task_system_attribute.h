@@ -49,6 +49,18 @@ typedef struct
 	bool				input_signal;
 	bool 				input_mic;
 	bool 				input_btn;
+
+	/* Morse RX decoder state (initialized in task_system.c). */
+	morse_entry_t		rx_current_symbol;
+	uint32_t			rx_high_ticks;
+	uint32_t			rx_low_ticks;
+	uint32_t			rx_unit_ticks;
+	bool				rx_prev_signal;
+	bool				rx_symbol_started;
+	bool				rx_char_committed;
+	uint8_t				rx_symbol_index;
+	uint8_t				rx_symbol_len;
+
 } task_system_dta_t;
 
 /********************** external data declaration ****************************/

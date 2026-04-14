@@ -83,7 +83,8 @@ uint16_t EEPROM_Read2Bytes(uint16_t memAddr)
 }
 
 void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
-	uint16_t reading = EEPROM_Read2Bytes(index);
+	uint16_t physical_index = index*2; //Esto sucede porque cada caracter ocupa 2B
+	uint16_t reading = EEPROM_Read2Bytes(physical_index);
 	Symbol->index = index;
 	uint8_t sequence = reading >> 8;
 	Symbol->len = (sequence & 0b11100000) >> 5;
@@ -97,21 +98,23 @@ void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
 	Symbol->ascii_symbol = reading & 0xFF;
 }
 
-void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal){
+uint8_t EEPROM_NextSymbol(uint8_t index , morse_input signal){
+	uint8_t next_index = 0;
 
 	switch(signal){
 
 	case DOT:
-		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 );
+		next_index = 2* index;
 		break;
 
 	case LINE:
-		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 + 1 );
+		next_index = 2* index + 1;
 		break;
 
 		default:
 		break;
 	}
+	return next_index;
 }
 
 void EEPROM_SymbolToMorse( morse_entry_t* currentSymbol , char symbol){

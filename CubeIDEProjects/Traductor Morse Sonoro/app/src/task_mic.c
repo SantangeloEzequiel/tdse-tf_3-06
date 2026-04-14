@@ -47,7 +47,7 @@ task_mic_dta_t task_mic_dta_list[] = {
 #define FS  10000
 
 #define NUM_TONES 3
-#define THRESHOLD 75000000.0
+#define THRESHOLD 60000000.0
 
 #define Q 14
 #define SCALE (1<<Q)
@@ -222,6 +222,9 @@ void task_mic_statechart(void)
 				    put_event_task_system(p_task_mic_cfg->mic_no_detection);
 				    p_task_mic_dta->mic_flag = false;
 				}
+
+				/* Consume exactly one DMA-complete batch, then wait for next callback. */
+				p_task_mic_dta->state = ST_ADC_XX_BUSY;
 				break;
 		}
 	}
@@ -262,16 +265,27 @@ uint32_t goertzel_energy(const uint16_t *adc, int N, int16_t coeff, int mean)
         s1 = s0;
     }
 
-    return (uint32_t)(
-        (s1*s1) +
-        (s2*s2) -
-        ((coeff * s1 * s2) >> Q)
-    );
+    /* Keep power computation in 64-bit to avoid overflow. */
+    int64_t p1 = (int64_t)s1 * (int64_t)s1;
+    int64_t p2 = (int64_t)s2 * (int64_t)s2;
+    int64_t cross = ((int64_t)coeff * (int64_t)s1 * (int64_t)s2) >> Q;
+    int64_t energy = p1 + p2 - cross;
+
+    if (energy < 0)
+    {
+        return 0;
+    }
+    if (energy > UINT32_MAX)
+    {
+        return UINT32_MAX;
+    }
+
+    return (uint32_t)energy;
 }
 
 uint32_t batch_energy(task_mic_dta_t *p_task_mic_dta)
 {
-    uint32_t energy = 0;
+    uint64_t energy = 0;
     int32_t mean = 0;
 
     for(int i=0;i<ADC_BATCH_SIZE;i++)
@@ -289,6 +303,11 @@ uint32_t batch_energy(task_mic_dta_t *p_task_mic_dta)
         );
     }
 
-    return energy;
+    if (energy > UINT32_MAX)
+    {
+        return UINT32_MAX;
+    }
+
+    return (uint32_t)energy;
 }
 /********************** end of file ******************************************/

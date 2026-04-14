@@ -4,7 +4,9 @@
 #define MORSE_TOTAL_SPACE_BYTES 128
 #define MORSE_TOTAL_CHARACTERS 	36
 #define MORSE_MAX_INDEX 		64
-
+#define MORSE_STARTING_INDEX	1
+#define MIN_MORSE_LEN			1
+#define MAX_MORSE_LEN			5
 #define EEPROM_I2C_ADDR (0x50 << 1)
 
 #include <stdint.h>
@@ -39,7 +41,9 @@ HAL_StatusTypeDef EEPROM_WriteByte(uint8_t memAddr, uint8_t data);
 
 uint8_t EEPROM_ReadByte(uint16_t memAddr);
 
-void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal);
+void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index);
+
+uint8_t EEPROM_NextSymbol(uint8_t index , morse_input signal);
 
 void EEPROM_SymbolToMorse(morse_entry_t* currentSymbol , char symbol);
 

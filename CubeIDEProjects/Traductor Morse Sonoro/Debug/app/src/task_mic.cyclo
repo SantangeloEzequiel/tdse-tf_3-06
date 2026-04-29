@@ -1,6 +1,6 @@
 ../app/src/task_mic.c:73:6:task_mic_init	1
 ../app/src/task_mic.c:233:6:HAL_ADC_ConvCpltCallback	2
 ../app/src/task_mic.c:254:10:goertzel_energy	4
-../app/src/task_mic.c:286:10:batch_energy	6
+../app/src/task_mic.c:286:10:batch_energy	7
 ../app/src/task_mic.c:165:6:task_mic_statechart	13
 ../app/src/task_mic.c:127:6:task_mic_update	3

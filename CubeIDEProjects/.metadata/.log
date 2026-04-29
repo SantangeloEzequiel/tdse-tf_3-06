@@ -1220,3 +1220,575 @@ org.eclipse.core.runtime.CoreException: Setup exceptions
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
 !SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2026-04-13 23:09:43.621
 !MESSAGE Setup exceptions
+!SESSION 2026-04-19 23:45:58.574 -----------------------------------------------
+eclipse.buildId=Version 2.0.0
+java.version=21.0.8
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-04-19 23:46:25.285
+!MESSAGE Log4j2 initialized with config file C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-04-19 23:46:42.013
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:46:48.334
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:46:48.335
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:46:48.336
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:46:48.337
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:58:09.732
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:58:09.733
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-19 23:58:09.734
+!MESSAGE port: COM5
+!SESSION 2026-04-20 10:34:37.391 -----------------------------------------------
+eclipse.buildId=Version 2.0.0
+java.version=21.0.8
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY org.eclipse.core.resources 2 10035 2026-04-20 10:34:44.757
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-04-20 10:35:00.225
+!MESSAGE Log4j2 initialized with config file C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-04-20 10:35:16.120
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:35:20.594
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:35:20.596
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:35:20.597
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:35:20.597
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:35.703
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:35.704
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:35.704
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:41.183
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:41.184
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:41.185
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 10:40:41.185
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:17:57.809
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:17:57.810
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:17:57.811
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:18:02.134
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:18:02.134
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:18:02.135
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 14:18:02.136
+!MESSAGE port: COM4
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2026-04-20 14:42:41.445
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.debug.ui.actions.DsfResumeCommand$4$1@56b8d61a): Status ERROR: org.eclipse.cdt.dsf.gdb code=10001 Given context: (gdb[12].proc[42000].threadGroup[i1],gdb[12].proc[42000].OSthread[1]).thread[1], is already running.' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10001 2026-04-20 14:42:41.445
+!MESSAGE Given context: (gdb[12].proc[42000].threadGroup[i1],gdb[12].proc[42000].OSthread[1]).thread[1], is already running.
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 15:19:16.996
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 15:19:16.997
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-20 15:19:16.998
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:17:31.327
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:17:31.329
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:17:31.330
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:17:31.330
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:58:14.868
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:58:14.869
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 00:58:14.870
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 01:03:02.813
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 01:03:02.814
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 01:03:02.815
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 01:03:02.816
+!MESSAGE port: COM4
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-04-21 01:10:02.046
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob RUNNING
+	 at java.base/java.lang.Object.wait0(Native Method)
+	 at java.base/java.lang.Object.wait(Object.java:366)
+	 at java.base/java.lang.Object.wait(Object.java:339)
+	 at org.eclipse.ui.console.IOConsoleInputStream.waitForData(IOConsoleInputStream.java:140)
+	 at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:91)
+	 at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:113)
+	 at org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob.run(GdbBasicCliConsole.java:248)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2026-04-21 20:23:57.950 -----------------------------------------------
+eclipse.buildId=Version 2.0.0
+java.version=21.0.8
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-04-21 20:24:20.106
+!MESSAGE Log4j2 initialized with config file C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-04-21 20:24:34.452
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 20:24:40.719
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 20:24:40.720
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 20:24:40.721
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 21:14:31.190
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 21:14:31.191
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 21:14:31.192
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-21 21:14:31.193
+!MESSAGE port: COM4
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2026-04-21 21:22:55.803
+!MESSAGE Program file does not exist
+!STACK 0
+java.io.FileNotFoundException: C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\Debug\Traductor Morse Sonoro.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:333)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2026-04-21 21:22:55.804
+!MESSAGE C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\Debug\Traductor Morse Sonoro.elf not found
+!STACK 0
+java.io.FileNotFoundException: C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\Debug\Traductor Morse Sonoro.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:130)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:330)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:152)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:333)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2026-04-21 21:42:31.653
+!MESSAGE Error in final launch sequence:
+
+Setup exceptions
+!STACK 1
+org.eclipse.core.runtime.CoreException: Setup exceptions
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:333)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2026-04-21 21:42:31.653
+!MESSAGE Setup exceptions
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-04-21 23:56:38.787
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob RUNNING
+	 at java.base/java.lang.Object.wait0(Native Method)
+	 at java.base/java.lang.Object.wait(Object.java:366)
+	 at java.base/java.lang.Object.wait(Object.java:339)
+	 at org.eclipse.ui.console.IOConsoleInputStream.waitForData(IOConsoleInputStream.java:140)
+	 at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:91)
+	 at org.eclipse.ui.console.IOConsoleInputStream.read(IOConsoleInputStream.java:113)
+	 at org.eclipse.cdt.dsf.gdb.internal.ui.console.GdbBasicCliConsole$InputReadJob.run(GdbBasicCliConsole.java:248)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2026-04-27 22:35:00.722 -----------------------------------------------
+eclipse.buildId=Version 2.0.0
+java.version=21.0.8
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-04-27 22:35:23.755
+!MESSAGE Log4j2 initialized with config file C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-04-27 22:35:37.672
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-27 22:35:43.959
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-27 22:35:43.960
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-27 22:35:43.960
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:09.200
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:09.201
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:09.202
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:09.202
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:22.507
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:22.508
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 00:45:22.508
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:38:25.832
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:38:25.834
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:38:25.835
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:38:25.835
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2026-04-28 20:39:11.345
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 0 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2026-04-28 20:39:11.345
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:47:28.115
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:47:28.115
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 20:47:28.116
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:24.501
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:24.502
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:24.503
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:24.504
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:54.339
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:54.339
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 21:25:54.340
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:41:29.563
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:41:29.564
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:41:29.565
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:41:29.566
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:26.481
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:26.481
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:26.482
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:26.482
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:35.344
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:35.345
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:35.345
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:43:35.346
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:27.423
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:27.424
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:27.425
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:27.425
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:32.845
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:32.846
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:32.846
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 22:50:32.847
+!MESSAGE port: COM4
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2026-04-28 22:57:53.894
+!MESSAGE Error in final launch sequence:
+
+Failed to execute MI command:
+target extended-remote localhost:3333
+
+Error message from debugger back end:
+localhost:3333: Connection timed out.
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to execute MI command:
+target extended-remote localhost:3333
+
+Error message from debugger back end:
+localhost:3333: Connection timed out.
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:331)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: java.lang.Exception: localhost:3333: Connection timed out.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10004 2026-04-28 22:57:53.895
+!MESSAGE Failed to execute MI command:
+target extended-remote localhost:3333
+
+Error message from debugger back end:
+localhost:3333: Connection timed out.
+!STACK 0
+java.lang.Exception: localhost:3333: Connection timed out.
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.processMIOutput(AbstractMIControl.java:1024)
+	at org.eclipse.cdt.dsf.mi.service.command.AbstractMIControl$RxThread.run(AbstractMIControl.java:853)
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:01:22.396
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:01:22.396
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:01:22.397
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:15:54.249
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+COM4
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:15:54.250
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:15:54.251
+!MESSAGE port: COM5
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:15:54.251
+!MESSAGE port: COM4
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:20:39.383
+!MESSAGE Executed PowerShell command powershell.exe -Command "Get-CimInstance -ClassName Win32_SerialPort | Select-Object -ExpandProperty DeviceID":
+COM6
+COM5
+
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:20:39.384
+!MESSAGE port: COM6
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 1 1 2026-04-28 23:20:39.384
+!MESSAGE port: COM5

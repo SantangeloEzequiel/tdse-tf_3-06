@@ -50,6 +50,10 @@ typedef struct
 	bool 				input_mic;
 	bool 				input_btn;
 
+	/* Morse TX string transmission state */
+	char				message_tx[20];
+	uint8_t				message_tx_index;
+
 	/* Morse RX decoder state (initialized in task_system.c). */
 	morse_entry_t		rx_current_symbol;
 	uint32_t			rx_high_ticks;

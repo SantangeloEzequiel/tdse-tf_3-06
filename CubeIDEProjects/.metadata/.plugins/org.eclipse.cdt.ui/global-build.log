@@ -1,31 +1,45 @@
-02:02:03 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+22:56:32 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+make -j12 all 
+arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
+   text	   data	    bss	    dec	    hex	filename
+  39332	    284	   3300	  42916	   a7a4	Traductor Morse Sonoro.elf
+Finished building: default.size.stdout
+ 
+22:57:38 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+make -j12 all 
+arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
+   text	   data	    bss	    dec	    hex	filename
+  39332	    284	   3300	  42916	   a7a4	Traductor Morse Sonoro.elf
+Finished building: default.size.stdout
+ 
+23:00:52 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
 make -j12 all 
 arm-none-eabi-gcc "../app/src/app.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/app.d" -MT"app/src/app.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/app.o"
+arm-none-eabi-gcc "../app/src/logger.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/logger.d" -MT"app/src/logger.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/logger.o"
+arm-none-eabi-gcc "../app/src/task_GPIO_output.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_GPIO_output.d" -MT"app/src/task_GPIO_output.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_GPIO_output.o"
+arm-none-eabi-gcc "../app/src/task_GPIO_output_interface.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_GPIO_output_interface.d" -MT"app/src/task_GPIO_output_interface.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_GPIO_output_interface.o"
 arm-none-eabi-gcc "../app/src/task_HC05.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_HC05.d" -MT"app/src/task_HC05.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_HC05.o"
 arm-none-eabi-gcc "../app/src/task_HC05_interface.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_HC05_interface.d" -MT"app/src/task_HC05_interface.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_HC05_interface.o"
 arm-none-eabi-gcc "../app/src/task_mic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -Ofast -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_mic.d" -MT"app/src/task_mic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_mic.o"
 arm-none-eabi-gcc "../app/src/task_sensor.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_sensor.d" -MT"app/src/task_sensor.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_sensor.o"
 arm-none-eabi-gcc "../app/src/task_system.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_system.d" -MT"app/src/task_system.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_system.o"
 arm-none-eabi-gcc "../app/src/task_system_interface.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_system_interface.d" -MT"app/src/task_system_interface.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_system_interface.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../app/src/task_system.c:59:9: warning: missing braces around initializer [-Wmissing-braces]
+   59 |         {DEL_SYS_MIN, ST_SYS_RECEIVING, ST_SYS_WAITING_CONNECTION, {0} , 0 , WORDS_PER_MINUTE ,
+      |         ^
 arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Traductor Morse Sonoro.elf
  
 arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
 arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
    text	   data	    bss	    dec	    hex	filename
-  39172	    260	   3300	  42732	   a6ec	Traductor Morse Sonoro.elf
+  35640	    264	   3128	  39032	   9878	Traductor Morse Sonoro.elf
 Finished building: default.size.stdout
  
 Finished building: Traductor Morse Sonoro.list
  
-02:02:11 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
-make -j12 all 
-arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
-   text	   data	    bss	    dec	    hex	filename
-  39172	    260	   3300	  42732	   a6ec	Traductor Morse Sonoro.elf
-Finished building: default.size.stdout
- 
-02:03:32 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+23:16:22 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
 make -j12 all 
 arm-none-eabi-gcc "../app/src/task_mic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -Ofast -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_mic.d" -MT"app/src/task_mic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_mic.o"
 arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -34,61 +48,35 @@ Finished building target: Traductor Morse Sonoro.elf
 arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
 arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
    text	   data	    bss	    dec	    hex	filename
-  39172	    260	   3300	  42732	   a6ec	Traductor Morse Sonoro.elf
+  35640	    264	   3128	  39032	   9878	Traductor Morse Sonoro.elf
 Finished building: default.size.stdout
  
 Finished building: Traductor Morse Sonoro.list
  
-02:05:58 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+23:17:30 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
 make -j12 all 
-arm-none-eabi-gcc "../app/src/task_system.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_system.d" -MT"app/src/task_system.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_system.o"
-arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Traductor Morse Sonoro.elf
- 
-arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
-arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
-   text	   data	    bss	    dec	    hex	filename
-  39156	    260	   3300	  42716	   a6dc	Traductor Morse Sonoro.elf
-Finished building: default.size.stdout
- 
-Finished building: Traductor Morse Sonoro.list
- 
-02:11:09 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
-make -j12 all 
-arm-none-eabi-gcc "../app/src/app.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/app.d" -MT"app/src/app.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/app.o"
-arm-none-eabi-gcc "../app/src/task_HC05.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_HC05.d" -MT"app/src/task_HC05.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_HC05.o"
-arm-none-eabi-gcc "../app/src/task_HC05_interface.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_HC05_interface.d" -MT"app/src/task_HC05_interface.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_HC05_interface.o"
 arm-none-eabi-gcc "../app/src/task_mic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -Ofast -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_mic.d" -MT"app/src/task_mic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_mic.o"
-arm-none-eabi-gcc "../app/src/task_sensor.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_sensor.d" -MT"app/src/task_sensor.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_sensor.o"
-arm-none-eabi-gcc "../app/src/task_system.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_system.d" -MT"app/src/task_system.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_system.o"
-arm-none-eabi-gcc "../app/src/task_system_interface.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_system_interface.d" -MT"app/src/task_system_interface.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_system_interface.o"
-../app/src/task_system.c:56: warning: "MORSE_STARTING_INDEX" redefined
-   56 | #define MORSE_STARTING_INDEX            1u
-      | 
-In file included from C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc/task_system_attribute.h:10,
-                 from ../app/src/task_system.c:13:
-C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc/memoria_morse.h:7: note: this is the location of the previous definition
-    7 | #define MORSE_STARTING_INDEX    1
-      | 
-../app/src/task_system.c:57: warning: "MIN_MORSE_LEN" redefined
-   57 | #define MIN_MORSE_LEN                           1u
-      | 
-C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc/memoria_morse.h:8: note: this is the location of the previous definition
-    8 | #define MIN_MORSE_LEN                   1
-      | 
-../app/src/task_system.c:58: warning: "MAX_MORSE_LEN" redefined
-   58 | #define MAX_MORSE_LEN                           5u
-      | 
-C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc/memoria_morse.h:9: note: this is the location of the previous definition
-    9 | #define MAX_MORSE_LEN                   5
-      | 
 arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Traductor Morse Sonoro.elf
  
 arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
 arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
    text	   data	    bss	    dec	    hex	filename
-  39192	    260	   3300	  42752	   a700	Traductor Morse Sonoro.elf
+  35640	    264	   3128	  39032	   9878	Traductor Morse Sonoro.elf
+Finished building: default.size.stdout
+ 
+Finished building: Traductor Morse Sonoro.list
+ 
+23:19:45 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+make -j12 all 
+arm-none-eabi-gcc "../app/src/task_mic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -Ofast -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_mic.d" -MT"app/src/task_mic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_mic.o"
+arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Traductor Morse Sonoro.elf
+ 
+arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
+arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
+   text	   data	    bss	    dec	    hex	filename
+  35640	    264	   3128	  39032	   9878	Traductor Morse Sonoro.elf
 Finished building: default.size.stdout
  
 Finished building: Traductor Morse Sonoro.list

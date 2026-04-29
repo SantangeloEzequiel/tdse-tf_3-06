@@ -520,6 +520,7 @@ La tarea más importante del firmware. Se encarga del comportamiento básico del
   Es el estado por defecto del dispositivo. Se encuentra esperando la conexión bluetooth, mediante la lectura de STATE. Siempre que se pierde la conexión, se vuelve a este estado.
 * `ST_SYS_RECEIVING`:
   Observa los eventos `EV_SYS_BTN_INPUT_XX` y `EV_SYS_MIC_INPUT_XX` para enviar los flancos como `1`(ascendente) o `0`(descendiente) hacia la aplicación. La señal evaluada es un resultado de una combinación del micrófono y la llave morse. Es decir, los flancos responden a `MIC OR BTN`.
+  Tambien contiene un algoritmo de conversión morse-ascii simplificado (similar al de la imagen 3.5.6.2) para su interacción directa con consola serial.
 
 * `ST_SYS_TRANSMITTING`
   Queda a la espera del búffer rx. Al recibir un caractér, se invoca a `memoria_morse` para obtener una secuencia de puntos o rayas según el caractér. De ser un caractér no listado en el diccionario, se enciende el led ERROR. Este comportamiento no se ve normalmente, por ser la aplicación encargada de enviar solo caractéres válidos.
@@ -1028,5 +1029,5 @@ Referencias:
 #
 <strong>Fin de memoria</strong>
 
-Última actualización: 21/03/2026
+Última actualización: 20/04/2026
 

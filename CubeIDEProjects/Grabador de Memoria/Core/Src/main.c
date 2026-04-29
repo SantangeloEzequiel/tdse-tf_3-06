@@ -36,7 +36,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define READ
-//#define WRITE
+#define WRITE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -114,8 +114,8 @@ int main(void)
 		EEPROM_WriteByte( morse_table[i].index*2 + 1, morse_table[i].symbol);
 	  };
 	  for (uint8_t i = 0 ; i < MORSE_TOTAL_CHARACTERS ; i++ ){
-		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + MORSE_TOTAL_SPACE_BYTES + 1, morse_table_alphabet[i].morse);
-		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + 1 + MORSE_TOTAL_SPACE_BYTES + 1, morse_table_alphabet[i].symbol);
+		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + MORSE_TOTAL_SPACE_BYTES + 2, morse_table_alphabet[i].morse);
+		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + 1 + MORSE_TOTAL_SPACE_BYTES + 2, morse_table_alphabet[i].symbol);
 	  };
 
 	#endif

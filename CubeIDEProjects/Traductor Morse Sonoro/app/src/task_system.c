@@ -56,9 +56,9 @@
 
 /********************** internal data declaration ****************************/
 task_system_dta_t task_system_dta =
-	{DEL_SYS_MIN, ST_SYS_RECEIVING, ST_SYS_WAITING_CONNECTION, {} , 0 , WORDS_PER_MINUTE ,
+	{DEL_SYS_MIN, ST_SYS_RECEIVING, ST_SYS_WAITING_CONNECTION, {0} , 0 , WORDS_PER_MINUTE ,
 	 G_TASK_SYS_CNT_INI , false , false , LOW_SIGNAL , LOW_SIGNAL , LOW_SIGNAL,
-	 {}, 0u, 0u, RX_UNIT_TICKS_INIT, LOW_SIGNAL, false, false, MORSE_STARTING_INDEX, 0u};
+	 {0}, 0u, 0u, RX_UNIT_TICKS_INIT, LOW_SIGNAL, false, false, MORSE_STARTING_INDEX, 0u};
 
 #define SYSTEM_DTA_QTY	(sizeof(task_system_dta)/sizeof(task_system_dta_t))
 
@@ -263,7 +263,7 @@ void task_system_statechart(void)
 					put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_LED_ERROR);
 					put_event_task_GPIO_output(EV_GPIO_XX_OFF, ID_BUZZER);
 				} else {
-					EEPROM_SymbolToMorse(&p_task_system_dta->morse_character, message);
+ 					EEPROM_SymbolToMorse(&p_task_system_dta->morse_character, message);
 					if(p_task_system_dta->morse_character.ascii_symbol != morse_error.ascii_symbol){
 						p_task_system_dta->morse_character_tick = 0;
 						p_task_system_dta->state = ST_SYS_TRANSMITTING_CHAR;

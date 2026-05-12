@@ -179,10 +179,8 @@ void task_hc05_statechart(void)
 			case ST_HC05_CONNECTED:
 
 				if(p_task_hc05_dta->event == EV_HC05_FULLDUPLEX){
-					if(HC05_ALLOW_FULLDUPLEX)
-						p_task_hc05_dta->state = ST_HC05_RECEIVING;
-					else
-						p_task_hc05_dta->state = ST_HC05_ERROR;
+					/* Avoid dead-end error state: prioritize RX when both sides are active. */
+					p_task_hc05_dta->state = ST_HC05_RECEIVING;
 				}
 				else if (p_task_hc05_dta->event == EV_HC05_RX_BUFFER)
 					p_task_hc05_dta->state = ST_HC05_RECEIVING;
@@ -215,7 +213,8 @@ void task_hc05_statechart(void)
 				//TX BUFFER NOT EMPTY
 				p_task_hc05_dta->tx_buffer = get_tx_message_task_HC05();
 
-				HAL_UART_Transmit(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1, HC05_TIMEOUT);
+				//HAL_UART_Transmit(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1, HC05_TIMEOUT);
+				HAL_UART_Transmit_DMA(p_task_hc05_cfg->uart, &p_task_hc05_dta->tx_buffer, 1);
 				p_task_hc05_dta->tx_flag = 0;
 
 				p_task_hc05_dta->state = ST_HC05_CONNECTED;
@@ -228,6 +227,13 @@ void task_hc05_statechart(void)
 			break;
 
 			case ST_HC05_ERROR:
+				/* Recovery path in case this state is reached. */
+				if(p_task_hc05_dta->event == EV_HC05_DISCONNECTED){
+					p_task_hc05_dta->state = ST_HC05_DISCONNECTED;
+					put_event_task_system(p_task_hc05_cfg->connection_lost);
+				} else {
+					p_task_hc05_dta->state = ST_HC05_CONNECTED;
+				}
 			break;
 
 			default:

@@ -36,7 +36,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define READ
-//#define WRITE
+#define WRITE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -114,21 +114,21 @@ int main(void)
 		EEPROM_WriteByte( morse_table[i].index*2 + 1, morse_table[i].symbol);
 	  };
 	  for (uint8_t i = 0 ; i < MORSE_TOTAL_CHARACTERS ; i++ ){
-		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + MORSE_TOTAL_SPACE_BYTES + 1, morse_table_alphabet[i].morse);
-		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + 1 + MORSE_TOTAL_SPACE_BYTES + 1, morse_table_alphabet[i].symbol);
+		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + MORSE_TOTAL_SPACE_BYTES + 2, morse_table_alphabet[i].morse);
+		EEPROM_WriteByte( morse_table_alphabet[i].index*2 + 1 + MORSE_TOTAL_SPACE_BYTES + 2, morse_table_alphabet[i].symbol);
 	  };
 
 	#endif
 	#ifdef READ
 	  uint8_t caracter , morse;
-	  morse = EEPROM_ReadByte(0 + MORSE_TOTAL_SPACE_BYTES + 1);
-	  caracter = EEPROM_ReadByte(0 + MORSE_TOTAL_SPACE_BYTES + 2);
+	  morse = EEPROM_ReadByte(0);
+	  caracter = EEPROM_ReadByte(1);
 
-	  morse = EEPROM_ReadByte(1 + MORSE_TOTAL_SPACE_BYTES + 1);
-	  caracter = EEPROM_ReadByte(1 + MORSE_TOTAL_SPACE_BYTES + 2);
+	  morse = EEPROM_ReadByte(2);
+	  caracter = EEPROM_ReadByte(3);
 
-	  morse = EEPROM_ReadByte(26 + MORSE_TOTAL_SPACE_BYTES + 1);
-	  caracter = EEPROM_ReadByte(26 + MORSE_TOTAL_SPACE_BYTES + 2);
+	  morse = EEPROM_ReadByte(4);
+	  caracter = EEPROM_ReadByte(5);
 
 	#endif
 	  break;

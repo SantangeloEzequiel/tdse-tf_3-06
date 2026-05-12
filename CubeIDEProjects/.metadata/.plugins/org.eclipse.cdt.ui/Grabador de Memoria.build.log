@@ -1,0 +1,24 @@
+22:50:31 **** Build of configuration Debug for project Grabador de Memoria ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:123:30: warning: variable 'morse' set but not used [-Wunused-but-set-variable]
+  123 |           uint8_t caracter , morse;
+      |                              ^~~~~
+../Core/Src/main.c:123:19: warning: variable 'caracter' set but not used [-Wunused-but-set-variable]
+  123 |           uint8_t caracter , morse;
+      |                   ^~~~~~~~
+arm-none-eabi-gcc -o "Grabador de Memoria.elf" @"objects.list"   -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Grabador de Memoria\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Grabador de Memoria.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Grabador de Memoria.elf
+ 
+arm-none-eabi-size  Grabador\ de\ Memoria.elf 
+arm-none-eabi-objdump -h -S Grabador\ de\ Memoria.elf  > "Grabador de Memoria.list"
+   text	   data	    bss	    dec	    hex	filename
+  11388	     12	   1724	  13124	   3344	Grabador de Memoria.elf
+Finished building: default.size.stdout
+ 
+Finished building: Grabador de Memoria.list
+ 
+
+22:50:32 Build Finished. 0 errors, 2 warnings. (took 1s.696ms)
+

@@ -1,0 +1,17 @@
+23:19:45 **** Incremental Build of configuration Debug for project Traductor Morse Sonoro ****
+make -j12 all 
+arm-none-eabi-gcc "../app/src/task_mic.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app" -I"C:/Users/ramaz/Desktop/REPO EMBEBIDOS/tdse-tf_3-06/CubeIDEProjects/Traductor Morse Sonoro/app/inc" -Ofast -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"app/src/task_mic.d" -MT"app/src/task_mic.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "app/src/task_mic.o"
+arm-none-eabi-gcc -o "Traductor Morse Sonoro.elf" @"objects.list"  -lrdimon -mcpu=cortex-m3 -T"C:\Users\ramaz\Desktop\REPO EMBEBIDOS\tdse-tf_3-06\CubeIDEProjects\Traductor Morse Sonoro\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Traductor Morse Sonoro.map" -Wl,--gc-sections -static --specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Traductor Morse Sonoro.elf
+ 
+arm-none-eabi-size  Traductor\ Morse\ Sonoro.elf 
+arm-none-eabi-objdump -h -S Traductor\ Morse\ Sonoro.elf  > "Traductor Morse Sonoro.list"
+   text	   data	    bss	    dec	    hex	filename
+  35640	    264	   3128	  39032	   9878	Traductor Morse Sonoro.elf
+Finished building: default.size.stdout
+ 
+Finished building: Traductor Morse Sonoro.list
+ 
+
+23:19:46 Build Finished. 0 errors, 0 warnings. (took 1s.358ms)
+

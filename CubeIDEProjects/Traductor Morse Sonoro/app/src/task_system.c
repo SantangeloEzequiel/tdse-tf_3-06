@@ -61,7 +61,7 @@
 task_system_dta_t task_system_dta =
 	{DEL_SYS_MIN, ST_SYS_RECEIVING, ST_SYS_WAITING_CONNECTION, {0} , 0 , WORDS_PER_MINUTE ,
 	 G_TASK_SYS_CNT_INI , false , false , LOW_SIGNAL , LOW_SIGNAL , LOW_SIGNAL,
-	 {0}, 0u, 0u, RX_UNIT_TICKS_INIT, LOW_SIGNAL, false, false, MORSE_STARTING_INDEX, 0u};
+	 {0}, 0u, {0}, 0u , 0u , RX_UNIT_TICKS_INIT, LOW_SIGNAL, false, false, MORSE_STARTING_INDEX, 0u};
 
 #define SYSTEM_DTA_QTY	(sizeof(task_system_dta)/sizeof(task_system_dta_t))
 

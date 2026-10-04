@@ -529,6 +529,8 @@ La tarea más importante del firmware. Se encarga del comportamiento básico del
 * `ST_SYS_TRANSMITTING_WAIT`
   Decrementa `tick` hasta 0, y vuelve al estado `ST_SYS_TRANSMITTING_CHAR`.
 
+Cuenta con una macro `ON_BOARD_DECODE` que determina si se utiliza el algoritmo de conversión morse embebido en la placa o si se envía la señal recibida en crudo a la aplicación para que esta la procese.
+
 ### 3.5.2 Task sensor
 
 La tarea `task_sensor` se encarga de la lectura de todos los puertos GPIO configurados como entrada digital.
@@ -916,7 +918,9 @@ El funcionamiento es adecuado, con algunas mejoras y limitaciones pendientes. A 
 * La implementación de modo de bajo consumo es efectiva, pero se encuentra limitada por el consumo de la memoria EEPROM, que se encuentra constantemente alimentada. Es preciso investigar el motivo de este consumo, y corregirlo para la entrega al cliente.
 * Implementación DMA de la comunicación I2C con la memoria EEPROM para reducir notablemente el tiempo de ejecución de `task_system`.
 
-El siguiente [video demostrativo](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing) repasa cada función del dispositivo y su funcionamiento.
+El siguiente [video demostrativo](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing) repasa cada función del dispositivo y su funcionamiento utilizando la decodificación on-board.
+
+El siguiente [video demostrativo](https://drive.google.com/file/d/1XpYaygy5qgFFMLYC-HlMiM3PCYnf0Yhf/view?usp=sharing) muestra el funcionamiento del decodificador utiliando la aplicación móbil.
 
 
 
@@ -1026,8 +1030,9 @@ Referencias:
 
 * [Repositorio de MyFriendlyMorse](https://github.com/SantangeloEzequiel/MyFriendlyMorse)
 * [Video demostrativo del proyecto](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing)
+* [Video demostrativo de decodificación por aplicación móbil](https://drive.google.com/file/d/1XpYaygy5qgFFMLYC-HlMiM3PCYnf0Yhf/view?usp=sharing)
 #
 <strong>Fin de memoria</strong>
 
-Última actualización: 10/05/2026
+Última actualización: 5/10/2026
 

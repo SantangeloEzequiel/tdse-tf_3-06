@@ -36,6 +36,7 @@
 #define HIGH_SIGNAL					1
 #define LOW_SIGNAL_SYMBOL			'0'
 #define HIGH_SIGNAL_SYMBOL			'1'
+#define ON_BOARD_DECODE 			false
 #define MAIN_SIGNAL_PERIOD			5
 
 #define VELOCITY1					70
@@ -53,6 +54,8 @@
 #define RX_DOT_LINE_FACTOR			2ul
 #define RX_CHAR_GAP_FACTOR			3ul
 #define RX_WORD_GAP_FACTOR			7ul
+
+
 
 /********************** internal data declaration ****************************/
 task_system_dta_t task_system_dta =
@@ -219,8 +222,25 @@ void task_system_statechart(void)
 		        ? HIGH_SIGNAL
 		        : LOW_SIGNAL;
 
-		    p_task_system_dta->input_signal = new_state;
-		    rx_decoder_update(p_task_system_dta, p_task_system_dta->input_signal);
+		    /* Transmit only if state changed */
+		    if (ON_BOARD_DECODE)
+		    {
+		        p_task_system_dta->input_signal = new_state;
+		        rx_decoder_update(p_task_system_dta,
+		                          p_task_system_dta->input_signal);
+		    }
+		    else
+		    {
+		        if (new_state != p_task_system_dta->input_signal)
+		        {
+		            p_task_system_dta->input_signal = new_state;
+
+		            if (new_state == HIGH_SIGNAL)
+		                put_tx_message_task_HC05(HIGH_SIGNAL_SYMBOL);
+		            else
+		                put_tx_message_task_HC05(LOW_SIGNAL_SYMBOL);
+		        }
+		    }
 
 
 			if(message == TRANSMIT_CODE){

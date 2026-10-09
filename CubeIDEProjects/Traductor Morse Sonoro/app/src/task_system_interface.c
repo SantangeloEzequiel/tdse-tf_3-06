@@ -107,7 +107,7 @@ char get_message_task_system(void)
 	queue_rx_system.queue[queue_rx_system.tail++] = MESSAGE_UNDEFINED;
 
 	if (MAX_MESSAGES == queue_rx_system.tail)
-		queue_task_system.tail = 0;
+		queue_rx_system.tail = 0;
 
 	return message;
 }

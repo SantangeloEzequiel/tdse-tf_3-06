@@ -153,7 +153,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
         <li>Input de señal morse.</li>
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
-      Se utilizaron mecanismos de <em>debounce por software</em> para filtrar el ruido mecánico y garantizar una lectura limpia de la señal.</p>
+      Se utilizaron mecanismos de <em>debounce por software</em> para filtrar el ruido mecánico y garantizar una lectura limpia de la señal como se observa en la Figura 2.1.</p>
     </td>
     <td width="40%" align="center">
         <img src="https://github.com/user-attachments/assets/f57e6ff3-a524-4114-a19a-018d5caccd6d" width="250">
@@ -174,7 +174,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
         <li>Control de velocidad.</li>
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
-      Se utilizaron mecanismos de <em>debounce por software</em> para filtrar el ruido mecánico y garantizar una lectura limpia de la señal.</p>
+      Se utilizaron mecanismos de <em>debounce por software</em> para filtrar el ruido mecánico y garantizar una lectura limpia de la señal como se puede observar en la Figura 2.2.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="dip-switch" src="https://github.com/user-attachments/assets/2b3c45c3-40e8-4b28-9a40-6e6e99716785" />
@@ -197,7 +197,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
         <li>Indicadores de funcionamiento y errores.</li>
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
-      Se utilizaron diferentes modos de emisión (<strong>pulso, blink, on, off</strong>) para maximizar la capacidad de transmisión de información.</p>
+      Se utilizaron diferentes modos de emisión (<strong>pulso, blink, on, off</strong>) para maximizar la capacidad de transmisión de información como se puede observar en la Figura 2.3.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="dip-switch" src="https://github.com/user-attachments/assets/22028d4d-3719-473d-9a54-6f1f3edc266c" />
@@ -219,7 +219,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
       Se utiliza el <i>algoritmo de Goertzel</i> para filtrar la señal y reaccionar solo a bandas de frecuencias específicas. En este caso 3,3kHz.<br>
-      Además, cuenta con un preamplificador que adapta la señal para ser recibida de forma segura por el microcontrolador.</p>
+      Además, cuenta con un preamplificador que adapta la señal para ser recibida de forma segura por el microcontrolador como se puede observar en la Figura 2.4.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="dip-switch" src="https://github.com/user-attachments/assets/8173827e-c2bc-48f7-93ea-56fcd06a528e"/>
@@ -241,6 +241,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
       Se utilizan dos amplificadores inversores con referencia en 1,6V en cascada.</p>
+      <p>El circuito integrado LM358 utilizado como amplificador se muestra en la figura 2.5.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="Captura de pantalla 2026-03-08 200018" src="https://github.com/user-attachments/assets/cb178f40-7483-4f59-82b5-e5bf9e8a70c8" />
@@ -263,6 +264,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
       Se utiliza un circuito amplificador de corriente con un transistor <strong>BC337</strong> como interfaz entre el Buzzer y el microcontrolador.</p>
+      <p>El buzzer utilizado para generar las señales sonoras se muestra en la figura 2.6.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="Captura de pantalla 2026-03-08 200018" src="https://github.com/user-attachments/assets/458ab863-a26b-4782-89a6-cfe8072146ea" />
@@ -284,6 +286,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
       Se utiliza un <i>árbol binario</i> para almacenar el diccionario Morse-Letra y un <i>vector</i> para almacenar el diccionario Letra-Morse.</p>
+      <p>La figura 2.7 muestra la memoria EEPROM 24C02 utilizada para almacenar los diccionarios.</p>
     </td>
     <td width="40%" align="center">
         <img width="250"  alt="Captura de pantalla 2026-03-08 202435" src="https://github.com/user-attachments/assets/e5b2d823-5daf-490c-b31d-4838418abdff" />
@@ -307,6 +310,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
       <p><strong>Implementación Técnica:</strong><br>
         Se implementa un buzzer limitado rx y tx que transmite y recibe de forma periódica y bidireccional, siendo transparente para el dispositivo.<br>
       </p>
+      <p>El módulo HC-05 empleado para la comunicación Bluetooth se muestra en la figura 2.8.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="Captura de pantalla 2026-03-08 205942" src="https://github.com/user-attachments/assets/7c936b89-4113-4979-b566-258f468dad36" />
@@ -323,6 +327,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
   <tr>
     <td width="60%" valign="top">
       <p>Se utiliza una placa de desarrollo <strong>NUCLEO-F103RB</strong> para facilitar la programación, alimentación y coneccionado del microcontrolador, que contiene la lógica del programa.</p>
+      <p>La placa de desarrollo NUCLEO-F103RB utilizada se muestra en la figura 2.9.</p>
     </td>
     <td width="40%" align="center">
         <img width="250" alt="Captura de pantalla 2026-03-08 210435" src="https://github.com/user-attachments/assets/98879b1d-1af9-48f7-ac1a-fba764641a44" />
@@ -336,6 +341,8 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
 En esta sección se detalla la implementación técnica y específica de los requisitos, comenzando por el hardware utilizado, y ascendiendo hacia el firmware y software.
 
 ## 3.1 Esquema general
+En la figura 3.1 se presenta el diagrama en bloques general del sistema.
+
 
 <img width="2199" height="1080" alt="Diagrama_Bloques" src="https://github.com/user-attachments/assets/ee59740b-8430-4fa7-9ded-29057365209c" />
 <p align="center"><em>Figura 3.1: Diagrama en bloques del proyecto.</em></p>
@@ -343,10 +350,14 @@ En esta sección se detalla la implementación técnica y específica de los req
 ### 3.2 Esquemático eléctrico
 
 A continuación se expone el esquemático eléctrico completo del PCB tipo "Shield" diseñado, y se recorren las diferentes secciones:
+En la figura 3.2 se muestra el esquemático eléctrico completo del PCB.
+
 <img width="1274" height="827" alt="Esquematico" src="https://github.com/user-attachments/assets/ebe2cb42-8f9c-438b-92c5-7c855c14b5b6" />
 <p align="center"><em>Figura 3.2: Esquemático eléctrico completo.</em></p>
 
 ### 3.2.1 Preamplificador
+La figura 3.3 presenta el esquemático eléctrico del bloque preamplificador.
+
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/user-attachments/assets/41ffcb3a-a8f0-4520-9f80-232bb7240f29" />
 <p align="center"><em>Figura 3.3: Esquemático eléctrico del bloque preamplificador.</em></p>
 
@@ -363,9 +374,13 @@ $$A_v = -\left( \frac{R_2}{R_1} \right)$$
 En este caso, y aplicando ambas en cascada, se esperará una ganancia de 10000.
 
 A continuación se presenta la respuesta del preamplificador para diferentes entradas:
+La figura 3.4 muestra la respuesta del preamplificador ante un silbido constante.
+
 
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic.jpg?raw=true" />
 <p align="center"><em>Figura 3.4: Salida para circuito excitado con un silvido constante.</em></p>
+La figura 3.5 muestra la respuesta del preamplificador ante un sonido fuerte.
+
 
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic_saturada.jpg?raw=true" />
 <p align="center"><em>Figura 3.5: Salida para sonido fuerte.</em></p>
@@ -375,6 +390,8 @@ Se observa que para sonidos de volumen no muy fuerte, la señal de salida tiene 
 En cuanto a la excursión máxima, se observa que la señal no puede excursionar más allá de 3,24V y 400mV. Se deduce entonces que el diodo Zener `DZ1` realiza su trabajo, limitando la tensión a valores próximos a $V_Z = 3,3V$, y protegiendo el microcontrolador.
 
 ### 3.2.2 Memoria E2PROM
+En la figura 3.6 se presenta el esquemático eléctrico del bloque de memoria EEPROM.
+
 <img width="1246" height="483" alt="Esquematico_Memoria" src="https://github.com/user-attachments/assets/8660efd0-37db-4917-a437-718df6f2dfad" />
 <p align="center"><em>Figura 3.6: Esquemático eléctrico del bloque memoria.</em></p>
 
@@ -383,12 +400,16 @@ El conexionado de la memoria 24C02 (256B) es muy sencillo. Los terminales E0 , E
 Al tener una resistencia de pull-down interna, la protección contra escritura no se conecta, pues no la utilizaremos.
 
 Finalmente, se analiza el t-rise obtenido con un osciloscopio para determinar la mayor resistencia admisible en la red I2C. En este caso 4K7.
+La figura 3.7 muestra la relación entre la resistencia máxima y la capacidad de la red I2C.
+
 <div align="center">
 <img width="500" alt="CBus" src="https://github.com/user-attachments/assets/85878fe3-d6a7-4abc-b0b0-e73a91667231" />
 <p align="center"><em>Figura 3.7: Relación máx RL en función de la capacidad de la red CBUS.</em></p>
 <div align="justify">
 
 ### 3.2.3 Buzzer
+En la figura 3.8 se presenta el circuito de control del buzzer.
+
 <div align="center">
 <img width="350"  alt="Buzzer" src="https://github.com/user-attachments/assets/d4eb34ca-570f-4399-aecf-980437322201" />
 <p align="center"><em>Figura 3.8: Esquemático eléctrico del bloque memoria.</em></p>
@@ -399,6 +420,8 @@ El conexionado del buzzer requiere de la aplicación de un amplificador de corri
 Para solucionar el problema, se utiliza un simple transistor NPN en modo corte o saturación. La corriente esperada por el pin GPIO será de $$I_b = 2,6mA$$, mientras que la corriente máxima del Buzzer será de $$Ic = h_{fe} I_b \approx 156mA$$ para un $$h_{fe}$$ mínimo de 60.
 
 ### 3.2.4 GPIO
+La figura 3.9 muestra los esquemáticos de las conexiones GPIO.
+
 <div align="center">
 <img width="1300" height="563" alt="gpio" src="https://github.com/user-attachments/assets/06898bf1-d845-4b37-a60c-11d67db9bb4c" />
 <img width="303" height="324" alt="gpio2" src="https://github.com/user-attachments/assets/65cf87ac-d8e9-475f-b11b-0e49c88fe2c6" />
@@ -418,6 +441,8 @@ Outputs:
 
 ## 3.3 PCB
 Una vez diseñados y probados los diferentes bloques circuitales, se los implementó conjuntamente en un PCB que utiliza los pines Morpho de la placa NUCLEO-F103RB para montarse en formato shield.
+La figura 3.10 presenta distintas vistas de la versión final del PCB.
+
 
 <div align="center">
 <img width="300" alt="placa1" src="https://github.com/user-attachments/assets/d9c0316a-09ce-4f30-a791-8306b42e8534" />
@@ -455,6 +480,8 @@ Se utiliza el siguiente listado de conexiones para el conexionado del PCB:
 | `PC7`      | GPIO In | Entrada de llave morse |
 
 <p align="center"><em>Tabla 3.1: Tabla de pinouts.</em></p>
+La distribución de pines de la placa NUCLEO-F103RB se muestra en la figura 3.11.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Pinout.PNG?raw=true"/>
@@ -500,6 +527,8 @@ El gestor de tareas se encuentra en `app.c`, y contiene las siguientes:
 * `task_GPIO_output`: Lee las salidas de `task_system` y las aplica a los terminales de la placa. Contiene diferentes estados como ON , OFF , PULSE, etc.
 * `task_mic`: Utiliza el lector ADC para capturar la señal de micrófono, aplicar análisis de señales e indicar a `task_system` si detecta audio en las bandas especificadas o no.
 * `task_HC05`: Sirve para insertar palabras al buffer de `task_system` que vienen <i>desde</i> la aplicación, y al mismo tiempo tiene un buffer que le permite a `task_system` encolar palabras pendientes para transmitir <i>hacia</i> la aplicación.
+En la figura 3.12 se muestra el flujo de datos entre las tareas del firmware.
+
 
 
 <div align="center">
@@ -510,6 +539,8 @@ El gestor de tareas se encuentra en `app.c`, y contiene las siguientes:
 ### 3.5.1 Task system
 
 La tarea más importante del firmware. Se encarga del comportamiento básico del dispositivo, descripto en [3.4 Descripción de comportamiento](#34-descripción-de-comportamiento). A continuación se presenta el diagrama de estados de la tarea:
+La figura 3.13 presenta el diagrama de estados simplificado de `task_system`.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/system_Statechart.png?raw=true" />
@@ -534,6 +565,8 @@ Cuenta con una macro `ON_BOARD_DECODE` que determina si se utiliza el algoritmo 
 ### 3.5.2 Task sensor
 
 La tarea `task_sensor` se encarga de la lectura de todos los puertos GPIO configurados como entrada digital.
+En la figura 3.14 se presenta el diagrama de estados de `task_sensor`.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Sensor_Statechart.png?raw=true" />
@@ -545,6 +578,8 @@ Para cada puerto, se implementa un algoritmo de debounce por software mediante l
 ### 3.5.3 Task GPIO output
 
 La contraparte de `task_sensor`. Se encarga de aplicar a los puertos GPIO configurados como salida digital el resultado de la lógica del programa. Para esto, se implementan diferentes estados para cada puerto, como `ON`, `OFF`, `PULSE`, `BLINK`, etc. Cada estado tiene un comportamiento diferente, y algunos de ellos hacen uso de `tick` para controlar su duración.
+La figura 3.15 muestra el diagrama de estados de `task_GPIO_output`.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/GPIO_Output_Statechart.png?raw=true" />
@@ -554,6 +589,8 @@ La contraparte de `task_sensor`. Se encarga de aplicar a los puertos GPIO config
 ### 3.5.4 Task mic
 
 `task_mic` se encarga de la lectura de n señales analógicas de micrófono, y de la aplicación del algoritmo de Goertzel para detectar la presencia de señales en bandas de frecuencia específicas. En este caso, se configura para detectar señales en la banda de 3,3kHz, que es la frecuencia de operación del buzzer.
+El diagrama de estados de `task_mic` se presenta en la figura 3.16.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/mic_Statechart.png?raw=true" />
@@ -587,6 +624,8 @@ lo que garantiza un correcto funcionamiento del sistema.
 ### 3.5.5 Task HC05
 
 `task_HC05` se encarga de la comunicación bidireccional con la aplicación móvil por medio del módulo HC-05. Para esto, se implementan dos buffers: uno para almacenar las palabras recibidas desde la aplicación, y otro para almacenar las palabras pendientes de enviar hacia la aplicación.
+En la figura 3.17 se muestra el diagrama de estados de `task_HC05`.
+
 
 <div align="center">
 <img width="1200"  src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/HC05_Statechart.png?raw=true" />
@@ -617,6 +656,8 @@ Contiene una definición de caractér morse en dos bytes:
 Para la organización de estos datos, se utlizan dos estructuras: una de traducción Morse-Letra, implementada en un árbol binario, y otra de traducción Letra-Morse, implementada en un vector. De este modo, se garantiza una búsqueda eficiente en ambos sentidos.
 
 Para el árbol binario, se utiliza el siguiente esquema:
+La figura 3.18 muestra el árbol binario empleado para la traducción de Morse a letra.
+
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/%C3%81rbol%20Binario.jpg?raw=true"/>
@@ -638,6 +679,8 @@ Para la implementación de la comunicación Bluetooth se utilizó como base un r
 
 Sobre esta base, se desarrolló y añadió lógica propia, integrando el algoritmo de detección de código Morse proveniente de la aplicación MyFriendlyMorse, de autoría propia.
 Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, adaptándola al contexto del proyecto, mientras que la aplicación final presenta una implementación y propósito diferentes.
+La figura 3.19 presenta el diagrama de estados de la lógica de detección Morse en la aplicación.
+
 
 
 
@@ -673,7 +716,9 @@ https://github.com/SantangeloEzequiel/MyFriendlyMorse
 ## 4. Ensayos y resultados
 ### 4.1 Medición y análisis de consumo
 
-Para el análisis de consumo, es preciso tener en cuenta la forma en que se alimenta la placa en la placa de desarrollo. La Figura 4.1.1 muestra el esquemático de la entrada de poder de la placa NUCLEO-F103RB:
+Para el análisis de consumo, es preciso tener en cuenta la forma en que se alimenta la placa en la placa de desarrollo. La Figura 4.1 muestra el esquemático de la entrada de poder de la placa NUCLEO-F103RB:
+En la figura 4.1 se identifica la etapa de entrada de alimentación de la placa NUCLEO-F103RB.
+
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/esquema_electrico_power.PNG?raw=true"/>
@@ -697,6 +742,8 @@ $$P_{avg} = 5V \cdot 135mA = 675mW$$
 El incremento de consumo se debe, principalmente, a la activación del buzzer, que tiene un consumo de corriente de aproximadamente 30mA.
 
 #### 2 Medición de consumo del microcontrolador
+La figura 4.2 muestra el banco de trabajo empleado para medir el consumo del microcontrolador.
+
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/banco_de_trabajo.jpeg?raw=true"/>
@@ -716,6 +763,8 @@ Se estima que la memoria EEPROM consume de forma constante casi 90mA. Esto es ex
 Se utiliza un indicador de tiempo de ejecución (WCET: Worst Case Execution Time) para registrar el máximo tiempo de ejecución de cada tarea, y así garantizar que se encuentre dentro del límite de 1ms.
 
 A continuación, se presental los resultados tras varios minutos de uso:
+En la figura 4.3 se muestran los resultados de las mediciones de tiempos de ejecución (WCET).
+
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/WCET.PNG?raw=true"/>
 <p align="center"><em>Figura 4.3: Resultados de análisis de tiempo de ejecución (WCET).</em></p>
@@ -777,11 +826,15 @@ Por supuesto, el impacto no es mayor a gran escala, debido al consumo de la memo
 ### 4.5 Consola y Build Analyzer
 
 A continuación se presentan los resultados obtenidos del análisis de consola y build analyzer, que permiten identificar posibles errores o advertencias en el código, así como optimizar el proceso de compilación:
+La figura 4.4 presenta la salida de consola obtenida durante la compilación.
+
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_build_capture.PNG?raw=true"/>
 <p align="center"><em>Figura 4.4: Output de consola al compilar.</em></p>
 <div align="justify">
+La figura 4.5 muestra el uso de memoria informado por Build Analyzer.
+
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_memory_usage.PNG?raw=true"/>

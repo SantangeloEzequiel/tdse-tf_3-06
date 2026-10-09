@@ -5,7 +5,7 @@
 
 **Autores: Ezequiel Santangelo - 112762, Ramiro Mántaras - 111510**
 
-**Fecha: 10/5/26**
+**Fecha: 5/10/26**
 
 **Cuatrimestre de cursada: 2do 2025**
 
@@ -21,10 +21,10 @@ El proyecto fue desarrollado utilizando firmware Bare-Metal sobre un microcontro
 El presente documento detalla las características técnicas del producto, modelos utilizados y evaluaciones de funcionamiento varias.
 
 # Índice
-1. [Introducción general](#introducción-general)
+1. [Introducción general](#1-introducción-general)
     - [1.1 Objetivos](#11-objetivos)
     - [1.2 Análisis de mercado](#12-análisis-de-mercado)
-2. [Introducción específica](#introducción-específica)
+2. [Introducción específica](#2-introducción-específica)
     - [2.1 Requisitos del proyecto](#21-requisitos-del-proyecto)
     - [2.2 Casos de uso](#22-casos-de-uso)
     - [2.3 Elementos del hardware](#23-elementos-del-hardware)
@@ -37,7 +37,7 @@ El presente documento detalla las características técnicas del producto, model
         - [2.3.7 Memoria E2PROM externa](#237-memoria-e2prom-externa)
         - [2.3.8 HC-05](#238-hc-05)
         - [2.3.9 Placa de desarrollo](#239-placa-de-desarrollo)
-3. [Diseño e implementación](#diseño-e-implementación)
+3. [Diseño e implementación](#3-diseño-e-implementación)
     - [3.1 Esquema general](#31-esquema-general)
     - [3.2 Esquemático Eléctrico](#32-esquemático-eléctrico)
         - [3.2.1 Preamplificador](#321-preamplificador)
@@ -58,7 +58,7 @@ El presente documento detalla las características técnicas del producto, model
         - [3.5.5 Task HC-05](#355-task-hc-05)
         - [3.5.6 Memoria Morse](#356-memoria-morse)
     - [3.6 Aplicación Móvil](#36-aplicación-móvil)
-4. [Ensayos y resultados](#ensayos-y-resultados)
+4. [Ensayos y resultados](#4-ensayos-y-resultados)
     - [4.1 Medición y análisis de consumo](#41-medición-y-análisis-de-consumo)
     - [4.2 Medición y análisis de tiempos de ejecución (WCET)](#42-medición-y-análisis-de-tiempos-de-ejecución-wcet)
     - [4.3 Cálculo del factor de uso (U) de la CPU](#43-cálculo-del-factor-de-uso-u-de-la-cpu)
@@ -73,7 +73,7 @@ El presente documento detalla las características técnicas del producto, model
 6. [Bibliografía](#bibliografía)
 
 
-# **Introducción General**
+# **1. Introducción General**
 ## 1.1 Objetivos
 
 El objetivo de este proyecto es diseñar e implementar un sistema de comunicacion entre dos usuarios a travez de MORSE, facilitandole el acceso a quienes no conozcan el codigo, funcionando asi como "traductor". Se busca además garantizar una comunicación clara y confiable entre los dispositivos, implementando detección precisa de señales sonoras, y una correcta decodificación y visualización de los mensajes en texto.
@@ -88,7 +88,7 @@ Un segundo competidor es https://www.mercadolibre.com.ar/pantalones-cortos-morse
 
 En resumen, el mercado es escaso (Debido mayormente a que puede llegar a verse como "una comunicacion del pasado"; aunque en ciertos contextos muy eficiente).
 
-# **Introducción Específica**
+# **2. Introducción Específica**
 
 ## 2.1 Requisitos del Proyecto
 
@@ -116,7 +116,7 @@ En la Tabla 2.1 se presentan los requisitos y casos de uso:
 
 ## 2.2 Casos de uso
 
-En las tablas se presentan 2 casos de uso para el sistema.
+En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
 
 | **Elemento**            | **Definición**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -146,7 +146,7 @@ En las tablas se presentan 2 casos de uso para el sistema.
 <table>
   <tr>
     <td width="60%" valign="top">
-      <p>Se utiliza un pulsador <strong>Impreso en 3D FDM</strong> como dispositivos de entrada principal.<br>
+      <p>Se utiliza un pulsador <strong>Impreso en 3D FDM</strong> como dispositivo de entrada principal.<br>
       Origen: https://www.thingiverse.com/thing:2870754</p>
       <p><strong>Funcionalidad:</strong></p>
       <ul>
@@ -332,23 +332,23 @@ En las tablas se presentan 2 casos de uso para el sistema.
   </tr>
 </table>
 
-# Diseño e implementación
+# 3. Diseño e implementación
 En esta sección se detalla la implementación técnica y específica de los requisitos, comenzando por el hardware utilizado, y ascendiendo hacia el firmware y software.
 
 ## 3.1 Esquema general
 
 <img width="2199" height="1080" alt="Diagrama_Bloques" src="https://github.com/user-attachments/assets/ee59740b-8430-4fa7-9ded-29057365209c" />
-<p align="center"><em>Imagen 3.1.1: Diagrama en bloques del proyecto.</em></p>
+<p align="center"><em>Imagen 3.1: Diagrama en bloques del proyecto.</em></p>
 
 ### 3.2 Esquemático eléctrico
 
 A continuación se expone el esquemático eléctrico completo del PCB tipo "Shield" diseñado, y se recorren las diferentes secciones:
 <img width="1274" height="827" alt="Esquematico" src="https://github.com/user-attachments/assets/ebe2cb42-8f9c-438b-92c5-7c855c14b5b6" />
-<p align="center"><em>Imagen 3.2.1: Esquemático eléctrico completo.</em></p>
+<p align="center"><em>Imagen 3.2: Esquemático eléctrico completo.</em></p>
 
 ### 3.2.1 Preamplificador
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/user-attachments/assets/41ffcb3a-a8f0-4520-9f80-232bb7240f29" />
-<p align="center"><em>Imagen 3.2.1.1: Esquemático eléctrico del bloque preamplificador.</em></p>
+<p align="center"><em>Imagen 3.3: Esquemático eléctrico del bloque preamplificador.</em></p>
 
 El bloque preamplificador se divide a su vez en tres partes: El bloque micrófono, y ambos bloques en configuración amplificador inversor con referencia no nula.
 
@@ -365,10 +365,10 @@ En este caso, y aplicando ambas en cascada, se esperará una ganancia de 10000.
 A continuación se presenta la respuesta del preamplificador para diferentes entradas:
 
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic.jpg?raw=true" />
-<p align="center"><em>Imagen 3.2.1.1: Salida para circuito excitado con un silvido constante.</em></p>
+<p align="center"><em>Imagen 3.4: Salida para circuito excitado con un silvido constante.</em></p>
 
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic_saturada.jpg?raw=true" />
-<p align="center"><em>Imagen 3.2.1.2: Salida para sonido fuerte.</em></p>
+<p align="center"><em>Imagen 3.5: Salida para sonido fuerte.</em></p>
 
 Se observa que para sonidos de volumen no muy fuerte, la señal de salida tiene una amplitud de 1V, valor para el que el ADC es muy sensible.
 
@@ -376,7 +376,7 @@ En cuanto a la excursión máxima, se observa que la señal no puede excursionar
 
 ### 3.2.2 Memoria E2PROM
 <img width="1246" height="483" alt="Esquematico_Memoria" src="https://github.com/user-attachments/assets/8660efd0-37db-4917-a437-718df6f2dfad" />
-<p align="center"><em>Imagen 3.2.1.3: Esquemático eléctrico del bloque memoria.</em></p>
+<p align="center"><em>Imagen 3.6: Esquemático eléctrico del bloque memoria.</em></p>
 
 El conexionado de la memoria 24C02 (256B) es muy sencillo. Los terminales E0 , E1 y E2 asignan los últimos 3 dígitos de la dirección del integrado, para la comunicación I2C. Para la aplicación solo necesitamos uno, por lo que sus valores son arbitrarios siempre y cuando el firmware sepa la dirección resultante, en este caso 0x50.
 
@@ -385,13 +385,13 @@ Al tener una resistencia de pull-down interna, la protección contra escritura n
 Finalmente, se analiza el t-rise obtenido con un osciloscopio para determinar la mayor resistencia admisible en la red I2C. En este caso 4K7.
 <div align="center">
 <img width="500" alt="CBus" src="https://github.com/user-attachments/assets/85878fe3-d6a7-4abc-b0b0-e73a91667231" />
-<p align="center"><em>Imagen 3.2.1.2: Relación máx RL en función de la capacidad de la red CBUS.</em></p>
+<p align="center"><em>Imagen 3.7: Relación máx RL en función de la capacidad de la red CBUS.</em></p>
 <div align="justify">
 
 ### 3.2.3 Buzzer
 <div align="center">
 <img width="350"  alt="Buzzer" src="https://github.com/user-attachments/assets/d4eb34ca-570f-4399-aecf-980437322201" />
-<p align="center"><em>Imagen 3.2.3.1: Esquemático eléctrico del bloque memoria.</em></p>
+<p align="center"><em>Imagen 3.8: Esquemático eléctrico del bloque memoria.</em></p>
 <div align="justify">
     
 El conexionado del buzzer requiere de la aplicación de un amplificador de corriente, pues, a parte de requerir una alimentación de 5V, también tiene una corriente de operación muy superior a la que puede entregar el microcontrolador por un solo pin GPIO.
@@ -402,7 +402,7 @@ Para solucionar el problema, se utiliza un simple transistor NPN en modo corte o
 <div align="center">
 <img width="1300" height="563" alt="gpio" src="https://github.com/user-attachments/assets/06898bf1-d845-4b37-a60c-11d67db9bb4c" />
 <img width="303" height="324" alt="gpio2" src="https://github.com/user-attachments/assets/65cf87ac-d8e9-475f-b11b-0e49c88fe2c6" />
-<p align="center"><em>Imagen 3.2.4.1: Esquemáticos de GPIOs.</em></p>
+<p align="center"><em>Imagen 3.9: Esquemáticos de GPIOs.</em></p>
 <div align="justify">
 
 Se utilizan en este proyecto 9 puertos de uso general (GPIO), 5 entradas y 4 salidas. Aunque su aplicación es muy sencilla, se describe cada uno:
@@ -425,7 +425,7 @@ Una vez diseñados y probados los diferentes bloques circuitales, se los impleme
 <img width="300" alt="placa2" src="https://github.com/user-attachments/assets/946c729e-bebc-4739-a669-2ddb47e51256" />
 <img width="300" alt="placa3" src="https://github.com/user-attachments/assets/a157a106-970d-4ec2-8c31-e0ecb7047428" />
 
-<p align="center"><em>Imagen 3.3.1.1: Versión final del PCB.</em></p>
+<p align="center"><em>Imagen 3.10: Versión final del PCB.</em></p>
 <div align="justify">
 
 El PCB final tiene tan solo tres salidas:
@@ -454,11 +454,11 @@ Se utiliza el siguiente listado de conexiones para el conexionado del PCB:
 | `PC1`      | GPIO In | Entrada de Velocidad 2 (DIP Switch) |
 | `PC7`      | GPIO In | Entrada de llave morse |
 
-<p align="center"><em>Tabla 3.7.1: Tabla de pinouts.</em></p>
+<p align="center"><em>Tabla 3.1: Tabla de pinouts.</em></p>
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Pinout.PNG?raw=true"/>
-<p align="center"><em>Imagen 3.7.1.1: Distribución de pines de la placa NUCLEO-F103RB.</em></p>
+<p align="center"><em>Imagen 3.11: Distribución de pines de la placa NUCLEO-F103RB.</em></p>
 <div align="justify">
 
 
@@ -504,7 +504,7 @@ El gestor de tareas se encuentra en `app.c`, y contiene las siguientes:
 
 <div align="center">
 <img width="1200" alt="TPF EMBEBIDOS" src="https://github.com/user-attachments/assets/f427b3a2-51af-447c-8af2-682ad7436e8d" />
-<p align="center"><em>Imagen 3.5.1: Flujo de datos entre tareas.</em></p>
+<p align="center"><em>Imagen 3.12: Flujo de datos entre tareas.</em></p>
 <div align="justify">
 
 ### 3.5.1 Task system
@@ -513,14 +513,14 @@ La tarea más importante del firmware. Se encarga del comportamiento básico del
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/system_Statechart.png?raw=true" />
-<p align="center"><em>Imagen 3.5.1.1: Diagrama de estados <i>simplificado</i> de task_system.</em></p>
+<p align="center"><em>Imagen 3.13: Diagrama de estados <i>simplificado</i> de task_system.</em></p>
 <div align="justify">
 
 * `ST_SYS_WAITING_CONNECTION`:
   Es el estado por defecto del dispositivo. Se encuentra esperando la conexión bluetooth, mediante la lectura de STATE. Siempre que se pierde la conexión, se vuelve a este estado.
 * `ST_SYS_RECEIVING`:
   Observa los eventos `EV_SYS_BTN_INPUT_XX` y `EV_SYS_MIC_INPUT_XX` para enviar los flancos como `1`(ascendente) o `0`(descendiente) hacia la aplicación. La señal evaluada es un resultado de una combinación del micrófono y la llave morse. Es decir, los flancos responden a `MIC OR BTN`.
-  Tambien contiene un algoritmo de conversión morse-ascii simplificado (similar al de la imagen 3.5.6.2) para su interacción directa con consola serial.
+  Tambien contiene un algoritmo de conversión morse-ascii simplificado (similar al de la imagen 3.19) para su interacción directa con consola serial.
 
 * `ST_SYS_TRANSMITTING`
   Queda a la espera del búffer rx. Al recibir un caractér, se invoca a `memoria_morse` para obtener una secuencia de puntos o rayas según el caractér. De ser un caractér no listado en el diccionario, se enciende el led ERROR. Este comportamiento no se ve normalmente, por ser la aplicación encargada de enviar solo caractéres válidos.
@@ -537,7 +537,7 @@ La tarea `task_sensor` se encarga de la lectura de todos los puertos GPIO config
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Sensor_Statechart.png?raw=true" />
-<p align="center"><em>Imagen 3.5.2.1: Diagrama de estados de task_sensor.</em></p>
+<p align="center"><em>Imagen 3.14: Diagrama de estados de task_sensor.</em></p>
 <div align="justify">
 
 Para cada puerto, se implementa un algoritmo de debounce por software mediante los estados `ST_BTN_XX_FALLING` y `ST_BTN_XX_RISING`, que se encarga de filtrar el ruido mecánico de los pulsadores. Para esto, se utiliza `tick`, que se incrementa cada `1ms`. En este caso, se configura el tiempo de debounce en 50ms, es decir, 50 ticks. De este modo, cada vez que se detecta un flanco, se espera a que el puerto se mantenga estable durante 50 ticks para validar el cambio de estado. También, por supuesto, retrasa la entrada, pero de forma imperceptible para el usuario.
@@ -548,7 +548,7 @@ La contraparte de `task_sensor`. Se encarga de aplicar a los puertos GPIO config
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/GPIO_Output_Statechart.png?raw=true" />
-<p align="center"><em>Imagen 3.5.3.1: Diagrama de estados de task_GPIO_output.</em></p>
+<p align="center"><em>Imagen 3.15: Diagrama de estados de task_GPIO_output.</em></p>
 <div align="justify">
 
 ### 3.5.4 Task mic
@@ -557,7 +557,7 @@ La contraparte de `task_sensor`. Se encarga de aplicar a los puertos GPIO config
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/mic_Statechart.png?raw=true" />
-<p align="center"><em>Imagen 3.5.4.1: Flujo de datos entre tareas.</em></p>
+<p align="center"><em>Imagen 3.16: Flujo de datos entre tareas.</em></p>
 <div align="justify">
 
 Aunque el diagrama de estados resulta extremadamente sencillo, la complejidad de la tarea radica en su implementación específica.
@@ -590,7 +590,7 @@ lo que garantiza un correcto funcionamiento del sistema.
 
 <div align="center">
 <img width="1200"  src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/HC05_Statechart.png?raw=true" />
-<p align="center"><em>Imagen 3.5.5.1: Flujo de datos entre tareas.</em></p>
+<p align="center"><em>Imagen 3.17: Flujo de datos entre tareas.</em></p>
 <div align="justify">
 
 Para la implementación específica, se requiere que la transmisión sea de caractéres individuales, debido a la frecuencia máxima fijada por el HC-5:
@@ -620,7 +620,7 @@ Para el árbol binario, se utiliza el siguiente esquema:
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/%C3%81rbol%20Binario.jpg?raw=true"/>
-<p align="center"><em>Imagen 3.5.6.1: Árbol binario de traducción Morse-Letra.</em></p>
+<p align="center"><em>Imagen 3.18: Árbol binario de traducción Morse-Letra.</em></p>
 <div align="justify">
 
 esto permite buscar el caracter según el usuario ingresa puntos o rayas en tiempo real.
@@ -643,7 +643,7 @@ Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, a
 
 <div align="center">
 <img width="1200" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Diagrama%20de%20Harel%20Morse-Logic.png?raw=true"/>
-<p align="center"> <em>Imagen 3.5.6.2: Diagrama de estado de HAREL de Logica Morse. </em></p>
+<p align="center"> <em>Imagen 3.19: Diagrama de estado de HAREL de Logica Morse. </em></p>
 <div align="justify">
 
 Aquí se detecta la existencia de símbolos diferentes mediante una función empírica basada en la experimentación. Si bien, en teoría, una raya dura aproximadamente tres veces más que un punto, en la práctica el punto de mayor duración puede ser solo alrededor de 1,5 veces menor que la raya de menor duración.
@@ -670,14 +670,14 @@ Repositorio de MyFriendlyMorse:
 
 https://github.com/SantangeloEzequiel/MyFriendlyMorse
 
-## Ensayos y resultados
+## 4. Ensayos y resultados
 ### 4.1 Medición y análisis de consumo
 
 Para el análisis de consumo, es preciso tener en cuenta la forma en que se alimenta la placa en la placa de desarrollo. La imagen 4.1.1 muestra el esquemático de la entrada de poder de la placa NUCLEO-F103RB:
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/esquema_electrico_power.PNG?raw=true"/>
-<p align="center"><em>Imagen 4.1.1: Etapa de entrada de poder.</em></p>
+<p align="center"><em>Imagen 4.1: Etapa de entrada de poder.</em></p>
 <div align="justify">
 
 Se realizan entonces dos mediciones:
@@ -700,7 +700,7 @@ El incremento de consumo se debe, principalmente, a la activación del buzzer, q
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/banco_de_trabajo.jpeg?raw=true"/>
-<p align="center"><em>Imagen 4.1.2: Banco de trabajo utilizado para la medición del consumo del microcontrolador.</em></p>
+<p align="center"><em>Imagen 4.2: Banco de trabajo utilizado para la medición del consumo del microcontrolador.</em></p>
 <div align="justify">
 
 Colocando un multímetro en modo amperímetro en JP6, se obtiene el siguiente consumo:
@@ -718,7 +718,7 @@ Se utiliza un indicador de tiempo de ejecución (WCET: Worst Case Execution Time
 A continuación, se presental los resultados tras varios minutos de uso:
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/WCET.PNG?raw=true"/>
-<p align="center"><em>Imagen 4.2.1: Resultados de análisis de tiempo de ejecución (WCET).</em></p>
+<p align="center"><em>Imagen 4.3: Resultados de análisis de tiempo de ejecución (WCET).</em></p>
 <div align="justify">
 
 Las tareas son las siguientes:
@@ -780,12 +780,12 @@ A continuación se presentan los resultados obtenidos del análisis de consola y
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_build_capture.PNG?raw=true"/>
-<p align="center"><em>Imagen 4.5.1: Output de consola al compilar.</em></p>
+<p align="center"><em>Imagen 4.4: Output de consola al compilar.</em></p>
 <div align="justify">
 
 <div align="center">
 <img width="800" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/Console_memory_usage.PNG?raw=true"/>
-<p align="center"><em>Imagen 4.5.2: Uso de recursos de memoria (Build Analyzer).</em></p>
+<p align="center"><em>Imagen 4.5: Uso de recursos de memoria (Build Analyzer).</em></p>
 <div align="justify">
 
 Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memoria flash, y 1/3 de los recursos de memoria RAM, lo que indica que el sistema tiene un margen considerable para la implementación de nuevas funcionalidades o la optimización del código.
@@ -906,7 +906,7 @@ Esta es la prueba definitiva del modo TRANSMISIÓN.
 
 Una vez funcional el sistema, se debe verificar que la comunicación sea congruente con la aplicación. Es decir, se reemplaza la consola con una aplicación android de producción propia.
 
-# Conclusiones
+# 5. Conclusiones
 ## 5.1 Resultados obtenidos
 
 El resultado final del proyecto es un dispositivo funcional que cumple con la mayoría de los requisitos establecidos, y que se encuentra en una etapa avanzada de desarrollo. Se han implementado las funcionalidades básicas de recepción y transmisión de código Morse, así como la comunicación Bluetooth con una aplicación móvil.
@@ -960,6 +960,7 @@ A lo largo del desarrollo del proyecto se han encontrado múltiples dificultades
       <p>La falta de la implementación de una protección contra sobretensión a la entrada resultó un problema en algunas ocasiones, cuando el mal conexionado resultó en el daño de los integrados LM358 y 24C02.</p></tr>
   </td>
 </table>
+<p align="center"><em>Tabla 5.1: Dificultades</em></p>
 
 ## 5.3 Uso de IA
 
@@ -1005,8 +1006,9 @@ El rápido desarrollo de Inteligencias Artificiales simplifica en gran medida mu
     </tr>
   </td>
 </table>
+<p align="center"><em>Tabla 5.2: uso de IA</em></p>
 
-# Bibliografía y referencias
+# 6. Bibliografía y referencias
 
 
 
@@ -1034,5 +1036,5 @@ Referencias:
 #
 <strong>Fin de memoria</strong>
 
-Última actualización: 5/10/2026
+Última actualización: 9/10/2026
 

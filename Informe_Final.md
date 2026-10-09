@@ -24,6 +24,8 @@ El presente documento detalla las características técnicas del producto, model
 1. [Introducción general](#1-introducción-general)
     - [1.1 Objetivos](#11-objetivos)
     - [1.2 Análisis de mercado](#12-análisis-de-mercado)
+    - [1.3 Comparación con el prototipo desarrollado](#13-comparación-con-el-prototipo-desarrollado)
+    - [1.4 Alcance del prototipo](#14-alcance-del-prototipo)
 2. [Introducción específica](#2-introducción-específica)
     - [2.1 Requisitos del proyecto](#21-requisitos-del-proyecto)
     - [2.2 Casos de uso](#22-casos-de-uso)
@@ -53,9 +55,9 @@ El presente documento detalla las características técnicas del producto, model
     - [3.5 Firmware](#35-firmware)
         - [3.5.1 Task system](#351-task-system)
         - [3.5.2 Task sensor](#352-task-sensor)
-        - [3.5.3 Task GPIO Output](#353-gpio-output)
+        - [3.5.3 Task GPIO Output](#353-task-gpio-output)
         - [3.5.4 Task mic](#354-task-mic)
-        - [3.5.5 Task HC-05](#355-task-hc-05)
+        - [3.5.5 Task HC05](#355-task-hc05)
         - [3.5.6 Memoria Morse](#356-memoria-morse)
     - [3.6 Aplicación Móvil](#36-aplicación-móvil)
 4. [Ensayos y resultados](#4-ensayos-y-resultados)
@@ -74,6 +76,7 @@ El presente documento detalla las características técnicas del producto, model
 
 
 # **1. Introducción General**
+
 ## 1.1 Objetivos
 
 El objetivo de este proyecto es diseñar e implementar un sistema de comunicacion entre dos usuarios a travez de MORSE, facilitandole el acceso a quienes no conozcan el codigo, funcionando asi como "traductor". Se busca además garantizar una comunicación clara y confiable entre los dispositivos, implementando detección precisa de señales sonoras, y una correcta decodificación y visualización de los mensajes en texto.
@@ -87,6 +90,46 @@ Como primer competidor esta la app de Play Store "Learn and Traslate" link: http
 Un segundo competidor es https://www.mercadolibre.com.ar/pantalones-cortos-morse-cw-telegraph-radio-de-onda-corta-par/p/MLA2039077129?matt_tool=38087446&pdp_filters=item_id%3AMLA2469142614&from=gshop&utm_source=chatgpt.com, el cual es el tipico pedal de morse para radio de ondas cortas (entre 3 MHz y 30 MHz).
 
 En resumen, el mercado es escaso (Debido mayormente a que puede llegar a verse como "una comunicacion del pasado"; aunque en ciertos contextos muy eficiente).
+
+## 1.3 Comparación con el prototipo desarrollado
+
+A diferencia del pedal de morse, nuestro prototipo permite interpretar automáticamente las señales Morse recibidas. Además, combina una interfaz física de transmisión con una aplicación móvil.
+
+Nuestro prototipo incorpora una característica adicional denominada *Morse Learning*, que permite interpretar señales Morse sin conocer previamente la duración de los puntos, las rayas y los silencios.
+
+Para ello, el sistema mide los tiempos de las señales recibidas y, mediante un algoritmo desarrollado para este trabajo, identifica los diferentes símbolos y determina sus duraciones de referencia. Esto permite adaptarse a distintas velocidades de transmisión y tolerar cierto grado de inconsistencia en los tiempos utilizados por el emisor.
+
+Sin embargo, el prototipo no cuenta con las herramientas didácticas que puede ofrecer una aplicación diseñada exclusivamente para enseñar código Morse, como ejercicios progresivos, niveles de dificultad o actividades de evaluación del aprendizaje.
+
+## 1.4 Alcance del prototipo
+
+Alcance implementado:
+
+El prototipo desarrollado permite:
+
+* Transmitir y recibir código Morse mediante señales sonoras.
+
+* Ingresar señales manualmente mediante un pulsador o detectarlas utilizando un micrófono.
+
+* Traducir entre texto y código Morse mediante el dispositivo y su aplicación Android.
+
+* Adaptar la interpretación de los símbolos Morse a la velocidad del emisor mediante el algoritmo Morse Learning.
+
+* Ajustar la velocidad de transmisión mediante un DIP Switch.
+
+* Intercambiar mensajes con la aplicación móvil mediante Bluetooth.
+
+Limitaciones del prototipo:
+
+* No permite transmitir y recibir simultáneamente.
+
+* La recepción sonora puede verse afectada por el ruido ambiental.
+
+* No incorpora herramientas didácticas avanzadas, como ejercicios progresivos o evaluaciones de aprendizaje.
+
+* No implementa comunicación por radiofrecuencia.
+
+Este tema se vuelve a detallar en la sección  [4.6 Cumplimiento de requisitos](#46-cumplimiento-de-requisitos), en la que se explica cada ítem y la razón de no haberse implementado, si corresponde.
 
 # **2. Introducción Específica**
 

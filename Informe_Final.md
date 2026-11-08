@@ -35,7 +35,7 @@ El presente documento detalla las características técnicas del producto, model
         - [2.3.3 LEDs (Diodos Emisores de Luz)](#233-leds-diodos-emisores-de-luz)
         - [2.3.4 Micrófono Electret](#234-micrófono-electret)
         - [2.3.5 Amplificador](#235-amplificador)
-        - [2.3.6 Buzzer 3,3kHz](#236-buzzer-33khz)
+        - [2.3.6 Buzzer 3,3 kHz](#236-buzzer-33khz)
         - [2.3.7 Memoria E2PROM externa](#237-memoria-e2prom-externa)
         - [2.3.8 HC-05](#238-hc-05)
         - [2.3.9 Placa de desarrollo](#239-placa-de-desarrollo)
@@ -68,11 +68,11 @@ El presente documento detalla las características técnicas del producto, model
     - [4.5 Consola y Build Analyzer](#45-consola-y-build-analyzer)
     - [4.6 Cumplimiento de requisitos](#46-cumplimiento-de-requisitos)
     - [4.7 Pruebas de integración](#47-pruebas-de-integración)
-5. [Conclusiones](#conclusiones)
+5. [Conclusiones](#5-conclusiones)
     - [5.1 Resultados obtenidos](#51-resultados-obtenidos)
     - [5.2 Dificultades encontradas](#52-dificultades-encontradas)
-    - [5.3 Uso de IA](#53-uso-de-ia)
-6. [Bibliografía](#bibliografía)
+6. [Uso de herramientas de inteligencia artificial](#6-uso-de-herramientas-de-inteligencia-artificial)
+7. [Bibliografía y Referencias](#7-bibliografía-y-referencias)
 
 
 # **1. Introducción General**
@@ -261,7 +261,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
         <li>Input de señal sonora morse.</li>
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
-      Se utiliza el <i>algoritmo de Goertzel</i> para filtrar la señal y reaccionar solo a bandas de frecuencias específicas. En este caso 3,3kHz.<br>
+      Se utiliza el <i>algoritmo de Goertzel</i> para filtrar la señal y reaccionar solo a bandas de frecuencias específicas. En este caso 3,3 kHz.<br>
       Además, cuenta con un preamplificador que adapta la señal para ser recibida de forma segura por el microcontrolador como se puede observar en la Figura 2.4.</p>
     </td>
     <td width="40%" align="center">
@@ -283,7 +283,7 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
         <li>Preamplificador de entrada de micrófono.</li>
       </ul>
       <p><strong>Implementación Técnica:</strong><br>
-      Se utilizan dos amplificadores inversores con referencia en 1,6V en cascada.</p>
+      Se utilizan dos amplificadores inversores con referencia en 1,6 V en cascada.</p>
       <p>El circuito integrado LM358 utilizado como amplificador se muestra en la figura 2.5.</p>
     </td>
     <td width="40%" align="center">
@@ -294,12 +294,12 @@ En las tablas 2.2 y 2.3 se presentan 2 casos de uso para el sistema.
   </tr>
 </table>
 
-### 2.3.6 Buzzer 3,3kHz
+### 2.3.6 Buzzer 3,3 kHz
 
 <table>
   <tr>
     <td width="60%" valign="top">
-      <p>Se utiliza un <strong>Buzzer con frecuencia de operación 3,3kHz</strong> para generar una señal sonora morse.</p>
+      <p>Se utiliza un <strong>Buzzer con frecuencia de operación 3,3 kHz</strong> para generar una señal sonora morse.</p>
       <p><strong>Funcionalidad:</strong></p>
       <ul>
         <li>Output de señal morse en modo emisión.</li>
@@ -385,15 +385,20 @@ En esta sección se detalla la implementación técnica y específica de los req
 
 ## 3.1 Esquema general
 En la figura 3.1 se presenta el diagrama en bloques general del sistema.
-
+El bloque central será el microcontrolador, que se comunica con 6 elementos:
+* LEDs y Buzzer: Comunicación unidireccional por GPIO. Su función es servir de interfaz de comunicación hacia el usuario.
+* Dip Switch: Comunicación unidireccional por GPIO. Su función es servir de intefaz de configuración para el usuario.
+* Preamplificador: Lectura mediante módulo ADC de señal preprocesada de micrófono.
+* Diccionarios: Comunicación bidireccional I2C. Requiere la solicitación de datos por parte del microcontrolador y el envío de los mismos.
+* HC-05: Comunicación UART. Sirve para el intercambio de información entre la aplicación móvil y el microcontrolador.
 
 <img width="2199" height="1080" alt="Diagrama_Bloques" src="https://github.com/user-attachments/assets/ee59740b-8430-4fa7-9ded-29057365209c" />
 <p align="center"><em>Figura 3.1: Diagrama en bloques del proyecto.</em></p>
 
 ### 3.2 Esquemático eléctrico
 
-A continuación se expone el esquemático eléctrico completo del PCB tipo "Shield" diseñado, y se recorren las diferentes secciones:
-En la figura 3.2 se muestra el esquemático eléctrico completo del PCB.
+La figura 3.2 se muestra el esquemático eléctrico completo del PCB tipo "Shield" diseñado.
+En las secciones 3.2.1 a 3.2.4 se analiza cada subsistema en detalle.
 
 <img width="1274" height="827" alt="Esquematico" src="https://github.com/user-attachments/assets/ebe2cb42-8f9c-438b-92c5-7c855c14b5b6" />
 <p align="center"><em>Figura 3.2: Esquemático eléctrico completo.</em></p>
@@ -408,7 +413,7 @@ El bloque preamplificador se divide a su vez en tres partes: El bloque micrófon
 
 El bloque micrófono no es más que la aplicación del circuito sugerido en la datasheet. Alimenta el micrófono electret y filtra la señal contínua con un capacitor de acople.
 
-La señal de entrada, no obstante, se encuentra centrada en 0V y tiene valores pico imperceptibles al microcontrolador de unos 10mV, aproximadamente. Mediante la implementación de los bloques amplificadores se busca obtener una señal centrada en 1,6V, con valores pico cercanos a 1,6V. De este modo, la señal podrá tener máxima excursión simétrica y ser detectada correctamente por la entrada analógica del microcontrolador.
+La señal de entrada, no obstante, se encuentra centrada en 0 V y tiene valores pico imperceptibles al microcontrolador de unos 10 mV, aproximadamente. Mediante la implementación de los bloques amplificadores se busca obtener una señal centrada en 1,6 V, con valores pico cercanos a 1,6 V. De este modo, la señal podrá tener máxima excursión simétrica y ser detectada correctamente por la entrada analógica del microcontrolador.
 
 Es bien conocida la amplificación de tensión de este tipo de configuraciones: 
 
@@ -428,9 +433,9 @@ La figura 3.5 muestra la respuesta del preamplificador ante un sonido fuerte.
 <img width="1524" height="690" alt="Esquematico_preamp" src="https://github.com/SantangeloEzequiel/tdse-tf_3-06/blob/Presentaci%C3%B3n-Final/images/salida_mic_saturada.jpg?raw=true" />
 <p align="center"><em>Figura 3.5: Salida para sonido fuerte.</em></p>
 
-Se observa que para sonidos de volumen no muy fuerte, la señal de salida tiene una amplitud de 1V, valor para el que el ADC es muy sensible.
+Se observa que para sonidos de volumen no muy fuerte, la señal de salida tiene una amplitud de 1 V, valor para el que el ADC es muy sensible.
 
-En cuanto a la excursión máxima, se observa que la señal no puede excursionar más allá de 3,24V y 400mV. Se deduce entonces que el diodo Zener `DZ1` realiza su trabajo, limitando la tensión a valores próximos a $V_Z = 3,3V$, y protegiendo el microcontrolador.
+En cuanto a la excursión máxima, se observa que la señal no puede excursionar más allá de 3,24 V y 400 mV. Se deduce entonces que el diodo Zener `DZ1` realiza su trabajo, limitando la tensión a valores próximos a $V_Z = 3,3\ V$, y protegiendo el microcontrolador.
 
 ### 3.2.2 Memoria E2PROM
 En la figura 3.6 se presenta el esquemático eléctrico del bloque de memoria EEPROM.
@@ -438,7 +443,7 @@ En la figura 3.6 se presenta el esquemático eléctrico del bloque de memoria EE
 <img width="1246" height="483" alt="Esquematico_Memoria" src="https://github.com/user-attachments/assets/8660efd0-37db-4917-a437-718df6f2dfad" />
 <p align="center"><em>Figura 3.6: Esquemático eléctrico del bloque memoria.</em></p>
 
-El conexionado de la memoria 24C02 (256B) es muy sencillo. Los terminales E0 , E1 y E2 asignan los últimos 3 dígitos de la dirección del integrado, para la comunicación I2C. Para la aplicación solo necesitamos uno, por lo que sus valores son arbitrarios siempre y cuando el firmware sepa la dirección resultante, en este caso 0x50.
+El conexionado de la memoria 24C02 (256 B) es muy sencillo. Los terminales E0 , E1 y E2 asignan los últimos 3 dígitos de la dirección del integrado, para la comunicación I2C. Para la aplicación solo necesitamos uno, por lo que sus valores son arbitrarios siempre y cuando el firmware sepa la dirección resultante, en este caso 0x50.
 
 Al tener una resistencia de pull-down interna, la protección contra escritura no se conecta, pues no la utilizaremos.
 
@@ -458,9 +463,9 @@ En la figura 3.8 se presenta el circuito de control del buzzer.
 <p align="center"><em>Figura 3.8: Esquemático eléctrico del bloque memoria.</em></p>
 <div align="justify">
     
-El conexionado del buzzer requiere de la aplicación de un amplificador de corriente, pues, a parte de requerir una alimentación de 5V, también tiene una corriente de operación muy superior a la que puede entregar el microcontrolador por un solo pin GPIO.
+El conexionado del buzzer requiere de la aplicación de un amplificador de corriente, pues, a parte de requerir una alimentación de 5 V, también tiene una corriente de operación muy superior a la que puede entregar el microcontrolador por un solo pin GPIO.
 
-Para solucionar el problema, se utiliza un simple transistor NPN en modo corte o saturación. La corriente esperada por el pin GPIO será de $$I_b = 2,6mA$$, mientras que la corriente máxima del Buzzer será de $$Ic = h_{fe} I_b \approx 156mA$$ para un $$h_{fe}$$ mínimo de 60.
+Para solucionar el problema, se utiliza un simple transistor NPN en modo corte o saturación. La corriente esperada por el pin GPIO será de $$I_b = 2,6\ mA$$, mientras que la corriente máxima del Buzzer será de $$Ic = h_{fe} I_b \approx 156\ mA$$ para un $$h_{fe}$$ mínimo de 60.
 
 ### 3.2.4 GPIO
 La figura 3.9 muestra los esquemáticos de las conexiones GPIO.
@@ -476,10 +481,10 @@ Se utilizan en este proyecto 9 puertos de uso general (GPIO), 5 entradas y 4 sal
 Inputs:
 * <strong>Botón Input</strong>: Se utiliza el formato RPU, es decir, normalmente alto.
 * <strong>DIP Switch de velocidad</strong>: Se escojen pines con RPD interna disponible, de este modo se elimina este componente de la placa, y el conexionado es directo.
-* <strong>Status de HC-05</strong>: El HC-05 cuenta con una salida 0V/3,3V compatible para conexión directa con el microcontrolador, que indica si el dispositivo pudo o no establecer una conexión.
+* <strong>Status de HC-05</strong>: El HC-05 cuenta con una salida 0 V/3,3 V compatible para conexión directa con el microcontrolador, que indica si el dispositivo pudo o no establecer una conexión.
 
 Outputs:
-* <strong>LEDs indicadores</strong>: Se utiliza una salida de forma directa para alimentar los LEDs indicadores, con una resistencia de 1K. Esto produce corrientes $$I \approx 1,5mA$$, dependiendo del color.
+* <strong>LEDs indicadores</strong>: Se utiliza una salida de forma directa para alimentar los LEDs indicadores, con una resistencia de 1 K. Esto produce corrientes $$I \approx 1,5\ mA$$, dependiendo del color.
 * <strong>Disparador de Buzzer</strong>: Conectado directamente a la base del transistor de control del Buzzer.
 
 ## 3.3 PCB
@@ -497,7 +502,7 @@ La figura 3.10 presenta distintas vistas de la versión final del PCB.
 <div align="justify">
 
 El PCB final tiene tan solo tres salidas:
-* Alimentación independiente (J1) (4,85V - 5,15V)
+* Alimentación independiente (J1) (4,85 V - 5,15 V)
 * Conector para llave morse (J2)
 * Conector para HC05 (J4)
 
@@ -552,13 +557,13 @@ Este es el modo por defecto tras establecer una conexión. Se espera que, ya sea
 
 Si el usuario lo desea, puede cambiar por medio de la aplicación entre los modos Recepción y Transmisión. En este modo, se espera que el usuario escriba en formato LETRA por medio de la aplicación, para convertirlo a señales sonoras.
 
-Se puede controlar la velocidad de transmisión utilizando el DIP Switch (SW1). Estos valores de velocidad van desde el mínimo esperable de un usuario de nivel inicial, hasta el de un profesional (5-40ppm). 
+Se puede controlar la velocidad de transmisión utilizando el DIP Switch (SW1). Estos valores de velocidad van desde el mínimo esperable de un usuario de nivel inicial, hasta el de un profesional (5-40 ppm). 
 
 ## 3.5 Firmware
 
 El firmware funciona en modo Bare-Metal (sin sistema operativo), y se basa en la ejecución cíclica de diferentes tareas modulares que controlan diferentes etapas del dispositivo.
 
-La base de tiempo es de 1ms (1 tick), fijado por la interrupción `HAL_SYSTICK_Callback`. Por ello, es importante que la ejecución de todas las tareas se efectúe en un tiempo menor a 1 tick.
+La base de tiempo es de 1 ms (1 tick), fijado por la interrupción `HAL_SYSTICK_Callback`. Por ello, es importante que la ejecución de todas las tareas se efectúe en un tiempo menor a 1 tick.
 
 En caso de sobrepasar dicho límite, se habilita un contador `g_task_xx_tick_cnt` que contabiliza la cantidad de ejecuciones perdidas, y las ejecuta todas en la próxima iteración.
 
@@ -616,7 +621,7 @@ En la figura 3.14 se presenta el diagrama de estados de `task_sensor`.
 <p align="center"><em>Figura 3.14: Diagrama de estados de task_sensor.</em></p>
 <div align="justify">
 
-Para cada puerto, se implementa un algoritmo de debounce por software mediante los estados `ST_BTN_XX_FALLING` y `ST_BTN_XX_RISING`, que se encarga de filtrar el ruido mecánico de los pulsadores. Para esto, se utiliza `tick`, que se incrementa cada `1ms`. En este caso, se configura el tiempo de debounce en 50ms, es decir, 50 ticks. De este modo, cada vez que se detecta un flanco, se espera a que el puerto se mantenga estable durante 50 ticks para validar el cambio de estado. También, por supuesto, retrasa la entrada, pero de forma imperceptible para el usuario.
+Para cada puerto, se implementa un algoritmo de debounce por software mediante los estados `ST_BTN_XX_FALLING` y `ST_BTN_XX_RISING`, que se encarga de filtrar el ruido mecánico de los pulsadores. Para esto, se utiliza `tick`, que se incrementa cada `1 ms`. En este caso, se configura el tiempo de debounce en 50 ms, es decir, 50 ticks. De este modo, cada vez que se detecta un flanco, se espera a que el puerto se mantenga estable durante 50 ticks para validar el cambio de estado. También, por supuesto, retrasa la entrada, pero de forma imperceptible para el usuario.
 
 ### 3.5.3 Task GPIO output
 
@@ -631,7 +636,7 @@ La figura 3.15 muestra el diagrama de estados de `task_GPIO_output`.
 
 ### 3.5.4 Task mic
 
-`task_mic` se encarga de la lectura de n señales analógicas de micrófono, y de la aplicación del algoritmo de Goertzel para detectar la presencia de señales en bandas de frecuencia específicas. En este caso, se configura para detectar señales en la banda de 3,3kHz, que es la frecuencia de operación del buzzer.
+`task_mic` se encarga de la lectura de n señales analógicas de micrófono, y de la aplicación del algoritmo de Goertzel para detectar la presencia de señales en bandas de frecuencia específicas. En este caso, se configura para detectar señales en la banda de 3,3 kHz, que es la frecuencia de operación del buzzer.
 El diagrama de estados de `task_mic` se presenta en la figura 3.16.
 
 
@@ -644,23 +649,23 @@ Aunque el diagrama de estados resulta extremadamente sencillo, la complejidad de
 
 Se utiliza la lectura del ADC en formato Batch por medio de DMA e interrupciones por medio de una señal PWM. Esto garantiza que cada `N` muestras separadas `Ts` segundos, se refresque un buffer que contiene valores que reflejan un muestreo de la señal de micrófono.
 
-En este caso, y por cuestiones de efectividad (se debe garantizar un tiempo de ejecución al menos menos a 1ms), se utiliza un Batch de 50 muestras, con una frecuencia de muestreo de 10kHz. Esto da como resultado un tiempo de muestreo de 5ms. Suficiente para la máxima velocidad morse, que ronda una duración de punto de 30ms.
+En este caso, y por cuestiones de efectividad (se debe garantizar un tiempo de ejecución al menos menos a 1 ms), se utiliza un Batch de 50 muestras, con una frecuencia de muestreo de 10 kHz. Esto da como resultado un tiempo de muestreo de 5 ms. Suficiente para la máxima velocidad morse, que ronda una duración de punto de 30 ms.
 
-Esto significa que se toman fragmentos de 5ms de la señal de micrófono. Como la frecuencia a detectar es del orden de los 3,3kHz, se cumple el teorema de Nyquist:
+Esto significa que se toman fragmentos de 5 ms de la señal de micrófono. Como la frecuencia a detectar es del orden de los 3,3 kHz, se cumple el teorema de Nyquist:
 
 $$
 f_s > 2 \cdot f_{max}
 $$
 
-También debe garantizarse que el tiempo de conversión individual sea inferior a 1/Ts, es decir, 100µs. El tiempo de ejecución será de 12.5 ciclos (SAR) más el tiempo de carga del capacitor Cadc, con valor 8pF.
+También debe garantizarse que el tiempo de conversión individual sea inferior a 1/Ts, es decir, 100 µs. El tiempo de ejecución será de 12.5 ciclos (SAR) más el tiempo de carga del capacitor Cadc, con valor 8 pF.
 
-Para el ADC1, utilizado, se utiliza una señal de clock PCLK2/ADCprescaler = 4MHz. 12,5 ciclos serán 3,125µs.
+Para el ADC1, utilizado, se utiliza una señal de clock PCLK2/ADCprescaler = 4 MHz. 12,5 ciclos serán 3,125 µs.
 
-El tiempo de carga del capacitor será $(R_{in} + R_{adc}) \cdot C_{adc}$, siendo Rin la resistencia de entrada del ADC, y Radc la resistencia interna del ADC, con valor 1k. Al estar conectada la entrada del ADC a la salida de un operacional, ser espera que el tiempo de carga sea aproximadamente $5 \cdot R_{adc} \cdot C_{adc} = 8ns$.
+El tiempo de carga del capacitor será $(R_{in} + R_{adc}) \cdot C_{adc}$, siendo Rin la resistencia de entrada del ADC, y Radc la resistencia interna del ADC, con valor 1 k. Al estar conectada la entrada del ADC a la salida de un operacional, ser espera que el tiempo de carga sea aproximadamente $5 \cdot R_{adc} \cdot C_{adc} = 8\ ns$.
 
 Finalmente, el tiempo total de conversión será de aproximadamente 
 
-$$T_{conv} = 3.125\mu s + 8ns \approx 3.133\mu s < 100\mu s$$
+$$T_{conv} = 3.125\ \mu s + 8\ ns \approx 3.133\ \mu s < 100\ \mu s$$
 
 lo que garantiza un correcto funcionamiento del sistema.
 
@@ -677,9 +682,9 @@ En la figura 3.17 se muestra el diagrama de estados de `task_HC05`.
 
 Para la implementación específica, se requiere que la transmisión sea de caractéres individuales, debido a la frecuencia máxima fijada por el HC-5:
 
-$$ T_{min} = 8 * T_{bit}  = 8 * \frac{1}{9600} = 0.833ms $$
+$$ T_{min} = 8 * T_{bit}  = 8 * \frac{1}{9600} = 0.833\ ms $$
 
-que se encuentra cerca del límite de 1ms.
+que se encuentra cerca del límite de 1 ms.
 
 La implementación de `DMA` hace que la tarea no se vea afectada por el alto tiempo de transmisión, pues el microcontrolador se encarga de enviar o recibir los datos de forma autónoma, y solo interrumpe a la tarea cuando la transmisión o recepción ha finalizado.
 
@@ -693,13 +698,12 @@ Memoria morse es una librería implementada para separar la comunicación I2C co
 
 Contiene una definición de caractér morse en dos bytes:
 
-*Byte 0: bit del caracter en ASCII
-*Byte 1: código de secuencia morse: los 3 bits menos significativos representan la cantidad de símbolos, y los 5 bits más significativos representan la secuencia de puntos y rayas, siendo `0` un punto y `1` una raya.
+* Byte 0: bit del caracter en ASCII
+* Byte 1: código de secuencia morse: los 3 bits menos significativos representan la cantidad de símbolos, y los 5 bits más significativos representan la secuencia de puntos y rayas, siendo `0` un punto y `1` una raya.
 
 Para la organización de estos datos, se utlizan dos estructuras: una de traducción Morse-Letra, implementada en un árbol binario, y otra de traducción Letra-Morse, implementada en un vector. De este modo, se garantiza una búsqueda eficiente en ambos sentidos.
 
-Para el árbol binario, se utiliza el siguiente esquema:
-La figura 3.18 muestra el árbol binario empleado para la traducción de Morse a letra.
+Para el árbol binario, se utiliza el esquema de la figura 3.18.
 
 
 <div align="center">
@@ -718,9 +722,9 @@ Para el vector, se utilizan tan solo 37 caracteres, sin espacios vacíos por imp
 Para el grabado de memoria inicial, se utiliza el proyecto `Grabador de Memoria`.
 
 ## 3.6 Aplicación móvil
-Para la implementación de la comunicación Bluetooth se utilizó como base un repositorio público disponible en GitHub, correspondiente a un terminal Bluetooth (autoría de Kai Morich), el cual permite el envío y recepción de datos mediante comunicacion serie desde dispositivos Android.
+Para la implementación de la comunicación Bluetooth se utilizó como base un repositorio público disponible en GitHub, correspondiente a un terminal Bluetooth (autoría de Kai Morich) [[3]](#7-bibliografía-y-referencias), el cual permite el envío y recepción de datos mediante comunicacion serie desde dispositivos Android.
 
-Sobre esta base, se desarrolló y añadió lógica propia, integrando el algoritmo de detección de código Morse proveniente de la aplicación MyFriendlyMorse, de autoría propia.
+Sobre esta base, se desarrolló y añadió lógica propia, integrando el algoritmo de detección de código Morse proveniente de la aplicación MyFriendlyMorse [[5]](#7-bibliografía-y-referencias), de autoría propia.
 Cabe destacar que únicamente se reutilizó la lógica de detección de Morse, adaptándola al contexto del proyecto, mientras que la aplicación final presenta una implementación y propósito diferentes.
 La figura 3.19 presenta el diagrama de estados de la lógica de detección Morse en la aplicación.
 
@@ -742,19 +746,7 @@ Una vez finalizada la etapa de aprendizaje, los símbolos previamente almacenado
 
 En conclusión, se puede afirmar que se trata de un sistema que no depende de una duración fija de los símbolos, lo que permite una fácil escalabilidad. Asimismo, contempla ciertas invariancias propias del emisor (no extremas), es decir, mientras los puntos mantengan una duración menor que las rayas, el sistema será capaz de detectarlos correctamente.
 
-Repositorios y enlaces...
-
-Repositorio del terminal Bluetooth (base del proyecto): 
-
-https://github.com/kai-morich/SimpleBluetoothTerminal
-
-Aplicación MyFriendlyMorse en Google Play: 
-
-https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR
-
-Repositorio de MyFriendlyMorse: 
-
-https://github.com/SantangeloEzequiel/MyFriendlyMorse
+La aplicación final puede descargarse desde Google Play [[4]](#7-bibliografía-y-referencias).
 
 ## 4. Ensayos y resultados
 ### 4.1 Medición y análisis de consumo
@@ -774,15 +766,15 @@ Se realizan entonces dos mediciones:
 2. Medición de consumo del microcontrolador: Se mide el consumo de corriente del microcontrolador utilizando un amperímetro en serie con la alimentación del microcontrolador, utilizando el Jumper JP6.
 
 #### 1 Medición de consumo general
-$$P_{avg} = 5V \cdot I_{avg}$$
+$$P_{avg} = 5\ V \cdot I_{avg}$$
 En modo espera:
-$$P_{avg} = 5V \cdot 105mA = 525mW$$
+$$P_{avg} = 5\ V \cdot 105\ mA = 525\ mW$$
 Al insertar una señal sonora en modo Recepción:
-$$P_{avg} = 5V \cdot 135mA = 675mW$$
+$$P_{avg} = 5\ V \cdot 135\ mA = 675\ mW$$
 Al emitir una señal en modo Transmisión:
-$$P_{avg} = 5V \cdot 135mA = 675mW$$
+$$P_{avg} = 5\ V \cdot 135\ mA = 675\ mW$$
 
-El incremento de consumo se debe, principalmente, a la activación del buzzer, que tiene un consumo de corriente de aproximadamente 30mA.
+El incremento de consumo se debe, principalmente, a la activación del buzzer, que tiene un consumo de corriente de aproximadamente 30 mA.
 
 #### 2 Medición de consumo del microcontrolador
 La figura 4.2 muestra el banco de trabajo empleado para medir el consumo del microcontrolador.
@@ -795,15 +787,15 @@ La figura 4.2 muestra el banco de trabajo empleado para medir el consumo del mic
 
 Colocando un multímetro en modo amperímetro en JP6, se obtiene el siguiente consumo:
 
-$$P_{mcu_avg} = 3,3V \cdot I_{mcu_avg} = 3,3V \cdot 9mA = 29,7mW$$
+$$P_{mcu_avg} = 3,3\ V \cdot I_{mcu_avg} = 3,3\ V \cdot 9\ mA = 29,7\ mW$$
 
 El consumo es evidentemente mucho más bajo que el total de consumo. Entonces, ¿qué consume tanto?
 
-Se estima que la memoria EEPROM consume de forma constante casi 90mA. Esto es extraño, debido a que no se encuentra en uso, simplemente alimentada.
+Se estima que la memoria EEPROM consume de forma constante casi 90 mA. Esto es extraño, debido a que no se encuentra en uso, simplemente alimentada.
 
 ### 4.2 Medición y análisis de tiempos de ejecución (WCET)
 
-Se utiliza un indicador de tiempo de ejecución (WCET: Worst Case Execution Time) para registrar el máximo tiempo de ejecución de cada tarea, y así garantizar que se encuentre dentro del límite de 1ms.
+Se utiliza un indicador de tiempo de ejecución (WCET: Worst Case Execution Time) para registrar el máximo tiempo de ejecución de cada tarea, y así garantizar que se encuentre dentro del límite de 1 ms.
 
 A continuación, se presental los resultados tras varios minutos de uso:
 En la figura 4.3 se muestran los resultados de las mediciones de tiempos de ejecución (WCET).
@@ -814,19 +806,19 @@ En la figura 4.3 se muestran los resultados de las mediciones de tiempos de ejec
 <div align="justify">
 
 Las tareas son las siguientes:
-* `task_sensor`: 56us
-* `task_hc05`: 37us
-* `task_mic`: 329us
-* `task_system`: 560us
-* `task_GPIO_output`: 44us
+* `task_sensor`: 56 us
+* `task_hc05`: 37 us
+* `task_mic`: 329 us
+* `task_system`: 560 us
+* `task_GPIO_output`: 44 us
 
 La sumatoria de estos procesos da como resultado un total de
 
-$$\sum_{i=0}^{5} WCET_{i} = 1026us$$
+$$\sum_{i=0}^{5} WCET_{i} = 1026\ us$$
 
 lo que significa que se pueden perder iteraciones ocasionalmente, pero no de forma significativa. De hecho, el sistema funciona correctamente y sin retrasos perceptibles para el usuario.
 
-Esto sucede porque, a pesar de superar el límite teórico de 1ms, tareas como `task_mic` (algoritmo de Goertzel) y `task_system` (comunicación I2C) no se ejecutan en su modo más pesado en cada iteración, sino que solo lo hacen cuando se cumplen ciertas condiciones, como que se llene el batch del ADC o que se reciba un caractér por bluetooth. Por lo tanto, aunque su tiempo de ejecución es alto, no afectan el rendimiento general del sistema de manera significativa.
+Esto sucede porque, a pesar de superar el límite teórico de 1 ms, tareas como `task_mic` (algoritmo de Goertzel) y `task_system` (comunicación I2C) no se ejecutan en su modo más pesado en cada iteración, sino que solo lo hacen cuando se cumplen ciertas condiciones, como que se llene el batch del ADC o que se reciba un caractér por bluetooth. Por lo tanto, aunque su tiempo de ejecución es alto, no afectan el rendimiento general del sistema de manera significativa.
 
 ### 4.3 Cálculo del factor de uso (U) de la CPU
 
@@ -840,17 +832,17 @@ Para nuestro caso, se evalúa para las diferentes tareas:
 
 | Tarea | $$C_i$$      | $$T_i$$ | $$U_i$$ | 
 |-----|---------------------|---------|---------|
-| `task_sensor`| 56us | 1000us | 0.056 |
-| `task_hc05`| 37us | 1000us | 0.037 |
-| `task_mic`| 329us | 5000us | 0.065 |
-| `task_system`| 560us | 1000us | 0.560 |
-| `task_GPIO_output`| 44us | 1000us | 0.044 |
+| `task_sensor`| 56 us | 1000 us | 0.056 |
+| `task_hc05`| 37 us | 1000 us | 0.037 |
+| `task_mic`| 329 us | 5000 us | 0.065 |
+| `task_system`| 560 us | 1000 us | 0.560 |
+| `task_GPIO_output`| 44 us | 1000 us | 0.044 |
 
 $$U = 0.762 $$
 
 El factor de uso de la CPU podría ser más bajo si se considera que `task_system` solo realiza lecturas a la memoria EEPROM cuando recibe caracteres.
 
-<i>Nota: Se utilizan 5ms como base de tiempo para `task_mic`, pues es el tiempo que toma al ADC llenar el batch.</i>
+<i>Nota: Se utilizan 5 ms como base de tiempo para `task_mic`, pues es el tiempo que toma al ADC llenar el batch.</i>
 
 ### 4.4 Utilización de modo de bajo consumo
 
@@ -858,7 +850,7 @@ Nuesto sistema tiene un uso de CPU estimado de 0.762, pero se alcanza sólo cuan
 
 Al estudio de consumo anterior, se le agrega la directiva HAL_PWR_EnterSLEEPMode(). El resultado es el siguiente:
 
-$$P_{mcu_avg} = 3,3V \cdot I_{mcu_avg} = 3,3V \cdot 6mA = 19,8mW$$
+$$P_{mcu_avg} = 3,3\ V \cdot I_{mcu_avg} = 3,3\ V \cdot 6\ mA = 19,8\ mW$$
 
 Esto es una reducción de consumo del 33%. Que se condice con el cálculo de factor de uso, que indica que el microcontrolador se encuentra inactivo aproximadamente el 24% del tiempo. Dado que la tarea `task_system` es solo ocasionalmente pesada, se espera que
 
@@ -868,7 +860,6 @@ Por supuesto, el impacto no es mayor a gran escala, debido al consumo de la memo
 
 ### 4.5 Consola y Build Analyzer
 
-A continuación se presentan los resultados obtenidos del análisis de consola y build analyzer, que permiten identificar posibles errores o advertencias en el código, así como optimizar el proceso de compilación:
 La figura 4.4 presenta la salida de consola obtenida durante la compilación.
 
 
@@ -887,6 +878,9 @@ La figura 4.5 muestra el uso de memoria informado por Build Analyzer.
 Como se puede observar, se utilizan aproximádamente 1/5 de los recursos de memoria flash, y 1/3 de los recursos de memoria RAM, lo que indica que el sistema tiene un margen considerable para la implementación de nuevas funcionalidades o la optimización del código.
 
 ### 4.6 Cumplimiento de requisitos
+
+A continuación se analiza el grado de completitud de los objetivos planteados durante la etapa de presentación del proyecto, separados por submódulos.
+
 | Estado | Descripción      |
 |-----|---------------------|
 | 🟢 | Ya implementado|
@@ -1000,7 +994,11 @@ Esta es la prueba definitiva del modo TRANSMISIÓN.
 
 #### Prueba de integración final: Integración con aplicación
 
-Una vez funcional el sistema, se debe verificar que la comunicación sea congruente con la aplicación. Es decir, se reemplaza la consola con una aplicación android de producción propia.
+Una vez funcional el sistema, se debe verificar que la comunicación sea congruente con la aplicación. Es decir, se reemplaza la consola con una aplicación android de producción propia:
+
+* El video [[6]](#7-bibliografía-y-referencias) repasa cada función del dispositivo y su funcionamiento utilizando la decodificación on-board.
+
+* El video [[7]](#7-bibliografía-y-referencias) muestra el funcionamiento del decodificador utiliando la aplicación móvil.
 
 # 5. Conclusiones
 ## 5.1 Resultados obtenidos
@@ -1014,99 +1012,136 @@ El funcionamiento es adecuado, con algunas mejoras y limitaciones pendientes. A 
 * La implementación de modo de bajo consumo es efectiva, pero se encuentra limitada por el consumo de la memoria EEPROM, que se encuentra constantemente alimentada. Es preciso investigar el motivo de este consumo, y corregirlo para la entrega al cliente.
 * Implementación DMA de la comunicación I2C con la memoria EEPROM para reducir notablemente el tiempo de ejecución de `task_system`.
 
-El siguiente [video demostrativo](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing) repasa cada función del dispositivo y su funcionamiento utilizando la decodificación on-board.
-
-El siguiente [video demostrativo](https://drive.google.com/file/d/1XpYaygy5qgFFMLYC-HlMiM3PCYnf0Yhf/view?usp=sharing) muestra el funcionamiento del decodificador utiliando la aplicación móbil.
-
-
-
 ## 5.2 Dificultades encontradas
 
 A lo largo del desarrollo del proyecto se han encontrado múltiples dificultades que debieron ser resueltas, y por ende dejaron un aprendizaje. Entre ellas, destacan las siguientes:
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Complejidad algorítmica del algoritmo de Goertzel y punto flotante.</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>Resultó un gran problema la duración de task_mic debido a la carga temporal del algoritmo de Goertzel, sumado a la incapacidad del mcu de procesar punto flotante de forma eficiente. 
-      Se debió implementar el punto flotante de forma manual, y al mismo tiempo se redujeron notablemente las muestras tomadas, así como la cantidad de frecuencias a evaluar, hasta encontrar un valor satisfactorio.</p>
-    </tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        Resultó un gran problema la duración de task_mic debido a la carga temporal
+        del algoritmo de Goertzel, sumado a la incapacidad del mcu de procesar
+        punto flotante de forma eficiente. Se debió implementar el punto flotante
+        de forma manual, y al mismo tiempo se redujeron notablemente las muestras
+        tomadas, así como la cantidad de frecuencias a evaluar, hasta encontrar
+        un valor satisfactorio.
+      </p>
+    </td>
+  </tr>
 </table>
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Tiempo de ejecución de task_hc05</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>El desconocimiento sobre la capacidad de utilizar DMA para el control de canales de comunicación USART fue un problema durante una parte importante del desarrollo.
-      La solución se escondía detrás de una simple configuración del ioc. Esto llevó el WCET de casi 1ms a los actuales 50us.</p></tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        El desconocimiento sobre la capacidad de utilizar DMA para el control de
+        canales de comunicación USART fue un problema durante una parte importante
+        del desarrollo. La solución se escondía detrás de una simple configuración
+        del ioc. Esto llevó el WCET de casi  ms a los actuales 50 us.
+      </p>
+    </td>
+  </tr>
 </table>
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Falta de protección contra sobretensión</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>La falta de la implementación de una protección contra sobretensión a la entrada resultó un problema en algunas ocasiones, cuando el mal conexionado resultó en el daño de los integrados LM358 y 24C02.</p></tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        La falta de la implementación de una protección contra sobretensión a la
+        entrada resultó un problema en algunas ocasiones, cuando el mal conexionado
+        resultó en el daño de los integrados LM358 y 24C02.
+      </p>
+    </td>
+  </tr>
 </table>
+
 <p align="center"><em>Tabla 5.1: Dificultades</em></p>
 
-## 5.3 Uso de IA
+
+# 6. Uso de herramientas de inteligencia artificial
 
 El rápido desarrollo de Inteligencias Artificiales simplifica en gran medida muchas tareas que antes eran tediosas. Aunque su alcance es aun limitado en la electrónica, durante el desarrollo del proyecto nuestro equipo ha hecho uso de este herramienta de diferentes formas:
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Asistencia en el rápido entendimiento de código:</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>El uso de IA ha resultado muy (y sorpresivamente) eficiente para el análisis de código. Normalmente se puede pedir un análisis preliminar para el posterior y más fino análisis técnico, realizado por una persona.</p>
-    </tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        El uso de IA ha resultado muy (y sorpresivamente) eficiente para el análisis
+        de código. Normalmente se puede pedir un análisis preliminar para el posterior
+        y más fino análisis técnico, realizado por una persona.
+      </p>
+    </td>
+  </tr>
 </table>
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Troubleshooting de código:</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>Es de conocimiento público que las IAs son especialmente buenas analizando y produciendo código. En este caso, fueron utilizadas en múltiples ocasiones para solucionar problemas de código menores pero a veces escondidos a simple vista. Ej: una librería no incluída, una variable mal definida, etc.</p>
-    </tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        Es de conocimiento público que las IAs son especialmente buenas analizando
+        y produciendo código. En este caso, fueron utilizadas en múltiples ocasiones
+        para solucionar problemas de código menores pero a veces escondidos a simple
+        vista. Ej: una librería no incluída, una variable mal definida, etc.
+      </p>
+    </td>
+  </tr>
 </table>
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Asistencia en la producción del algoritmo de Goertzel.</strong></p>
-    </tr>
-  </td>
+    </td>
+  </tr>
 </table>
 
 <table>
-  <td>
-    <tr height="30%" valign="top">
+  <tr>
+    <td height="30%" valign="top">
       <p><strong>Búsqueda de documentación:</strong></p>
-    </tr>
-    <tr height="60%" valign="top">
-      <p>La amplia documentación existente de los componentes utilizados en este MPV hizo posible resolver algunas problemáticas típicas de carácter electrónico, como la programación inicial del HC-05. La mayoría de estos problemas de esta naturaleza, sin embargo, fueron resueltos "a la antigua".</p>
-    </tr>
-  </td>
+    </td>
+  </tr>
+  <tr>
+    <td height="60%" valign="top">
+      <p>
+        La amplia documentación existente de los componentes utilizados en este MPV
+        hizo posible resolver algunas problemáticas típicas de carácter electrónico,
+        como la programación inicial del HC-05. La mayoría de estos problemas de
+        esta naturaleza, sin embargo, fueron resueltos "a la antigua".
+      </p>
+    </td>
+  </tr>
 </table>
+
 <p align="center"><em>Tabla 5.2: uso de IA</em></p>
 
-# 6. Bibliografía y referencias
-
-
+# 7. Bibliografía y referencias
 
 Listado de archivos de consulta utilizados:
 - [Micrófono electret](https://www.sameskydevices.com/product/resource/cmc-5044pf-a.pdf)
@@ -1119,18 +1154,26 @@ Listado de archivos de consulta utilizados:
 
 
 Referencias:
-* `README.md`
-* `Informe_de_Avance.md`
 
-* [Repositorio del terminal Bluetooth (base del proyecto)](https://github.com/kai-morich/SimpleBluetoothTerminal)
 
-* [Aplicación MyFriendlyMorse en Google Play](https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR)
+[1] `README.md`
 
-* [Repositorio de MyFriendlyMorse](https://github.com/SantangeloEzequiel/MyFriendlyMorse)
-* [Video demostrativo del proyecto](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing)
-* [Video demostrativo de decodificación por aplicación móbil](https://drive.google.com/file/d/1XpYaygy5qgFFMLYC-HlMiM3PCYnf0Yhf/view?usp=sharing)
+
+[2] `Informe_de_Avance.md`
+
+[3] [Simple Bluetooth Terminal, Kai Morich.](https://github.com/kai-morich/SimpleBluetoothTerminal)
+
+[4] [Aplicación MyFriendlyMorse en Google Play.](https://play.google.com/store/apps/details?id=com.santangeloezequiel.myfriendlymorse&hl=es_AR)
+
+[5] [Repositorio de MyFriendlyMorse.](https://github.com/SantangeloEzequiel/MyFriendlyMorse)
+
+
+[6] [Video demostrativo del proyecto.](https://drive.google.com/file/d/1pP6eDevZ_npDm8u9_rv_3fITbqkFUuF4/view?usp=sharing)
+
+
+[7] [Video demostrativo de decodificación por aplicación móbil.](https://drive.google.com/file/d/1XpYaygy5qgFFMLYC-HlMiM3PCYnf0Yhf/view?usp=sharing)
 #
 <strong>Fin de memoria</strong>
 
-Última actualización: 9/10/2026
+Última actualización: 9/11/2026
 

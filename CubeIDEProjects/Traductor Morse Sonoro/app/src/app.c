@@ -197,6 +197,8 @@ void app_update(void)
 		}
 		__asm("CPSIE i");	/* enable interrupts */
 	}
+
+    HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 }
 
 void HAL_SYSTICK_Callback(void)

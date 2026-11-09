@@ -64,26 +64,29 @@ HAL_StatusTypeDef EEPROM_WriteBuffer(uint8_t memAddr,
 
 //--------------------------------------------------READ OPERATIONS
 
-uint8_t EEPROM_ReadByte(uint16_t memAddr)
+uint16_t EEPROM_Read2Bytes(uint16_t memAddr)
 {
-    uint8_t data = 0xFF;
+    uint8_t buffer[2] = {0};
 
     HAL_I2C_Mem_Read(
-        &hi2c1,               // I2C handle
-        EEPROM_I2C_ADDR,      // Dirección I2C de la EEPROM
-        memAddr,              // Dirección interna
-        I2C_MEMADD_SIZE_8BIT, // 24C02 usa 8 bits
-        &data,                // Buffer destino
-        1,                    // Cantidad de bytes
-        HAL_MAX_DELAY         // Timeout
+        &hi2c1,
+        EEPROM_I2C_ADDR,
+        memAddr,
+        I2C_MEMADD_SIZE_8BIT,
+        buffer,
+        2,
+        HAL_MAX_DELAY
     );
 
-    return data;
+    // EEPROM devuelve MSB primero (generalmente)
+    return (buffer[0] << 8) | buffer[1];
 }
 
 void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
+	uint16_t physical_index = index*2; //Esto sucede porque cada caracter ocupa 2B
+	uint16_t reading = EEPROM_Read2Bytes(physical_index);
 	Symbol->index = index;
-	uint8_t sequence = EEPROM_ReadByte(index);
+	uint8_t sequence = reading >> 8;
 	Symbol->len = (sequence & 0b11100000) >> 5;
 
 	for(uint8_t i = 0 ; i < Symbol->len ; i++){
@@ -92,24 +95,26 @@ void EEPROM_ReadSymbol(morse_entry_t* Symbol , uint16_t index){
 		else
 			Symbol->morse_sequence[i] = DOT;
 	}
-	Symbol->ascii_symbol = EEPROM_ReadByte(index + 1);
+	Symbol->ascii_symbol = reading & 0xFF;
 }
 
-void EEPROM_NextSymbol(morse_entry_t* currentSymbol , morse_input signal){
+uint8_t EEPROM_NextSymbol(uint8_t index , morse_input signal){
+	uint8_t next_index = 0;
 
 	switch(signal){
 
 	case DOT:
-		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 );
+		next_index = 2* index;
 		break;
 
 	case LINE:
-		EEPROM_ReadSymbol( currentSymbol , currentSymbol->index *2 + 1 );
+		next_index = 2* index + 1;
 		break;
 
 		default:
 		break;
 	}
+	return next_index;
 }
 
 void EEPROM_SymbolToMorse( morse_entry_t* currentSymbol , char symbol){
@@ -117,11 +122,11 @@ if(symbol != ' '){
 		uint8_t symbol_index;
 		if(symbol >= '0' && symbol <= '9' ){
 			symbol_index = symbol - '0' + ('Z' - 'A') + 1; //Maps 48-57 to 27-36
-			EEPROM_ReadSymbol(currentSymbol , symbol_index*2 + MORSE_TOTAL_SPACE_BYTES + 1);
+			EEPROM_ReadSymbol(currentSymbol , symbol_index + MORSE_TOTAL_SPACE_BYTES/2 + 1);
 		}
 		else if(symbol >= 'A' && symbol <= 'Z' ){
 			symbol_index = symbol - 'A'; //Maps 65-90 to 0-25
-			EEPROM_ReadSymbol(currentSymbol , symbol_index*2 + MORSE_TOTAL_SPACE_BYTES + 1);
+			EEPROM_ReadSymbol(currentSymbol , symbol_index + MORSE_TOTAL_SPACE_BYTES/2 + 1);
 		}
 		else{
 			*currentSymbol = morse_error;

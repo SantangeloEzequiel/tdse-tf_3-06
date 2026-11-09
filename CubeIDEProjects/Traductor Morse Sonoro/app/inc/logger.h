@@ -53,7 +53,7 @@ extern "C" {
 
 #define LOGGER_CONFIG_ENABLE                    (1)
 #define LOGGER_CONFIG_MAXLEN                    (64)
-#define LOGGER_CONFIG_USE_SEMIHOSTING           (1)
+#define LOGGER_CONFIG_USE_SEMIHOSTING           (0)
 
 #if 1 == LOGGER_CONFIG_ENABLE
 #define LOGGER_LOG(...)\
